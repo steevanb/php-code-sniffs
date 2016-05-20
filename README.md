@@ -1,4 +1,5 @@
 [![version](https://img.shields.io/badge/version-development-green.svg)](https://github.com/steevanb/php-code-sniffs)
+[![sensiolabs insight](https://img.shields.io/badge/sensiolabs%20insight-platinum-brightgreen.svg)](https://insight.sensiolabs.com/projects/0bcb9abc-acfa-4822-bf10-4f3740d9f180/analyses/3)
 
 PHP Code Sniffs
 ===============
