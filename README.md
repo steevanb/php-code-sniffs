@@ -3,12 +3,12 @@
 PHP Code Sniffs
 ===============
 
-Add some sniffs for squizlabs/php_codesniffer
+Add some sniffs for [squizlabs/php_codesniffer](https://github.com/squizlabs/PHP_CodeSniffer)
 
 Installation
 ============
 
-You will need squizlabs/php_codesniffer to use this sniffs ( https://github.com/squizlabs/PHP_CodeSniffer ).
+You will need squizlabs/php_codesniffer to use this sniffs.
 I do not include it in steevanb/php-code-sniffs, if you want to use a fork.
 ```json
 # composer.json
