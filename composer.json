@@ -1,6 +1,6 @@
 {
     "name": "steevanb/php-code-sniffs",
     "description": "Add some sniffs for squizlabs/php_codesniffer",
-    "license": "open-source",
+    "license": "MIT",
     "type": "library"
 }
