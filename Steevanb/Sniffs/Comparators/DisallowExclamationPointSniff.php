@@ -10,7 +10,7 @@ class Steevanb_Sniffs_Comparators_DisallowExclamationPointSniff implements PHP_C
      */
     public function register()
     {
-        return [ T_TRUE ];
+        return [ T_BOOLEAN_NOT ];
     }
 
     /**
@@ -20,13 +20,9 @@ class Steevanb_Sniffs_Comparators_DisallowExclamationPointSniff implements PHP_C
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-
-        if ($tokens[$stackPtr - 1]['code'] === T_BOOLEAN_NOT) {
-            $phpcsFile->addError(
-                '"!" to compare as false is not allowed, use "== false" or "=== false" instead',
-                $stackPtr
-            );
-        }
+        $phpcsFile->addError(
+            '"!" to compare as false is not allowed, use "== false" or "=== false" instead',
+            $stackPtr
+        );
     }
 }
