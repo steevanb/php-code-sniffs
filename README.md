@@ -11,7 +11,7 @@ Installation
 You will need squizlabs/php_codesniffer to use this sniffs.
 I do not include it in steevanb/php-code-sniffs, if you want to use a fork.
 ```json
-# composer.json
+// composer.json
 {
     "require-dev": {
         "squizlabs/php_codesniffer": "2.*",
@@ -27,4 +27,17 @@ Then, add sniffs to your ruleset.xml :
 <ruleset name="FooRuleset">
     <rule ref="vendor/steevanb/php-code-sniffs"></rule>
 </ruleset>
+```
+
+Most used commands
+==================
+
+Summary of most used commands to check your code style :
+```bash
+# execute sniffs, and output errors
+./vendor/bin/phpcs --standard=ruleset.xml
+# execute sniffs, and write results in foo.csv
+./vendor/bin/phpcs --standard=ruleset.xml --report-csv=foo.csv
+# show list of configured sniffs
+./vendor/bin/phpcs --standard=ruleset.xml -e
 ```
