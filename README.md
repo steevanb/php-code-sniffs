@@ -24,7 +24,7 @@ Then, add sniffs to your ruleset.xml :
 ```xml
 <!-- ruleset.xml -->
 <?xml version="1.0"?>
-<ruleset name="Huttopia">
+<ruleset name="FooRuleset">
     <rule ref="vendor/steevanb/php-code-sniffs"></rule>
 </ruleset>
 ```
