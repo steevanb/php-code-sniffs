@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Fork de Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff
- * Suppression des méthodes des librairies externes, qui ne sont pas camelCase
+ * Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff fork
+ * Allow externals libraries to not respect this standard
  */
 
 class Steevanb_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff

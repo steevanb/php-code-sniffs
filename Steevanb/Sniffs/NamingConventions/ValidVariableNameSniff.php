@@ -1,14 +1,18 @@
 <?php
 
 /**
- * Fork de Zend_Sniffs_NamingConventions_ValidVariableNameSniff
- * Suppression de l'erreur camelCase sur la propriété Mailjet\Resources::$Email (librairie externe)
+ * Zend_Sniffs_NamingConventions_ValidVariableNameSniff fork
+ * Allow some variables to not be camelCase
  */
-
 class Steevanb_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff
 {
     /** @var string[] */
-    protected $allowedVariableNames = ['Email'];
+    protected static $allowedVariableNames = [];
+
+    public static function addAllowedVariableName(string $name)
+    {
+        static::$allowedVariableNames[] = $name;
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.

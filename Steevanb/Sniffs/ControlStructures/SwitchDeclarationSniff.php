@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Fork de PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff
- * Suppression  de l'obligation de retour à la ligne après case et default
+ * PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff for
+ * Remove forced ne line after case and default
  */
 class Steevanb_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff
 {

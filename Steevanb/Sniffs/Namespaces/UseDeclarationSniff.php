@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Fork de PSR2_Sniffs_Namespaces_UseDeclarationSniff
- * Suppression du forçage d'un seul use par ligne, pour PHP7
+ * PSR2_Sniffs_Namespaces_UseDeclarationSniff fork
+ * Remove only one use per line, for PHP 7
  */
 class Steevanb_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Sniff
 {

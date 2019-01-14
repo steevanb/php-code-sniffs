@@ -10,14 +10,16 @@
     <rule ref="vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic">
         <exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
         <exclude name="Generic.Classes.OpeningBraceSameLine"/>
-        <exclude name="Generic.CodeAnalysis.UnusedFunctionParameter"/>
-        <exclude name="Generic.CodeAnalysis.UselessOverridingMethod"/>
         <exclude name="Generic.CodeAnalysis.EmptyStatement"/>
         <exclude name="Generic.Commenting.DocComment"/>
+        <exclude name="Generic.Debug.CSSLint"/>
+        <exclude name="Generic.Debug.ESLint"/>
+        <exclude name="Generic.Debug.JSHint"/>
         <exclude name="Generic.Files.EndFileNoNewline"/>
         <exclude name="Generic.Files.LowercasedFilename"/>
         <exclude name="Generic.Formatting.MultipleStatementAlignment"/>
         <exclude name="Generic.Formatting.NoSpaceAfterCast"/>
+        <exclude name="Generic.Formatting.SpaceAfterNot"/>
         <exclude name="Generic.Functions.OpeningFunctionBraceBsdAllman"/>
         <exclude name="Generic.Functions.OpeningFunctionBraceKernighanRitchie"/>
         <exclude name="Generic.Metrics.CyclomaticComplexity"/>
@@ -26,9 +28,14 @@
         <exclude name="Generic.PHP.ClosingPHPTag"/>
         <exclude name="Generic.PHP.UpperCaseConstant"/>
         <exclude name="Generic.PHP.DeprecatedFunctions"/>
+        <exclude name="Generic.PHP.Syntax"/>
         <exclude name="Generic.Strings.UnnecessaryStringConcat"/>
         <exclude name="Generic.Commenting.Todo"/>
+        <exclude name="Generic.VersionControl.SubversionProperties"/>
         <exclude name="Generic.WhiteSpace.DisallowSpaceIndent"/>
+    </rule>
+    <rule ref="vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR1">
+        <exclude name="PSR1.Methods.CamelCapsMethodName"/>
     </rule>
     <rule ref="vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR2">
         <exclude name="PSR2.ControlStructures.ControlStructureSpacing"/>
@@ -42,6 +49,7 @@
     <rule ref="vendor/leaphub/phpcs-symfony2-standard/leaphub/phpcs/Symfony2">
         <exclude name="Symfony2.Commenting.ClassComment"/>
         <exclude name="Symfony2.Commenting.FunctionComment"/>
+        <exclude name="Symfony2.Scope.MethodScope"/>
     </rule>
     <rule ref="Generic.Files.LineLength">
         <properties>
