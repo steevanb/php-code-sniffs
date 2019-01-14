@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<ruleset name="Steevanb">
+    <description>Steevan BARBOYON coding standards</description>
+
+    <exclude-pattern>*/Resources/*</exclude-pattern>
+    <arg name="extensions" value="php"/>
+    <arg name="colors"/>
+    <arg name="report-width" value="200"/>
+
+    <rule ref="vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic">
+        <exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+        <exclude name="Generic.Classes.OpeningBraceSameLine"/>
+        <exclude name="Generic.CodeAnalysis.UnusedFunctionParameter"/>
+        <exclude name="Generic.CodeAnalysis.UselessOverridingMethod"/>
+        <exclude name="Generic.CodeAnalysis.EmptyStatement"/>
+        <exclude name="Generic.Commenting.DocComment"/>
+        <exclude name="Generic.Files.EndFileNoNewline"/>
+        <exclude name="Generic.Files.LowercasedFilename"/>
+        <exclude name="Generic.Formatting.MultipleStatementAlignment"/>
+        <exclude name="Generic.Formatting.NoSpaceAfterCast"/>
+        <exclude name="Generic.Functions.OpeningFunctionBraceBsdAllman"/>
+        <exclude name="Generic.Functions.OpeningFunctionBraceKernighanRitchie"/>
+        <exclude name="Generic.Metrics.CyclomaticComplexity"/>
+        <exclude name="Generic.Metrics.NestingLevel"/>
+        <exclude name="Generic.NamingConventions.CamelCapsFunctionName"/>
+        <exclude name="Generic.PHP.ClosingPHPTag"/>
+        <exclude name="Generic.PHP.UpperCaseConstant"/>
+        <exclude name="Generic.PHP.DeprecatedFunctions"/>
+        <exclude name="Generic.Strings.UnnecessaryStringConcat"/>
+        <exclude name="Generic.Commenting.Todo"/>
+        <exclude name="Generic.WhiteSpace.DisallowSpaceIndent"/>
+    </rule>
+    <rule ref="vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR2">
+        <exclude name="PSR2.ControlStructures.ControlStructureSpacing"/>
+        <exclude name="Squiz.WhiteSpace.ControlStructureSpacing"/>
+        <exclude name="PSR2.Namespaces.UseDeclaration.MultipleDeclarations"/>
+        <exclude name="PSR2.ControlStructures.SwitchDeclaration"/>
+    </rule>
+    <rule ref="vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Zend">
+        <exclude name="Zend.NamingConventions.ValidVariableName"/>
+    </rule>
+    <rule ref="vendor/leaphub/phpcs-symfony2-standard/leaphub/phpcs/Symfony2">
+        <exclude name="Symfony2.Commenting.ClassComment"/>
+        <exclude name="Symfony2.Commenting.FunctionComment"/>
+    </rule>
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+        </properties>
+    </rule>
+    <rule ref="vendor/steevanb/php-code-sniffs/Steevanb"/>
+</ruleset>

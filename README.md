@@ -1,44 +1,29 @@
-[![version](https://img.shields.io/badge/version-development-green.svg)](https://github.com/steevanb/php-code-sniffs)
-[![sensiolabs insight](https://img.shields.io/badge/sensiolabs%20insight-platinum-brightgreen.svg)](https://insight.sensiolabs.com/projects/0bcb9abc-acfa-4822-bf10-4f3740d9f180/analyses/3)
+PhpCS
+=====
 
-PHP Code Sniffs
-===============
+Liste des normes de dev qui seront vérifiées
+--------------------------------------------
 
-Add some sniffs for [squizlabs/php_codesniffer](https://github.com/squizlabs/PHP_CodeSniffer)
-
-Installation
-============
-
-You will need squizlabs/php_codesniffer to use this sniffs.
-I do not include it in steevanb/php-code-sniffs, if you want to use a fork.
-```json
-// composer.json
-{
-    "require-dev": {
-        "squizlabs/php_codesniffer": "2.*",
-        "steevanb/php-code-sniffs": "dev-master"
-    }
-}
-```
-
-Then, add sniffs to your ruleset.xml :
-```xml
-<!-- ruleset.xml -->
-<?xml version="1.0"?>
-<ruleset name="FooRuleset">
-    <rule ref="vendor/steevanb/php-code-sniffs"></rule>
-</ruleset>
-```
-
-Most used commands
-==================
-
-Summary of most used commands to check your code style :
 ```bash
-# execute sniffs, and output errors
-./vendor/bin/phpcs --standard=ruleset.xml
-# execute sniffs, and write results in foo.csv
-./vendor/bin/phpcs --standard=ruleset.xml --report-csv=foo.csv
-# show list of configured sniffs
-./vendor/bin/phpcs --standard=ruleset.xml -e
+vendor/bin/phpcs --standard=./ruleset.xml -e
+```
+
+Vérifier les normes de dev des fichiers à commiter
+--------------------------------------------------
+
+```bash
+git status --porcelain | grep -E '^[^D\?]{2} .*\.php$' | awk '{print $2}' | xargs -n1 bin/phpcs --standard=vendor/info-droid/phpcs/ruleset.xml
+```
+
+Vérifier les normes de dev de tous les fichiers d'un répertoire
+---------------------------------------------------------------
+
+```bash
+vendor/bin/phpcs --standard=./ruleset.xml --report=InfoDroid src/
+
+# écrire le résultat dans un fichier CSV
+vendor/bin/phpcs --standard=vendor/info-droid/phpcs/ruleset.xml --report-csv=foo.csv src/
+
+# lister les sniffs configurés
+vendor/bin/phpcs --standard=vendor/info-droid/phpcs/ruleset.xml -e
 ```
