@@ -1,19 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
+/** Disallow more than one empty line */
 class Steevanb_Sniffs_PHP_DisallowMultipleEmptyLinesSniff extends Generic_Sniffs_PHP_DeprecatedFunctionsSniff
 {
-    /** @return int[] */
-    public function register()
+    public function register(): array
     {
         return [T_WHITESPACE];
     }
 
-    /**
-     * @param PHP_CodeSniffer_File $phpcsFile
-     * @param int $stackPtr
-     * @return void
-     */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    /** @param int $stackPtr */
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr): void
     {
         $token = $phpcsFile->getTokens()[$stackPtr];
         if (isset($phpcsFile->getTokens()[$stackPtr + 1]) && isset($phpcsFile->getTokens()[$stackPtr + 2])) {

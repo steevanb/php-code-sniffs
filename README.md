@@ -77,6 +77,15 @@ Steevanb_Sniffs_Functions_DisallowMultipleReturnSniff::addAllowedFunction(
 
 // come methods could have a nesting level greater than 5
 Steevanb_Sniffs_Metrics_NestingLevelSniff::addAllowedNestingLevelMethods('foo.php', 'barMethod');
+
+// allow some deprecated function
+Steevanb_Sniffs_PHP_DeprecatedFunctionsSniff::addAllowDeprecatedFunction('deprecated_function');
+
+// force use groups to be at 3rd level, instead of 1st or 2nd
+// example : Symfony\Component\Form\{}
+Steevanb_Sniffs_Uses_GroupUsesSniff::addThirdLevelPrefix('Symfony\Component');
+// if you want to configure it for a Symfony project, you can use addSymfonyPrefixs()
+Steevanb_Sniffs_Uses_GroupUsesSniff::addSymfonyPrefixs();
 ```
 
 Coding standards
@@ -117,7 +126,6 @@ squizlabs/php_codesniffer
 | [Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff](https://github.com/squizlabs/PHP_CodeSniffer/blob/2.9/CodeSniffer/Standards/Generic/Sniffs/NamingConventions/UpperCaseConstantNameSniff.php) | `const` |
 | [Generic_Sniffs_PHP_BacktickOperatorSniff](https://github.com/squizlabs/PHP_CodeSniffer/blob/2.9/CodeSniffer/Standards/Generic/Sniffs/PHP/BacktickOperatorSniff.php) | ` |
 | [Generic_Sniffs_PHP_CharacterBeforePHPOpeningTagSniff](https://github.com/squizlabs/PHP_CodeSniffer/blob/2.9/CodeSniffer/Standards/Generic/Sniffs/PHP/CharacterBeforePHPOpeningTagSniff.php) | `<?`, `<?php`, `<%` |
-| [Generic_Sniffs_PHP_DeprecatedFunctionsSniff](https://github.com/squizlabs/PHP_CodeSniffer/blob/2.9/CodeSniffer/Standards/Generic/Sniffs/PHP/DeprecatedFunctionsSniff.php) | All PHP deprecated functions |
 | [Generic_Sniffs_PHP_DisallowAlternativePHPTagsSniff](https://github.com/squizlabs/PHP_CodeSniffer/blob/2.9/CodeSniffer/Standards/Generic/Sniffs/PHP/DisallowAlternativePHPTagsSniff.php) | `<%`, `<%= %>`, `<script>` |
 | [Generic_Sniffs_PHP_DisallowShortOpenTagSniff](https://github.com/squizlabs/PHP_CodeSniffer/blob/2.9/CodeSniffer/Standards/Generic/Sniffs/PHP/DisallowShortOpenTagSniff.php) | `<?`, `<?= ?>` |
 | [Generic_Sniffs_PHP_ForbiddenFunctionsSniff](https://github.com/squizlabs/PHP_CodeSniffer/blob/2.9/CodeSniffer/Standards/Generic/Sniffs/PHP/ForbiddenFunctionsSniff.php) | `sizeof`, `delete` |
@@ -198,18 +206,19 @@ steevanb/php-code-sniffs
 
 | Sniff | Apply on |
 |-------|----------|
-| [Steevanb_Sniffs_Functions_DisallowMultipleReturnSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/Functions/DisallowMultipleReturnSniff.php) | `return` |
-| [Steevanb_Sniffs_Syntax_ConcatenationSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/Syntax/ConcatenationSniff.php) | Concatenation character `.` |
-| [Steevanb_Sniffs_CodeAnalysis_EmptyStatementSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/CodeAnalysis/EmptyStatementSniff.php) | `try`, `finally`, `do`, `while`, `if`, `else`, `elseif`, `for`, `foreach`, `switch` |
-| [Steevanb_Sniffs_CodeAnalysis_StrictTypesSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/CodeAnalysis/StrictTypesSniff.php) | `declare(stric_types=1)` |
-| [Steevanb_Sniffs_Comparators_DisallowExclamationPointSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/Comparators/DisallowExclamationPointSniff.php) | `!` |
-| [Steevanb_Sniffs_Uses_GroupUsesSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/Uses/GroupUsesSniff.php) | `use` |
-| [Steevanb_Sniffs_Metrics_NestingLevelSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/Metrics/NestingLevelSniff.php) | `function` |
-| [Steevanb_Sniffs_Namespaces_UseDeclarationSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/Namespaces/UseDeclarationSniff.php) | `use` |
-| [Steevanb_Sniffs_PHP_DisallowMultipleEmptyLinesSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/PHP/DisallowMultipleEmptyLinesSniff.php) | Empty lines |
-| [Steevanb_Sniffs_PHP_DisallowSelfSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/PHP/DisallowSelfSniff.php) | `self` |
-| [Steevanb_Sniffs_ControlStructures_SwitchDeclarationSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/ControlStructures/SwitchDeclarationSniff.php) | `switch` |
 | [Steevanb_Sniffs_Arrays_DisallowShortArraySyntaxSpacesSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/Arrays/DisallowShortArraySyntaxSpacesSniff.php) | `[]` |
 | [Steevanb_Sniffs_Classes_ClassNameIsFileNameSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/Classes/ClassNameIsFileNameSniff.php) | `class`, `interface`, `trait` |
-| [Steevanb_Sniffs_NamingConventions_ValidVariableNameSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/NamingConventions/ValidVariableNameSniff.php) | All variables |
+| [Steevanb_Sniffs_Comparators_DisallowExclamationPointSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/Comparators/DisallowExclamationPointSniff.php) | `!` |
+| [Steevanb_Sniffs_CodeAnalysis_EmptyStatementSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/CodeAnalysis/EmptyStatementSniff.php) | `try`, `finally`, `do`, `while`, `if`, `else`, `elseif`, `for`, `foreach`, `switch` |
+| [Steevanb_Sniffs_CodeAnalysis_StrictTypesSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/CodeAnalysis/StrictTypesSniff.php) | `declare(stric_types=1)` |
+| [Steevanb_Sniffs_ControlStructures_SwitchDeclarationSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/ControlStructures/SwitchDeclarationSniff.php) | `switch` |
+| [Steevanb_Sniffs_Functions_DisallowMultipleReturnSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/Functions/DisallowMultipleReturnSniff.php) | `return` |
+| [Steevanb_Sniffs_Metrics_NestingLevelSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/Metrics/NestingLevelSniff.php) | `function` |
+| [Steevanb_Sniffs_Namespaces_UseDeclarationSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/Namespaces/UseDeclarationSniff.php) | `use` |
+| [Steevanb_Sniffs_PHP_DeprecatedFunctionsSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/PHP/DeprecatedFunctionsSniff.php) | All PHP deprecated functions |
+| [Steevanb_Sniffs_PHP_DisallowMultipleEmptyLinesSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/PHP/DisallowMultipleEmptyLinesSniff.php) | Empty lines |
+| [Steevanb_Sniffs_PHP_DisallowSelfSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/PHP/DisallowSelfSniff.php) | `self` |
+| [Steevanb_Sniffs_Syntax_ConcatenationSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/Syntax/ConcatenationSniff.php) | Concatenation character `.` |
+| [Steevanb_Sniffs_Uses_GroupUsesSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/Uses/GroupUsesSniff.php) | `use` |
 | [Steevanb_Sniffs_NamingConventions_CamelCapsFunctionNameSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/NamingConventions/CamelCapsFunctionNameSniff.php) | `function` |
+| [Steevanb_Sniffs_NamingConventions_ValidVariableNameSniff](https://github.com/steevanb/php-code-sniffs/blob/master/Steevanb/Sniffs/NamingConventions/ValidVariableNameSniff.php) | All variables |

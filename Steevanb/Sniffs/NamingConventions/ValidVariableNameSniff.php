@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Zend_Sniffs_NamingConventions_ValidVariableNameSniff fork
- * Allow some variables to not be camelCase
+ * Allow some variables to not respect camelCase
  */
 class Steevanb_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff
 {
@@ -14,15 +16,8 @@ class Steevanb_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeS
         static::$allowedVariableNames[] = $name;
     }
 
-    /**
-     * Processes this test, when one of its tokens is encountered.
-     *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int $stackPtr The position of the current token in the stack passed in $tokens.
-     *
-     * @return void
-     */
-    protected function processVariable(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    /** @param int $stackPtr */
+    protected function processVariable(PHP_CodeSniffer_File $phpcsFile, $stackPtr): void
     {
         $tokens  = $phpcsFile->getTokens();
         $varName = ltrim($tokens[$stackPtr]['content'], '$');
@@ -96,7 +91,7 @@ class Steevanb_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeS
 
         if (
             PHP_CodeSniffer::isCamelCaps($varName, false, true, false) === false
-            && in_array($varName, $this->allowedVariableNames) === false
+            && in_array($varName, static::$allowedVariableNames) === false
         ) {
             $error = 'Variable "%s" is not in valid camel caps format';
             $data = [$originalVarName];
@@ -104,21 +99,13 @@ class Steevanb_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeS
         }
     }
 
-    /**
-     * Processes class member variables.
-     *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in the
-     *                                        stack passed in $tokens.
-     *
-     * @return void
-     */
-    protected function processMemberVar(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    /** @param int $stackPtr */
+    protected function processMemberVar(PHP_CodeSniffer_File $phpcsFile, $stackPtr): void
     {
-        $tokens      = $phpcsFile->getTokens();
-        $varName     = ltrim($tokens[$stackPtr]['content'], '$');
+        $tokens = $phpcsFile->getTokens();
+        $varName = ltrim($tokens[$stackPtr]['content'], '$');
         $memberProps = $phpcsFile->getMemberProperties($stackPtr);
-        $public      = ($memberProps['scope'] === 'public');
+        $public = ($memberProps['scope'] === 'public');
 
         if ($public === true) {
             if (substr($varName, 0, 1) === '_') {
@@ -141,16 +128,8 @@ class Steevanb_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeS
         }
     }
 
-    /**
-     * Processes the variable found within a double quoted string.
-     *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the double quoted
-     *                                        string.
-     *
-     * @return void
-     */
-    protected function processVariableInString(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    /** @param int $stackPtr */
+    protected function processVariableInString(PHP_CodeSniffer_File $phpcsFile, $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
 

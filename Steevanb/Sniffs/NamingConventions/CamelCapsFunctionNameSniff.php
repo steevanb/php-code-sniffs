@@ -1,17 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff fork
- * Allow externals libraries to not respect this standard
+ * Allow external libraries to not respect this standard
  */
 
 class Steevanb_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
 {
-    /**
-     * A list of all PHP magic methods.
-     *
-     * @var array
-     */
+    /** A list of all PHP magic methods */
     protected $magicMethods = [
         'construct' => true,
         'destruct' => true,
@@ -32,10 +30,7 @@ class Steevanb_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_C
 
     /**
      * A list of all PHP non-magic methods starting with a double underscore.
-     *
      * These come from PHP modules such as SOAPClient.
-     *
-     * @var array
      */
     protected $methodsDoubleUnderscore = [
         'soapcall' => true,
@@ -57,18 +52,10 @@ class Steevanb_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_C
         'requiresSQLCommentHint'
     ];
 
-    /**
-     * A list of all PHP magic functions.
-     *
-     * @var array
-     */
+    /** A list of all PHP magic functions */
     protected $magicFunctions = ['autoload' => true];
 
-    /**
-     * If TRUE, the string must not have two capital letters next to each other.
-     *
-     * @var bool
-     */
+    /** If TRUE, the string must not have two capital letters next to each other. */
     public $strict = true;
 
     public function __construct()
@@ -77,15 +64,10 @@ class Steevanb_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_C
     }
 
     /**
-     * Processes the tokens within the scope.
-     *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being processed.
-     * @param int $stackPtr The position where this token was found.
-     * @param int $currScope The position of the current scope.
-     *
-     * @return void
+     * @param int $stackPtr
+     * @param int $currScope
      */
-    protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
+    protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope): void
     {
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
         if ($methodName === null) {
@@ -147,15 +129,8 @@ class Steevanb_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_C
         }
     }
 
-    /**
-     * Processes the tokens outside the scope.
-     *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being processed.
-     * @param int $stackPtr The position where this token was found.
-     *
-     * @return void
-     */
-    protected function processTokenOutsideScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    /** @param int $stackPtr */
+    protected function processTokenOutsideScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr): void
     {
         $functionName = $phpcsFile->getDeclarationName($stackPtr);
         if ($functionName === null) {

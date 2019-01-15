@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 class PHP_CodeSniffer_Reports_Steevanb implements PHP_CodeSniffer_Report
 {
+    /** @var string[] */
     protected static $replacesInPath = [];
 
     public static function addReplaceInPath(string $search, string $replace): void
@@ -27,18 +30,15 @@ class PHP_CodeSniffer_Reports_Steevanb implements PHP_CodeSniffer_Report
      * its data should be counted in the grand totals.
      *
      * @param array $report Prepared report data.
-     * @param PHP_CodeSniffer_File $phpcsFile The file being reported on.
      * @param boolean $showSources Show sources?
      * @param int $width Maximum allowed line width.
-     *
-     * @return boolean
      */
     public function generateFileReport(
         $report,
         PHP_CodeSniffer_File $phpcsFile,
         $showSources = false,
         $width = 80
-    ) {
+    ): bool {
         if ($report['errors'] === 0 && $report['warnings'] === 0) {
             // Nothing to print.
             return false;
@@ -115,7 +115,7 @@ class PHP_CodeSniffer_Reports_Steevanb implements PHP_CodeSniffer_Report
                     }
 
                     // The padding that goes on the front of the line.
-                    $padding  = ($maxLineNumLength - strlen($line));
+                    $padding  = ($maxLineNumLength - strlen((string) $line));
                     $errorMsg = wordwrap(
                         $message,
                         $maxErrorSpace,

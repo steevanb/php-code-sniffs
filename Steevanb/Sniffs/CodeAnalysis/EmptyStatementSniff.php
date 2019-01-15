@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Autorisation de catch vide
+ * Generic_Sniffs_CodeAnalysis_EmptyStatementSniff fork
+ * Allow catch to be empty
  */
 class Steevanb_Sniffs_CodeAnalysis_EmptyStatementSniff extends Generic_Sniffs_CodeAnalysis_EmptyStatementSniff
 {
-    public function register()
+    public function register(): array
     {
         return [
             T_TRY,
@@ -18,6 +21,6 @@ class Steevanb_Sniffs_CodeAnalysis_EmptyStatementSniff extends Generic_Sniffs_Co
             T_FOR,
             T_FOREACH,
             T_SWITCH
-       ];
+        ];
     }
 }

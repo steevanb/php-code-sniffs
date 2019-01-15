@@ -1,31 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * PSR2_Sniffs_Namespaces_UseDeclarationSniff fork
  * Remove only one use per line, for PHP 7
  */
 class Steevanb_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Sniff
 {
-    /**
-     * Returns an array of tokens this test wants to listen for.
-     *
-     * @return array
-     */
-    public function register()
+    public function register(): array
     {
         return [T_USE];
     }
 
-    /**
-     * Processes this test, when one of its tokens is encountered.
-     *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in
-     *                                        the stack passed in $tokens.
-     *
-     * @return void
-     */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    /** @param int $stackPtr */
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr): void
     {
         if ($this->shouldIgnoreUse($phpcsFile, $stackPtr) === true) {
             return;
@@ -101,16 +90,8 @@ class Steevanb_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_
         }
     }
 
-    /**
-     * Check if this use statement is part of the namespace block.
-     *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in
-     *                                        the stack passed in $tokens.
-     *
-     * @return void
-     */
-    private function shouldIgnoreUse(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    /** @param int $stackPtr */
+    private function shouldIgnoreUse(PHP_CodeSniffer_File $phpcsFile, $stackPtr): bool
     {
         $tokens = $phpcsFile->getTokens();
 

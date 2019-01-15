@@ -1,39 +1,20 @@
 <?php
 
 /**
- * PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff for
- * Remove forced ne line after case and default
+ * PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff fork
+ * Remove forced new line after case and default
  */
 class Steevanb_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSniffer_Sniff
 {
-
-    /**
-     * The number of spaces code should be indented.
-     *
-     * @var int
-     */
     public $indent = 4;
 
-    /**
-     * Returns an array of tokens this test wants to listen for.
-     *
-     * @return array
-     */
-    public function register()
+    public function register(): array
     {
         return [T_SWITCH];
     }
 
-    /**
-     * Processes this test, when one of its tokens is encountered.
-     *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in the
-     *                                        stack passed in $tokens.
-     *
-     * @return void
-     */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    /** @param int $stackPtr */
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -49,7 +30,7 @@ class Steevanb_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_Co
         $caseAlignment = ($switch['column'] + $this->indent);
         $caseCount = 0;
 
-        while (($nextCase = $this->_findNextCase($phpcsFile, ($nextCase + 1), $switch['scope_closer'])) !== false) {
+        while (($nextCase = $this->findNextCase($phpcsFile, ($nextCase + 1), $switch['scope_closer'])) !== false) {
             if ($tokens[$nextCase]['code'] === T_DEFAULT) {
                 $type = 'default';
             } else {
@@ -59,10 +40,10 @@ class Steevanb_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_Co
 
             if ($tokens[$nextCase]['content'] !== strtolower($tokens[$nextCase]['content'])) {
                 $expected = strtolower($tokens[$nextCase]['content']);
-                $error = strtoupper($type).' keyword must be lowercase; expected "%s" but found "%s"';
+                $error = strtoupper($type) . ' keyword must be lowercase; expected "%s" but found "%s"';
                 $data = [$expected, $tokens[$nextCase]['content']];
 
-                $fix = $phpcsFile->addFixableError($error, $nextCase, $type.'NotLower', $data);
+                $fix = $phpcsFile->addFixableError($error, $nextCase, $type . 'NotLower', $data);
                 if ($fix === true) {
                     $phpcsFile->fixer->replaceToken($nextCase, $expected);
                 }
@@ -88,8 +69,8 @@ class Steevanb_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_Co
             $nextCloser = $tokens[$nextCase]['scope_closer'];
             if ($tokens[$opener]['code'] === T_COLON) {
                 if ($tokens[($opener - 1)]['code'] === T_WHITESPACE) {
-                    $error = 'There must be no space before the colon in a '.strtoupper($type).' statement';
-                    $fix   = $phpcsFile->addFixableError($error, $nextCase, 'SpaceBeforeColon'.strtoupper($type));
+                    $error = 'There must be no space before the colon in a ' . strtoupper($type) . ' statement';
+                    $fix   = $phpcsFile->addFixableError($error, $nextCase, 'SpaceBeforeColon' . strtoupper($type));
                     if ($fix === true) {
                         $phpcsFile->fixer->replaceToken(($opener - 1), '');
                     }
@@ -100,9 +81,7 @@ class Steevanb_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_Co
                     // closer is shared between multiple case statements, or even
                     // the default case.
                     $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($nextCloser - 1), $nextCase, true);
-                    if ($tokens[$prev]['line'] === $tokens[$nextCloser]['line']) {
-                        // suppression du sniff
-                    } else {
+                    if ($tokens[$prev]['line'] !== $tokens[$nextCloser]['line']) {
                         $diff = ($caseAlignment + $this->indent - $tokens[$nextCloser]['column']);
                         if ($diff !== 0) {
                             $error = 'Terminating statement must be indented to the same level as the CASE body';
@@ -118,8 +97,8 @@ class Steevanb_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_Co
                     }
                 }
             } else {
-                $error = strtoupper($type).' statements must be defined using a colon';
-                $phpcsFile->addError($error, $nextCase, 'WrongOpener'.$type);
+                $error = strtoupper($type) . ' statements must be defined using a colon';
+                $phpcsFile->addError($error, $nextCase, 'WrongOpener' . $type);
             }
 
             // We only want cases from here on in.
@@ -138,7 +117,7 @@ class Steevanb_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_Co
                 // This case statement has content. If the next case or default comes
                 // before the closer, it means we dont have a terminating statement
                 // and instead need a comment.
-                $nextCode = $this->_findNextCase($phpcsFile, ($tokens[$nextCase]['scope_opener'] + 1), $nextCloser);
+                $nextCode = $this->findNextCase($phpcsFile, ($tokens[$nextCase]['scope_opener'] + 1), $nextCloser);
                 if ($nextCode !== false) {
                     $prevCode = $phpcsFile->findPrevious(T_WHITESPACE, ($nextCode - 1), $nextCase, true);
                     if ($tokens[$prevCode]['code'] !== T_COMMENT) {
@@ -155,13 +134,12 @@ class Steevanb_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_Co
      *
      * Note that nested switches are ignored.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position to start looking at.
-     * @param int                  $end       The position to stop looking at.
+     * @param int $stackPtr The position to start looking at.
+     * @param int $end The position to stop looking at.
      *
      * @return int | bool
      */
-    private function _findNextCase(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $end)
+    private function findNextCase(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $end)
     {
         $tokens = $phpcsFile->getTokens();
         while (($stackPtr = $phpcsFile->findNext([T_CASE, T_DEFAULT, T_SWITCH], $stackPtr, $end)) !== false) {

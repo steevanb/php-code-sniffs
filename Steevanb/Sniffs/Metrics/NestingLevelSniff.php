@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Fork de Generic_Sniffs_Metrics_NestingLevelSniff
- * Autorisation de certaines méthodes à être au delà de $nestingLevel
+ * Generic_Sniffs_Metrics_NestingLevelSniff fork
+ * Allow some methods to not respect nesting level
  */
 class Steevanb_Sniffs_Metrics_NestingLevelSniff implements PHP_CodeSniffer_Sniff
 {
@@ -14,39 +16,19 @@ class Steevanb_Sniffs_Metrics_NestingLevelSniff implements PHP_CodeSniffer_Sniff
         static::$allowedNestingLevelMethods[] = $fileName . '::' . $method;
     }
 
-    /**
-     * A nesting level higher than this value will throw a warning.
-     *
-     * @var int
-     */
+    /** A nesting level higher than this value will throw a warning */
     public $nestingLevel = 5;
 
-    /**
-     * A nesting level higher than this value will throw an error.
-     *
-     * @var int
-     */
+    /** A nesting level higher than this value will throw an error */
     public $absoluteNestingLevel = 10;
 
-    /**
-     * Returns an array of tokens this test wants to listen for.
-     *
-     * @return array
-     */
-    public function register()
+    public function register(): array
     {
         return [T_FUNCTION];
     }
 
-    /**
-     * Processes this test, when one of its tokens is encountered.
-     *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int $stackPtr  The position of the current token in the stack passed in $tokens.
-     *
-     * @return void
-     */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    /** @param int $stackPtr */
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
 

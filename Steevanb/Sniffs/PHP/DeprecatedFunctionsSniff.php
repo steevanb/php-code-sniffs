@@ -1,26 +1,39 @@
 <?php
 
+declare(strict_types=1);
+
+/**
+ * Generic_Sniffs_PHP_DeprecatedFunctionsSniff fork
+ * Allow some deprecated functions to be used
+ */
 class Steevanb_Sniffs_PHP_DeprecatedFunctionsSniff extends Generic_Sniffs_PHP_DeprecatedFunctionsSniff
 {
-    /**
-     * Fonctions autorisées, pour l'utilisation de php-mcrypt
-     * @var array
-     */
-    protected $allowedDeprecatedFunctions = [
-        'mcrypt_get_iv_size',
-        'mcrypt_create_iv',
-        'mcrypt_encrypt',
-        'mcrypt_decrypt'
-    ];
+    /** @var string[] */
+    protected static $allowedDeprecatedFunctions = [];
 
-    public function __construct()
+    public static function addAllowDeprecatedFunction(string $name): void
     {
-        parent::__construct();
+        static::$allowedDeprecatedFunctions[] = $name;
+    }
 
+    /**
+     * @param PHP_CodeSniffer_File $phpcsFile
+     * @param int $stackPtr
+     * @param string $function
+     * @param ?string $pattern
+     */
+    protected function addError($phpcsFile, $stackPtr, $function, $pattern = null): void
+    {
+        $allowed = false;
         foreach (array_keys($this->forbiddenFunctions) as $functionName) {
-            if (in_array($functionName, $this->allowedDeprecatedFunctions)) {
-                unset($this->forbiddenFunctions[$functionName]);
+            if (in_array($functionName, static::$allowedDeprecatedFunctions)) {
+                $allowed = true;
+                break;
             }
+        }
+
+        if ($allowed === false) {
+            parent::addError($phpcsFile, $stackPtr, $function, $pattern);
         }
     }
 }

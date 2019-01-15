@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+/** Concatenation character "." should be surrounded by spaces */
 class Steevanb_Sniffs_Syntax_ConcatenationSniff implements PHP_CodeSniffer_Sniff
 {
     /** @return int[] */

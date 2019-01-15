@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+/** Disallow usage of self, whenever it's possible. Use static instead */
 class Steevanb_Sniffs_PHP_DisallowSelfSniff extends Generic_Sniffs_PHP_DeprecatedFunctionsSniff
 {
     protected $isInPropertyDeclaration = false;

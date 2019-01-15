@@ -1,24 +1,17 @@
 <?php
 
-/**
- * Reports errors if class, trait or interface name is not same as file name
- */
+declare(strict_types=1);
+
+/** Force class, trait or interface name to be the same as file name */
 class Steevanb_Sniffs_Classes_ClassNameIsFileNameSniff implements PHP_CodeSniffer_Sniff
 {
-    /**
-     * @return array
-     */
-    public function register()
+    public function register(): array
     {
-        return [ T_CLASS, T_INTERFACE, T_TRAIT ];
+        return [T_CLASS, T_INTERFACE, T_TRAIT];
     }
 
-    /**
-     * @param PHP_CodeSniffer_File $phpcsFile
-     * @param int $stackPtr
-     * @return void
-     */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    /** @param int $stackPtr */
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
         $name = $tokens[$phpcsFile->findNext(T_STRING, $stackPtr)]['content'];

@@ -1,5 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
+/** Disallow a function to have multiple return keyword */
 class Steevanb_Sniffs_Functions_DisallowMultipleReturnSniff implements PHP_CodeSniffer_Sniff
 {
     /** @var string[] */
@@ -10,18 +13,13 @@ class Steevanb_Sniffs_Functions_DisallowMultipleReturnSniff implements PHP_CodeS
         static::$allowedFunctions[$fileName] = [$function];
     }
 
-    /** @return int[] */
-    public function register()
+    public function register(): array
     {
         return [T_FUNCTION, T_RETURN];
     }
 
-    /**
-     * @param PHP_CodeSniffer_File $phpcsFile
-     * @param int $stackPtr
-     * @return void
-     */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    /** @param int $stackPtr */
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr): void
     {
         static $countReturn = [];
         static $currentFunction;
@@ -34,7 +32,10 @@ class Steevanb_Sniffs_Functions_DisallowMultipleReturnSniff implements PHP_CodeS
             if (in_array($currentFunction, static::$allowedFunctions[$phpcsFile->getFilename()] ?? []) === false) {
                 $countReturn++;
                 if ($countReturn > 1) {
-                    $phpcsFile->addErrorOnLine('Multiple return in function "' . $currentFunction . '" are not allowed', $token['line']);
+                    $phpcsFile->addErrorOnLine(
+                        'Multiple return in function "' . $currentFunction . '" are not allowed',
+                        $token['line']
+                    );
                 }
             }
         }

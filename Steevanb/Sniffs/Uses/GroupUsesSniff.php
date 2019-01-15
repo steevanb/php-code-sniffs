@@ -2,33 +2,50 @@
 
 declare(strict_types=1);
 
+/**
+ * Group use on 1st, 2nd or 3rd level
+ * Example:
+ * use App\{
+ *     Entity\Foo
+ *     Repository\FooRepository
+ * };
+ * use Symfony\Component\HttpFoundation\{
+ *     Request,
+ *     Response
+ * };
+ * Call addThreeLevelsPrefix() to force this namespace to be regrouped at 3rd level
+ */
 class Steevanb_Sniffs_Uses_GroupUsesSniff implements PHP_CodeSniffer_Sniff
 {
-    /** @var array */
-    protected $uses = [];
+    protected static $thirdLevelPrefixs = [];
+
+    public static function addThirdLevelPrefix(string $prefix): void
+    {
+        static::$thirdLevelPrefixs[] = $prefix;
+    }
+
+    public static function addSymfonyPrefixs(): void
+    {
+        static::addThirdLevelPrefix('Symfony\\Component');
+        static::addThirdLevelPrefix('Symfony\\Bundle');
+        static::addThirdLevelPrefix('Sensio\\Bundle');
+        static::addThirdLevelPrefix('Doctrine\\Common');
+    }
 
     /** @var string[] */
-    protected $useGroupPrefixs = [];
+    protected $uses = [];
 
-    protected const USE_PREFIXS_3_PARTS = [
-        'Symfony\\Component\\',
-        'Symfony\\Bundle\\',
-        'Sensio\\Bundle\\',
-        'Doctrine\\Common\\'
-    ];
-
-    /** @return int[] */
-    public function register()
+    public function register(): array
     {
         return [T_USE, T_OPEN_USE_GROUP];
     }
 
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    /** @param int $stackPtr */
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr): void
     {
         if ($phpcsFile->getTokens()[$stackPtr]['type'] === 'T_USE') {
             $useGroupPrefix = $this->getUseGroupPrefix($phpcsFile, $stackPtr);
             if ($useGroupPrefix !== null) {
-                $this->useGroupPrefixs[] = $useGroupPrefix;
                 $this->validateUseGroupPrefixName($phpcsFile, $stackPtr, $useGroupPrefix);
             } else {
                 $currentUse = $this->getCurrentUse($phpcsFile, $stackPtr);
@@ -105,13 +122,13 @@ class Steevanb_Sniffs_Uses_GroupUsesSniff implements PHP_CodeSniffer_Sniff
     protected function validateUseGroupPrefixName(PHP_CodeSniffer_File $phpcsFile, int $stackPtr, string $prefix): self
     {
         $is3parts = false;
-        foreach (static::USE_PREFIXS_3_PARTS as $usePrefix3part) {
+        foreach (static::$thirdLevelPrefixs as $usePrefix3part) {
             if (substr($usePrefix3part, 0, strlen($prefix)) === $prefix) {
                 $phpcsFile->addError(
                     'Use group "'
                         . $prefix
                         . '" is invalid, you must group at 3rd level for '
-                        . implode(', ', static::USE_PREFIXS_3_PARTS),
+                        . implode(', ', static::$thirdLevelPrefixs),
                     $stackPtr
                 );
             } elseif (substr($prefix, 0, strlen($usePrefix3part)) === $usePrefix3part) {
@@ -130,7 +147,7 @@ class Steevanb_Sniffs_Uses_GroupUsesSniff implements PHP_CodeSniffer_Sniff
         if ($is3parts === false && substr_count($prefix, '\\') > 1) {
             $allowedPrefix = substr($prefix, 0, strpos($prefix, '\\', strpos($prefix, '\\') + 1) + 1);
             $phpcsFile->addError(
-                '"' . $prefix . '" use group is invalid, use "' . $allowedPrefix . '" instead.',
+                '"' . $prefix . '" use group is invalid, use "' . rtrim($allowedPrefix, '\\') . '" instead',
                 $stackPtr
             );
         }
@@ -142,7 +159,7 @@ class Steevanb_Sniffs_Uses_GroupUsesSniff implements PHP_CodeSniffer_Sniff
     {
         foreach ($this->uses[$phpcsFile->getFilename()] ?? [] as $use) {
             $prefix = null;
-            foreach (static::USE_PREFIXS_3_PARTS as $usePrefix3part) {
+            foreach (static::$thirdLevelPrefixs as $usePrefix3part) {
                 if (substr($use, 0, strlen($usePrefix3part)) === $usePrefix3part) {
                     $prefix = substr($use, 0, strpos($use, '\\', strlen($usePrefix3part)) + 1);
                     break;
