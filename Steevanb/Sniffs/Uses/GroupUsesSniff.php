@@ -21,7 +21,7 @@ class Steevanb_Sniffs_Uses_GroupUsesSniff implements PHP_CodeSniffer_Sniff
 
     public static function addThirdLevelPrefix(string $prefix): void
     {
-        static::$thirdLevelPrefixs[] = $prefix;
+        static::$thirdLevelPrefixs[] = rtrim($prefix, '\\') . '\\';
     }
 
     public static function addSymfonyPrefixs(): void
