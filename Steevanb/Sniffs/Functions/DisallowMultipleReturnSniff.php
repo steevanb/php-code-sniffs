@@ -10,7 +10,7 @@ class Steevanb_Sniffs_Functions_DisallowMultipleReturnSniff implements PHP_CodeS
 
     public static function addAllowedFunction(string $fileName, string $function)
     {
-        static::$allowedFunctions[$fileName] = [$function];
+        static::$allowedFunctions[$fileName][] = $function;
     }
 
     public function register(): array
