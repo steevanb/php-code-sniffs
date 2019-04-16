@@ -2,8 +2,15 @@
 
 declare(strict_types=1);
 
+namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\CodeAnalysis;
+
+use PHP_CodeSniffer\{
+    Files\File,
+    Sniffs\Sniff
+};
+
 /** Force declare(strict_types=1) */
-class Steevanb_Sniffs_CodeAnalysis_StrictTypesSniff extends Generic_Sniffs_CodeAnalysis_EmptyStatementSniff
+class StrictTypesSniff implements Sniff
 {
     /** @var bool[] */
     protected $strictTypes = [];
@@ -13,7 +20,7 @@ class Steevanb_Sniffs_CodeAnalysis_StrictTypesSniff extends Generic_Sniffs_CodeA
         return [T_DECLARE, T_NAMESPACE];
     }
 
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, $stackPtr): void
     {
         if ($phpcsFile->getTokens()[$stackPtr]['code'] === T_DECLARE) {
             $this->strictTypes[$phpcsFile->getFilename()] = true;
@@ -21,7 +28,11 @@ class Steevanb_Sniffs_CodeAnalysis_StrictTypesSniff extends Generic_Sniffs_CodeA
             $phpcsFile->getTokens()[$stackPtr]['code'] === T_NAMESPACE
             && array_key_exists($phpcsFile->getFilename(), $this->strictTypes) === false
         ) {
-            $phpcsFile->addError('File should have "declare(strict_types=1);" before namespace', $stackPtr);
+            $phpcsFile->addError(
+                'File should have "declare(strict_types=1);" before namespace',
+                $stackPtr,
+                'StrictTypesRequired'
+            );
         }
     }
 }

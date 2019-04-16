@@ -1,9 +1,19 @@
 <?php
+/**
+ * Disallow usage of self, whenever it's possible. Use static instead
+ * @see https://www.php.net/manual/en/language.oop5.late-static-bindings.php
+ */
 
 declare(strict_types=1);
 
-/** Disallow usage of self, whenever it's possible. Use static instead */
-class Steevanb_Sniffs_PHP_DisallowSelfSniff extends Generic_Sniffs_PHP_DeprecatedFunctionsSniff
+namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\PHP;
+
+use PHP_CodeSniffer\{
+    Files\File,
+    Standards\Generic\Sniffs\PHP\DeprecatedFunctionsSniff
+};
+
+class DisallowSelfSniff extends DeprecatedFunctionsSniff
 {
     protected $isInPropertyDeclaration = false;
 
@@ -13,7 +23,7 @@ class Steevanb_Sniffs_PHP_DisallowSelfSniff extends Generic_Sniffs_PHP_Deprecate
     }
 
     /** @param int $stackPtr */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, $stackPtr): void
     {
         $token = $phpcsFile->getTokens()[$stackPtr];
         if (in_array($token['code'], [T_PUBLIC, T_PROTECTED, T_PRIVATE])) {
@@ -27,15 +37,17 @@ class Steevanb_Sniffs_PHP_DisallowSelfSniff extends Generic_Sniffs_PHP_Deprecate
             $token['code'] === T_SELF
             && $this->isInPropertyDeclaration === false
             && $this->isInFunctionParameters($phpcsFile, $stackPtr) === false
+            && $token['level'] > 1
         ) {
             $phpcsFile->addErrorOnLine(
-                'Because of Late Static Binding, self is not allowed, use static instead',
-                $phpcsFile->getTokens()[$stackPtr]['line']
+                'Because of Late Static Binding self is not allowed, use static instead',
+                $phpcsFile->getTokens()[$stackPtr]['line'],
+                'NotAllowed'
             );
         }
     }
 
-    protected function isInFunctionParameters(PHP_CodeSniffer_File $phpcsFile, int $stackPtr): bool
+    protected function isInFunctionParameters(File $phpcsFile, int $stackPtr): bool
     {
         $return = false;
         $openPtr = $phpcsFile->findPrevious([T_FUNCTION], $stackPtr);

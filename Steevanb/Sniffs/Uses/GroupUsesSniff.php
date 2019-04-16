@@ -2,6 +2,13 @@
 
 declare(strict_types=1);
 
+namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\Uses;
+
+use PHP_CodeSniffer\{
+    Files\File,
+    Sniffs\Sniff
+};
+
 /**
  * Group use on 1st, 2nd or 3rd level
  * Example:
@@ -15,7 +22,7 @@ declare(strict_types=1);
  * };
  * Call addThreeLevelsPrefix() to force this namespace to be regrouped at 3rd level
  */
-class Steevanb_Sniffs_Uses_GroupUsesSniff implements PHP_CodeSniffer_Sniff
+class GroupUsesSniff implements Sniff
 {
     protected static $thirdLevelPrefixs = [];
 
@@ -24,7 +31,7 @@ class Steevanb_Sniffs_Uses_GroupUsesSniff implements PHP_CodeSniffer_Sniff
         static::$thirdLevelPrefixs[] = rtrim($prefix, '\\') . '\\';
     }
 
-    public static function addSymfonyPrefixs(): void
+    public static function addSymfonyPrefixes(): void
     {
         static::addThirdLevelPrefix('Symfony\\Component');
         static::addThirdLevelPrefix('Symfony\\Bundle');
@@ -41,7 +48,7 @@ class Steevanb_Sniffs_Uses_GroupUsesSniff implements PHP_CodeSniffer_Sniff
     }
 
     /** @param int $stackPtr */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, $stackPtr): void
     {
         if ($phpcsFile->getTokens()[$stackPtr]['type'] === 'T_USE') {
             $useGroupPrefix = $this->getUseGroupPrefix($phpcsFile, $stackPtr);
@@ -69,7 +76,8 @@ class Steevanb_Sniffs_Uses_GroupUsesSniff implements PHP_CodeSniffer_Sniff
                 ) {
                     $phpcsFile->addError(
                         'Only one use per line allowed.',
-                        $comaPtr + 1
+                        $comaPtr + 1,
+                        'OneUsePerLine'
                     );
                     $errorLines[] = $nextToken['line'];
                 }
@@ -83,7 +91,7 @@ class Steevanb_Sniffs_Uses_GroupUsesSniff implements PHP_CodeSniffer_Sniff
         }
     }
 
-    protected function getCurrentUse(PHP_CodeSniffer_File $phpcsFile, int $stackPtr): ?string
+    protected function getCurrentUse(File $phpcsFile, int $stackPtr): ?string
     {
         $startUse = $phpcsFile->findNext(T_STRING, $stackPtr);
         $tokenEndLine = $phpcsFile->findNext(T_SEMICOLON, $startUse + 1, null, false, ';');
@@ -101,7 +109,7 @@ class Steevanb_Sniffs_Uses_GroupUsesSniff implements PHP_CodeSniffer_Sniff
         return $return;
     }
 
-    protected function getUseGroupPrefix(PHP_CodeSniffer_File $phpcsFile, int $stackPtr): ?string
+    protected function getUseGroupPrefix(File $phpcsFile, int $stackPtr): ?string
     {
         $return = null;
         $nextStackPtr = $stackPtr;
@@ -116,10 +124,10 @@ class Steevanb_Sniffs_Uses_GroupUsesSniff implements PHP_CodeSniffer_Sniff
             $urrentUseString .= $currentToken['content'];
         } while ($currentToken['code'] !== T_SEMICOLON);
 
-        return $return === null ? null : trim(rtrim($return, '\\'));
+        return ($return === null) ? null : trim(rtrim($return, '\\'));
     }
 
-    protected function validateUseGroupPrefixName(PHP_CodeSniffer_File $phpcsFile, int $stackPtr, string $prefix): self
+    protected function validateUseGroupPrefixName(File $phpcsFile, int $stackPtr, string $prefix): self
     {
         $is3parts = false;
         foreach (static::$thirdLevelPrefixs as $usePrefix3part) {
@@ -129,7 +137,8 @@ class Steevanb_Sniffs_Uses_GroupUsesSniff implements PHP_CodeSniffer_Sniff
                         . $prefix
                         . '" is invalid, you must group at 3rd level for '
                         . implode(', ', static::$thirdLevelPrefixs),
-                    $stackPtr
+                    $stackPtr,
+                    'GroupAt3rdLevel'
                 );
             } elseif (substr($prefix, 0, strlen($usePrefix3part)) === $usePrefix3part) {
                 $is3parts = true;
@@ -138,7 +147,8 @@ class Steevanb_Sniffs_Uses_GroupUsesSniff implements PHP_CodeSniffer_Sniff
                     $allowedPrefix = substr($prefix, 0, strpos($prefix, '\\', strlen($usePrefix3part)) + 1);
                     $phpcsFile->addError(
                         '"' . $prefix . '" use group is invalid, use "' . $allowedPrefix . '" instead.',
-                        $stackPtr
+                        $stackPtr,
+                        'BadRegroupment'
                     );
                     break;
                 }
@@ -148,14 +158,15 @@ class Steevanb_Sniffs_Uses_GroupUsesSniff implements PHP_CodeSniffer_Sniff
             $allowedPrefix = substr($prefix, 0, strpos($prefix, '\\', strpos($prefix, '\\') + 1) + 1);
             $phpcsFile->addError(
                 '"' . $prefix . '" use group is invalid, use "' . rtrim($allowedPrefix, '\\') . '" instead',
-                $stackPtr
+                $stackPtr,
+                'BadRegroupment'
             );
         }
 
         return $this;
     }
 
-    protected function validateUse(PHP_CodeSniffer_File $phpcsFile, int $stackPtr, string $useToValidate): self
+    protected function validateUse(File $phpcsFile, int $stackPtr, string $useToValidate): self
     {
         foreach ($this->uses[$phpcsFile->getFilename()] ?? [] as $use) {
             $prefix = null;
@@ -177,7 +188,8 @@ class Steevanb_Sniffs_Uses_GroupUsesSniff implements PHP_CodeSniffer_Sniff
             if ($prefix !== null && substr($useToValidate, 0, strlen($prefix)) === $prefix) {
                 $phpcsFile->addError(
                     'You must group the use "' . $useToValidate . '" in "' . rtrim($prefix, '\\') . '".',
-                    $stackPtr
+                    $stackPtr,
+                    'BadRegroupment'
                 );
                 break;
             }

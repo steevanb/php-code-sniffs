@@ -2,8 +2,15 @@
 
 declare(strict_types=1);
 
+namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\Functions;
+
+use PHP_CodeSniffer\{
+    Files\File,
+    Sniffs\Sniff
+};
+
 /** Disallow a function to have multiple return keyword */
-class Steevanb_Sniffs_Functions_DisallowMultipleReturnSniff implements PHP_CodeSniffer_Sniff
+class DisallowMultipleReturnSniff implements Sniff
 {
     /** @var string[] */
     protected static $allowedFunctions = [];
@@ -19,7 +26,7 @@ class Steevanb_Sniffs_Functions_DisallowMultipleReturnSniff implements PHP_CodeS
     }
 
     /** @param int $stackPtr */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, $stackPtr): void
     {
         static $countReturn = [];
         static $currentFunction;
@@ -28,15 +35,18 @@ class Steevanb_Sniffs_Functions_DisallowMultipleReturnSniff implements PHP_CodeS
         if ($token['code'] === T_FUNCTION) {
             $countReturn = 0;
             $currentFunction = $phpcsFile->getTokens()[$phpcsFile->findNext(T_STRING, $stackPtr)]['content'];
-        } elseif ($token['code'] === T_RETURN) {
-            if (in_array($currentFunction, static::$allowedFunctions[$phpcsFile->getFilename()] ?? []) === false) {
-                $countReturn++;
-                if ($countReturn > 1) {
-                    $phpcsFile->addErrorOnLine(
-                        'Multiple return in function "' . $currentFunction . '" are not allowed',
-                        $token['line']
-                    );
-                }
+        } elseif (
+            $token['code'] === T_RETURN
+            && in_array($currentFunction, static::$allowedFunctions[$phpcsFile->getFilename()] ?? []) === false
+            && in_array('PHPCS_T_CLOSURE', $token['conditions']) === false
+        ) {
+            $countReturn++;
+            if ($countReturn > 1) {
+                $phpcsFile->addErrorOnLine(
+                    'Multiple return in function "' . $currentFunction . '" are not allowed',
+                    $token['line'],
+                    'NotAllowed'
+                );
             }
         }
     }
