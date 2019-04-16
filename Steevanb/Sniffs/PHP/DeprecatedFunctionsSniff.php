@@ -2,11 +2,18 @@
 
 declare(strict_types=1);
 
+namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\PHP;
+
+use PHP_CodeSniffer\{
+    Files\File,
+    Standards\Generic\Sniffs\PHP\DeprecatedFunctionsSniff as PhpCodeSnifferDeprecatedFunctionsSniff
+};
+
 /**
  * Generic_Sniffs_PHP_DeprecatedFunctionsSniff fork
  * Allow some deprecated functions to be used
  */
-class Steevanb_Sniffs_PHP_DeprecatedFunctionsSniff extends Generic_Sniffs_PHP_DeprecatedFunctionsSniff
+class DeprecatedFunctionsSniff extends PhpCodeSnifferDeprecatedFunctionsSniff
 {
     /** @var string[] */
     protected static $allowedDeprecatedFunctions = [];
@@ -17,7 +24,7 @@ class Steevanb_Sniffs_PHP_DeprecatedFunctionsSniff extends Generic_Sniffs_PHP_De
     }
 
     /**
-     * @param PHP_CodeSniffer_File $phpcsFile
+     * @param File $phpcsFile
      * @param int $stackPtr
      * @param string $function
      * @param ?string $pattern

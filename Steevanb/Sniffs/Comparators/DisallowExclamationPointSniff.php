@@ -2,8 +2,15 @@
 
 declare(strict_types=1);
 
+namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\Comparators;
+
+use PHP_CodeSniffer\{
+    Files\File,
+    Sniffs\Sniff
+};
+
 /** Disallow "!" to compare with false */
-class Steevanb_Sniffs_Comparators_DisallowExclamationPointSniff implements PHP_CodeSniffer_Sniff
+class DisallowExclamationPointSniff implements Sniff
 {
     public function register(): array
     {
@@ -11,11 +18,12 @@ class Steevanb_Sniffs_Comparators_DisallowExclamationPointSniff implements PHP_C
     }
 
     /** @param int $stackPtr */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, $stackPtr): void
     {
         $phpcsFile->addError(
             '"!" to compare as false is not allowed, use "=== false" instead',
-            $stackPtr
+            $stackPtr,
+            'NotAllowed'
         );
     }
 }

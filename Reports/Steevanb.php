@@ -2,7 +2,15 @@
 
 declare(strict_types=1);
 
-class PHP_CodeSniffer_Reports_Steevanb implements PHP_CodeSniffer_Report
+namespace steevanb\PhpCodeSniffs\Reports;
+
+use PHP_CodeSniffer\{
+    Files\File,
+    Reports\Report,
+    Util\Timing
+};
+
+class Steevanb implements Report
 {
     /** @var string[] */
     protected static $replacesInPath = [];
@@ -33,12 +41,8 @@ class PHP_CodeSniffer_Reports_Steevanb implements PHP_CodeSniffer_Report
      * @param boolean $showSources Show sources?
      * @param int $width Maximum allowed line width.
      */
-    public function generateFileReport(
-        $report,
-        PHP_CodeSniffer_File $phpcsFile,
-        $showSources = false,
-        $width = 80
-    ): bool {
+    public function generateFileReport($report, File $phpcsFile, $showSources = false, $width = 80): bool
+    {
         if ($report['errors'] === 0 && $report['warnings'] === 0) {
             // Nothing to print.
             return false;
@@ -89,12 +93,12 @@ class PHP_CodeSniffer_Reports_Steevanb implements PHP_CodeSniffer_Report
             $width = 70;
         }
 
-        echo "\033[46;1m file://" . static::replaceInPath($file) . " \033[00m ";
+        echo "\e[46;1m file://" . static::replaceInPath($file) . " \e[00m ";
         if ($report['errors'] > 0) {
-            echo "\033[41;1m " . $report['errors'] . " \033[00m ";
+            echo "\e[41;1m " . $report['errors'] . " \e[00m ";
         }
         if ($report['warnings'] > 0) {
-            echo "\033[33;43;1m " . $report['warnings'] . " \033[00m ";
+            echo "\e[33;43;1m " . $report['warnings'] . " \e[00m ";
         }
         echo PHP_EOL;
 
@@ -111,21 +115,16 @@ class PHP_CodeSniffer_Reports_Steevanb implements PHP_CodeSniffer_Report
                     $message = $error['message'];
                     $message = str_replace("\n", "\n" . $paddingLine2, $message);
                     if ($showSources === true) {
-                        $message = "\033[1m" . $message . "\033[0m" . ' (' . $error['source'] . ')';
+                        $message = "\e[1m" . $message . "\e[0m (\e[36m" . $error['source'] . "\e[0m)";
                     }
 
                     // The padding that goes on the front of the line.
                     $padding  = ($maxLineNumLength - strlen((string) $line));
-                    $errorMsg = wordwrap(
-                        $message,
-                        $maxErrorSpace,
-                        PHP_EOL . $paddingLine2
-                    );
 
                     if ($error['type'] === 'ERROR') {
-                        echo "  \033[41;1m " . str_repeat(' ', $padding) . $line . " \033[0m ";
+                        echo "  \e[41;1m " . str_repeat(' ', $padding) . $line . " \e[0m ";
                     } else {
-                        echo "  \033[33;43;1m " . str_repeat(' ', $padding) . $line . " \033[0m ";
+                        echo "  \e[33;43;1m " . str_repeat(' ', $padding) . $line . " \e[0m ";
                     }
 
                     if ($report['fixable'] > 0) {
@@ -139,7 +138,13 @@ class PHP_CodeSniffer_Reports_Steevanb implements PHP_CodeSniffer_Report
                         echo '] ';
                     }
 
-                    echo $errorMsg . PHP_EOL;
+                    echo
+                        wordwrap(
+                            $message,
+                            $maxErrorSpace,
+                            PHP_EOL . $paddingLine2
+                        )
+                        . PHP_EOL;
                 }
             }
         }
@@ -171,6 +176,7 @@ class PHP_CodeSniffer_Reports_Steevanb implements PHP_CodeSniffer_Report
         $totalFixable,
         $showSources = false,
         $width = 80,
+        $interactive = false,
         $toScreen = true
     ) {
         if ($cachedData === '') {
@@ -179,8 +185,8 @@ class PHP_CodeSniffer_Reports_Steevanb implements PHP_CodeSniffer_Report
 
         echo $cachedData;
 
-        if ($toScreen === true && PHP_CODESNIFFER_INTERACTIVE === false) {
-            $time = ((microtime(true) - PHP_CodeSniffer_Reporting::$startTime) * 1000);
+        if ($toScreen === true && $interactive === false) {
+            $time = ((microtime(true) - $this->getStartTime()) * 1000);
 
             if ($time > 60000) {
                 $mins = floor($time / 60000);
@@ -196,12 +202,23 @@ class PHP_CodeSniffer_Reports_Steevanb implements PHP_CodeSniffer_Report
             }
 
             $parts = [
-                $totalFiles . ' files',
-                $totalErrors . ' errors',
-                $totalWarnings . ' warnings',
+                $totalFiles . ' file' . ($totalFiles > 1 ? 's' : null),
+                $totalErrors . ' error' . ($totalErrors > 1 ? 's' : null),
+                $totalWarnings . ' warning' . ($totalWarnings > 1 ? 's' : null),
                 $time
             ];
-            echo "\033[44m " . implode(' - ', $parts) . " \033[0m" . PHP_EOL;
+            echo "\e[44m " . implode(' - ', $parts) . " \e[0m" . PHP_EOL;
         }
+    }
+
+    protected function getStartTime(): float
+    {
+        // thanks to not add getter ...
+        $reflection = new \ReflectionProperty(Timing::class, 'startTime');
+        $reflection->setAccessible(true);
+        $return = $reflection->getValue();
+        $reflection->setAccessible(false);
+
+        return $return;
     }
 }

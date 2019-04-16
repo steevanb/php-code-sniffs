@@ -2,11 +2,18 @@
 
 declare(strict_types=1);
 
+namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\Namespaces;
+
+use PHP_CodeSniffer\{
+    Files\File,
+    Sniffs\Sniff
+};
+
 /**
  * PSR2_Sniffs_Namespaces_UseDeclarationSniff fork
- * Remove only one use per line, for PHP 7
+ * Removed only one use per line, for PHP 7
  */
-class Steevanb_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Sniff
+class UseDeclarationSniff implements Sniff
 {
     public function register(): array
     {
@@ -14,7 +21,7 @@ class Steevanb_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_
     }
 
     /** @param int $stackPtr */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, $stackPtr): void
     {
         if ($this->shouldIgnoreUse($phpcsFile, $stackPtr) === true) {
             return;
@@ -43,24 +50,27 @@ class Steevanb_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_
 
         // Only interested in the last USE statement from here onwards.
         $nextUse = $phpcsFile->findNext(T_USE, ($stackPtr + 1));
-        while ($this->shouldIgnoreUse($phpcsFile, $nextUse) === true) {
-            $nextUse = $phpcsFile->findNext(T_USE, ($nextUse + 1));
-            if ($nextUse === false) {
-                break;
+        if (is_int($nextUse)) {
+            while ($this->shouldIgnoreUse($phpcsFile, $nextUse) === true) {
+                $nextUse = $phpcsFile->findNext(T_USE, ($nextUse + 1));
+                if ($nextUse === false) {
+                    break;
+                }
             }
         }
 
-        if ($nextUse !== false) {
-            return;
+        if ($nextUse === false) {
+            $end = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+            $next = $phpcsFile->findNext(T_WHITESPACE, ($end + 1), null, true);
+
+            if ($tokens[$next]['code'] !== T_CLOSE_TAG) {
+                $this->processBlankLineAfterUse($phpcsFile, $tokens, $next, $end, $stackPtr);
+            }
         }
+    }
 
-        $end  = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
-        $next = $phpcsFile->findNext(T_WHITESPACE, ($end + 1), null, true);
-
-        if ($tokens[$next]['code'] === T_CLOSE_TAG) {
-            return;
-        }
-
+    private function processBlankLineAfterUse(File $phpcsFile, array $tokens, int $next, int $end, int $stackPtr): self
+    {
         $diff = ($tokens[$next]['line'] - $tokens[$end]['line'] - 1);
         if ($diff !== 1) {
             if ($diff < 0) {
@@ -68,8 +78,8 @@ class Steevanb_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_
             }
 
             $error = 'There must be one blank line after the last USE statement; %s found;';
-            $data  = [$diff];
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterLastUse', $data);
+            $data = [$diff];
+            $fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterLastUse', $data);
             if ($fix === true) {
                 if ($diff === 0) {
                     $phpcsFile->fixer->addNewline($end);
@@ -88,24 +98,25 @@ class Steevanb_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_
                 }
             }
         }
+
+        return $this;
     }
 
-    /** @param int $stackPtr */
-    private function shouldIgnoreUse(PHP_CodeSniffer_File $phpcsFile, $stackPtr): bool
+    private function shouldIgnoreUse(File $phpcsFile, int $stackPtr): bool
     {
         $tokens = $phpcsFile->getTokens();
 
         // Ignore USE keywords inside closures.
         $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
         if ($tokens[$next]['code'] === T_OPEN_PARENTHESIS) {
-            return true;
-        }
-
+            $return = true;
         // Ignore USE keywords for traits.
-        if ($phpcsFile->hasCondition($stackPtr, [T_CLASS, T_TRAIT]) === true) {
-            return true;
+        } elseif ($phpcsFile->hasCondition($stackPtr, [T_CLASS, T_TRAIT]) === true) {
+            $return = true;
+        } else {
+            $return = false;
         }
 
-        return false;
+        return $return;
     }
 }

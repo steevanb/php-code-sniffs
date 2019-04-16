@@ -2,8 +2,15 @@
 
 declare(strict_types=1);
 
+namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\PHP;
+
+use PHP_CodeSniffer\{
+    Files\File,
+    Sniffs\Sniff
+};
+
 /** Disallow more than one empty line */
-class Steevanb_Sniffs_PHP_DisallowMultipleEmptyLinesSniff extends Generic_Sniffs_PHP_DeprecatedFunctionsSniff
+class DisallowMultipleEmptyLinesSniff implements Sniff
 {
     public function register(): array
     {
@@ -11,7 +18,7 @@ class Steevanb_Sniffs_PHP_DisallowMultipleEmptyLinesSniff extends Generic_Sniffs
     }
 
     /** @param int $stackPtr */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, $stackPtr): void
     {
         $token = $phpcsFile->getTokens()[$stackPtr];
         if (isset($phpcsFile->getTokens()[$stackPtr + 1]) && isset($phpcsFile->getTokens()[$stackPtr + 2])) {
@@ -24,7 +31,11 @@ class Steevanb_Sniffs_PHP_DisallowMultipleEmptyLinesSniff extends Generic_Sniffs
                 && $nextToken2['code'] === T_WHITESPACE
                 && $nextToken2['content'] === "\n"
             ) {
-                $phpcsFile->addErrorOnLine('Multiple empty lines are not allowed', $nextToken['line']);
+                $phpcsFile->addErrorOnLine(
+                    'Multiple empty lines are not allowed',
+                    $nextToken['line'],
+                    'NotAllowed'
+                );
             }
         }
     }

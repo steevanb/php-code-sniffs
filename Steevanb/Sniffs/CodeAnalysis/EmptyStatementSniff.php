@@ -2,11 +2,15 @@
 
 declare(strict_types=1);
 
+namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\CodeAnalysis;
+
+use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyStatementSniff as PhpCodeSnifferEmptyStatementSniff;
+
 /**
  * Generic_Sniffs_CodeAnalysis_EmptyStatementSniff fork
  * Allow catch to be empty
  */
-class Steevanb_Sniffs_CodeAnalysis_EmptyStatementSniff extends Generic_Sniffs_CodeAnalysis_EmptyStatementSniff
+class EmptyStatementSniff extends PhpCodeSnifferEmptyStatementSniff
 {
     public function register(): array
     {

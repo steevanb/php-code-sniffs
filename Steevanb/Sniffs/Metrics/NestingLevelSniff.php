@@ -2,16 +2,23 @@
 
 declare(strict_types=1);
 
+namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\Metrics;
+
+use PHP_CodeSniffer\{
+    Files\File,
+    Sniffs\Sniff
+};
+
 /**
  * Generic_Sniffs_Metrics_NestingLevelSniff fork
  * Allow some methods to not respect nesting level
  */
-class Steevanb_Sniffs_Metrics_NestingLevelSniff implements PHP_CodeSniffer_Sniff
+class NestingLevelSniff implements Sniff
 {
     /** @var string[] */
     protected static $allowedNestingLevelMethods = [];
 
-    public static function addAllowedNestingLevelMethods(string $fileName, string $method)
+    public static function addAllowedNestingLevelMethods(string $fileName, string $method): void
     {
         static::$allowedNestingLevelMethods[] = $fileName . '::' . $method;
     }
@@ -28,7 +35,7 @@ class Steevanb_Sniffs_Metrics_NestingLevelSniff implements PHP_CodeSniffer_Sniff
     }
 
     /** @param int $stackPtr */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -62,12 +69,14 @@ class Steevanb_Sniffs_Metrics_NestingLevelSniff implements PHP_CodeSniffer_Sniff
             ];
             $phpcsFile->addError($error, $stackPtr, 'MaxExceeded', $data);
         } elseif ($nestingLevel > $this->nestingLevel) {
-            if (in_array(
-                basename($phpcsFile->getFilename())
-                    . '::'
-                    . $tokens[$phpcsFile->findNext(T_STRING, $stackPtr)]['content'],
-                static::$allowedNestingLevelMethods
-            ) === false) {
+            if (
+                in_array(
+                    basename($phpcsFile->getFilename())
+                        . '::'
+                        . $tokens[$phpcsFile->findNext(T_STRING, $stackPtr)]['content'],
+                    static::$allowedNestingLevelMethods
+                ) === false
+            ) {
                 $warning = 'Function\'s nesting level (%s) exceeds %s; consider refactoring the function';
                 $data = [$nestingLevel, $this->nestingLevel];
                 $phpcsFile->addWarning($warning, $stackPtr, 'TooHigh', $data);

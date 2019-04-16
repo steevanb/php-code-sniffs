@@ -1,14 +1,16 @@
 {
     "name": "steevanb/php-code-sniffs",
-    "description": "Steevan BARBOYON coding standards, could be checked with Docker",
+    "description": "Steevan BARBOYON coding standards.",
     "license": "MIT",
     "type": "library",
     "autoload": {
+        "psr-4": {
+            "steevanb\\PhpCodeSniffs\\": "/"
+        },
         "classmap": ["Reports/"]
     },
     "require": {
         "php": "^7.1",
-        "leaphub/phpcs-symfony2-standard": "~2.0.0",
-        "squizlabs/php_codesniffer": "^2.9"
+        "squizlabs/php_codesniffer": "3.4.*"
     }
 }
