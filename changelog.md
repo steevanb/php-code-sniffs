@@ -1,3 +1,7 @@
+### [2.0.2](../../compare/2.0.1...2.0.2) - 2019-04-19
+
+Remove `Squiz.Commenting.FunctionCommentThrowTag`.
+
 ### [2.0.1](../../compare/2.0.0...2.0.1) - 2019-04-19
 
 - Remove `PEAR.ControlStructures.MultiLineCondition.Alignment`: bug with grouped conditions.
