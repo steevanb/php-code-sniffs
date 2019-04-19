@@ -1,3 +1,8 @@
+### [2.0.1](../../compare/2.0.0...2.0.1) - 2019-04-19
+
+- Remove `PEAR.ControlStructures.MultiLineCondition.Alignment`: bug with grouped conditions.
+- Remove `Squiz.WhiteSpace.ObjectOperatorSpacing.Before`: bug with one call per line.
+
 ### [2.0.0](../../compare/1.0.2...2.0.0) - 2019-04-16
 
 - Update `squizlabs/php_codesniffer` to 3.2.*.
