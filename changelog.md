@@ -1,6 +1,10 @@
+### [2.0.3](../../compare/2.0.2...2.0.3) - 2019-04-19
+
+- Fix `Squiz.Commenting.FunctionCommentThrowTag` sniff name
+
 ### [2.0.2](../../compare/2.0.1...2.0.2) - 2019-04-19
 
-Remove `Squiz.Commenting.FunctionCommentThrowTag`.
+- Remove `Squiz.Commenting.FunctionCommentThrowTag`.
 
 ### [2.0.1](../../compare/2.0.0...2.0.1) - 2019-04-19
 
