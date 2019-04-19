@@ -6,8 +6,7 @@
     "autoload": {
         "psr-4": {
             "steevanb\\PhpCodeSniffs\\": "/"
-        },
-        "classmap": ["Reports/"]
+        }
     },
     "require": {
         "php": "^7.1",

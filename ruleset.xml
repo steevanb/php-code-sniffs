@@ -34,6 +34,8 @@
         <exclude name="Generic.VersionControl.SubversionProperties"/>
         <exclude name="Generic.WhiteSpace.DisallowSpaceIndent"/>
         <exclude name="PEAR.Formatting.MultiLineAssignment.EqualSignLine"/>
+        <!-- Bug when grouped conditions with () -->
+        <exclude name="PEAR.ControlStructures.MultiLineCondition.Alignment"/>
         <exclude name="PEAR.ControlStructures.MultiLineCondition.SpacingAfterOpenBrace"/>
         <exclude name="PEAR.ControlStructures.MultiLineCondition.StartWithBoolean"/>
         <exclude name="Squiz.ControlStructures.SwitchDeclaration.SpacingAfterBreak"/>
@@ -57,6 +59,7 @@
         <exclude name="Squiz.PHP.DisallowInlineIf"/>
         <exclude name="Squiz.WhiteSpace.ControlStructureSpacing"/>
         <exclude name="Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeClose"/>
+        <exclude name="Squiz.WhiteSpace.ObjectOperatorSpacing.Before"/>
         <exclude name="Zend.NamingConventions.ValidVariableName"/>
     </rule>
     <rule ref="Steevanb"/>
