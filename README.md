@@ -1,6 +1,6 @@
-[![version](https://img.shields.io/badge/version-2.0.3-green.svg)](https://github.com/steevanb/php-code-sniffs/tree/2.0.3)
+[![version](https://img.shields.io/badge/version-2.0.4-green.svg)](https://github.com/steevanb/php-code-sniffs/tree/2.0.4)
 [![php](https://img.shields.io/badge/php-^7.1-blue.svg)](https://php.net)
-![Lines](https://img.shields.io/badge/code%20lines-1895-green.svg)
+![Lines](https://img.shields.io/badge/code%20lines-1899-green.svg)
 ![Total Downloads](https://poser.pugx.org/steevanb/php-code-sniffs/downloads)
 
 php-code-sniffs
@@ -16,7 +16,7 @@ Installation
 ============
 
 ```bash
-composer require steevanb/php-code-sniffs ^2.0.3
+composer require steevanb/php-code-sniffs ^2.0.4
 ```
 
 Or if you want to use it with Docker: [steevanb/docker-php-code-sniffs](https://github.com/steevanb/docker-php-code-sniffs).
@@ -204,7 +204,6 @@ squizlabs/php_codesniffer
 | [Squiz.NamingConventions.ValidFunctionName](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/NamingConventions/ValidFunctionNameSniff.php) |
 | [Squiz.NamingConventions.ValidVariableName](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/NamingConventions/ValidVariableNameSniff.php) |
 | [Squiz.Objects.DisallowObjectStringIndex](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/Objects/DisallowObjectStringIndexSniff.php) |
-| [Squiz.Objects.ObjectInstantiation](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/Objects/ObjectInstantiationSniff.php) |
 | [Squiz.Objects.ObjectMemberComma](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/Objects/ObjectMemberCommaSniff.php) |
 | [Squiz.Operators.ComparisonOperatorUsage](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/Operators/ComparisonOperatorUsageSniff.php) |
 | [Squiz.Operators.IncrementDecrementUsage](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/Operators/IncrementDecrementUsageSniff.php) |
