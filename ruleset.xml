@@ -33,25 +33,32 @@
         <exclude name="Generic.Commenting.Todo"/>
         <exclude name="Generic.VersionControl.SubversionProperties"/>
         <exclude name="Generic.WhiteSpace.DisallowSpaceIndent"/>
+        <exclude name="Generic.WhiteSpace.LanguageConstructSpacing"/>
         <exclude name="PEAR.Formatting.MultiLineAssignment.EqualSignLine"/>
         <!-- Bug when grouped conditions with () -->
         <exclude name="PEAR.ControlStructures.MultiLineCondition.Alignment"/>
         <exclude name="PEAR.ControlStructures.MultiLineCondition.SpacingAfterOpenBrace"/>
         <exclude name="PEAR.ControlStructures.MultiLineCondition.StartWithBoolean"/>
+        <exclude name="PEAR.Files.IncludingFile"/>
         <exclude name="Squiz.ControlStructures.SwitchDeclaration.SpacingAfterBreak"/>
         <exclude name="Squiz.ControlStructures.SwitchDeclaration.BreakIndent"/>
         <exclude name="Squiz.Arrays.ArrayDeclaration.DoubleArrowNotAligned"/>
+        <exclude name="Squiz.Arrays.ArrayDeclaration.MultiLineNotAllowed"/>
+        <exclude name="Squiz.Arrays.ArrayDeclaration.NoComma"/>
         <exclude name="Squiz.Arrays.ArrayDeclaration.NoCommaAfterLast"/>
         <exclude name="Squiz.Arrays.ArrayDeclaration.SingleLineNotAllowed"/>
+        <exclude name="Squiz.Commenting.BlockComment"/>
         <exclude name="Squiz.Commenting.ClassComment.Missing"/>
         <exclude name="Squiz.Commenting.ClosingDeclarationComment"/>
         <exclude name="Squiz.Commenting.DocCommentAlignment"/>
         <exclude name="Squiz.Commenting.FileComment"/>
         <exclude name="Squiz.Commenting.FunctionComment"/>
         <exclude name="Squiz.Commenting.FunctionCommentThrowTag"/>
+        <exclude name="Squiz.Commenting.InlineComment"/>
         <exclude name="Squiz.Commenting.LongConditionClosingComment"/>
         <exclude name="Squiz.Commenting.VariableComment"/>
         <exclude name="Squiz.ControlStructures.ElseIfDeclaration"/>
+        <exclude name="Squiz.ControlStructures.InlineIfDeclaration.NotSingleLine"/>
         <exclude name="Squiz.Files.FileExtension"/>
         <exclude name="Squiz.Formatting.OperatorBracket.MissingBrackets"/>
         <exclude name="Squiz.Operators.ComparisonOperatorUsage.ImplicitTrue"/>
@@ -59,8 +66,11 @@
         <exclude name="Squiz.PHP.DisallowBooleanStatement.Found"/>
         <exclude name="Squiz.PHP.DisallowComparisonAssignment.AssignedComparison"/>
         <exclude name="Squiz.PHP.DisallowInlineIf"/>
+        <exclude name="Squiz.PHP.DisallowSizeFunctionsInLoops"/>
+        <exclude name="Squiz.Strings.DoubleQuoteUsage.ContainsVar"/>
         <exclude name="Squiz.WhiteSpace.ControlStructureSpacing"/>
         <exclude name="Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeClose"/>
+        <exclude name="Squiz.WhiteSpace.LanguageConstructSpacing"/>
         <exclude name="Squiz.WhiteSpace.ObjectOperatorSpacing.Before"/>
         <exclude name="Zend.NamingConventions.ValidVariableName"/>
     </rule>

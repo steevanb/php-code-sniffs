@@ -1,6 +1,6 @@
-[![version](https://img.shields.io/badge/version-2.0.4-green.svg)](https://github.com/steevanb/php-code-sniffs/tree/2.0.4)
+[![version](https://img.shields.io/badge/version-2.0.5-green.svg)](https://github.com/steevanb/php-code-sniffs/tree/2.0.5)
 [![php](https://img.shields.io/badge/php-^7.1-blue.svg)](https://php.net)
-![Lines](https://img.shields.io/badge/code%20lines-1899-green.svg)
+![Lines](https://img.shields.io/badge/code%20lines-1930-green.svg)
 ![Total Downloads](https://poser.pugx.org/steevanb/php-code-sniffs/downloads)
 
 php-code-sniffs
@@ -16,7 +16,7 @@ Installation
 ============
 
 ```bash
-composer require steevanb/php-code-sniffs ^2.0.4
+composer require steevanb/php-code-sniffs ^2.0.5
 ```
 
 Or if you want to use it with Docker: [steevanb/docker-php-code-sniffs](https://github.com/steevanb/docker-php-code-sniffs).
@@ -28,20 +28,26 @@ Search not respected coding standards
 -------------------------------------
 
 ```bash
-vendor/bin/phpcs --standard=vendor/steevanb/php-code-sniffs/ruleset.xml --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb src/
+cd vendor/steevanb/php-code-sniffs
+
+../../bin/phpcs --standard=ruleset.xml --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb src/
 
 # add sniff name to report
-vendor/bin/phpcs --standard=vendor/steevanb/php-code-sniffs/ruleset.xml --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb -s src/
+../../bin/phpcs --standard=ruleset.xml --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb -s src/
 
 # write results in CSV file
-vendor/bin/phpcs --standard=vendor/steevanb/php-code-sniffs/ruleset.xml --report-csv=foo.csv src/
+../../bin/phpcs --standard=ruleset.xml --report-csv=foo.csv src/
+
+# ignore directories
+../../bin/phpcs --standard=ruleset.xml --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb --ignore=/vendor,/var src/
 ```
 
 Show enabled coding standards
 -----------------------------
 
 ```bash
-vendor/bin/phpcs --standard=vendor/steevanb/php-code-sniffs/ruleset.xml -e
+cd vendor/steevanb/php-code-sniffs
+../../bin/phpcs --standard=ruleset.xml -e
 ```
 
 Check coding standards in files need to be commited
@@ -61,7 +67,8 @@ or the report `steevanb\PhpCodeSniffs\Reports\Steevanb`.
 
 You can configure them by adding a bootstrap script to phpcs:
 ```bash
-vendor/bin/phpcs --bootstrap=phpcs_boostrap.php (...)
+cd vendor/steevanb/php-code-sniffs
+../../bin/phpcs --bootstrap=phpcs_boostrap.php (...)
 ```
 
 ```php
@@ -120,13 +127,11 @@ squizlabs/php_codesniffer
 | [Generic.PHP.LowerCaseKeyword](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Generic/Sniffs/PHP/LowerCaseKeywordSniff.php) |
 | [Generic.WhiteSpace.DisallowTabIndent](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Generic/Sniffs/WhiteSpace/DisallowTabIndentSniff.php) |
 | [Generic.WhiteSpace.IncrementDecrementSpacing](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Generic/Sniffs/WhiteSpace/IncrementDecrementSpacingSniff.php) |
-| [Generic.WhiteSpace.LanguageConstructSpacing](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Generic/Sniffs/WhiteSpace/LanguageConstructSpacingSniff.php) |
 | [Generic.WhiteSpace.ScopeIndent](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Generic/Sniffs/WhiteSpace/ScopeIndentSniff.php) |
 
 | Sniff |
 |-------|
 | [PEAR.ControlStructures.MultiLineCondition](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/PEAR/Sniffs/ControlStructures/MultiLineConditionSniff.php) |
-| [PEAR.Files.IncludingFile](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/PEAR/Sniffs/Files/IncludingFileSniff.php) |
 | [PEAR.Formatting.MultiLineAssignment](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/PEAR/Sniffs/Formatting/MultiLineAssignmentSniff.php) |
 | [PEAR.Functions.FunctionCallSignature](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/PEAR/Sniffs/Functions/FunctionCallSignatureSniff.php) |
 | [PEAR.Functions.ValidDefaultValue](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/PEAR/Sniffs/Functions/ValidDefaultValueSniff.php) |
@@ -180,11 +185,9 @@ squizlabs/php_codesniffer
 | [Squiz.Classes.LowercaseClassKeywords](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/Classes/LowercaseClassKeywordsSniff.php) |
 | [Squiz.Classes.SelfMemberReference](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/Classes/SelfMemberReferenceSniff.php) |
 | [Squiz.Classes.ValidClassName](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/Classes/ValidClassNameSniff.php) |
-| [Squiz.Commenting.BlockComment](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/Commenting/BlockCommentSniff.php) |
 | [Squiz.Commenting.ClassComment](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/Commenting/ClassCommentSniff.php) |
 | [Squiz.Commenting.EmptyCatchComment](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/Commenting/EmptyCatchCommentSniff.php) |
 | [Squiz.Commenting.FunctionCommentThrowTag](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/Commenting/FunctionCommentThrowTagSniff.php) |
-| [Squiz.Commenting.InlineComment](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/Commenting/InlineCommentSniff.php) |
 | [Squiz.Commenting.PostStatementComment](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/Commenting/PostStatementCommentSniff.php) |
 | [Squiz.ControlStructures.ControlSignature](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/ControlStructures/ControlSignatureSniff.php) |
 | [Squiz.ControlStructures.ForEachLoopDeclaration](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/ControlStructures/ForEachLoopDeclarationSniff.php) |
@@ -212,7 +215,6 @@ squizlabs/php_codesniffer
 | [Squiz.PHP.DisallowBooleanStatement](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/PHP/DisallowBooleanStatementSniff.php) |
 | [Squiz.PHP.DisallowComparisonAssignment](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/PHP/DisallowComparisonAssignmentSniff.php) |
 | [Squiz.PHP.DisallowMultipleAssignments](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/PHP/DisallowMultipleAssignmentsSniff.php) |
-| [Squiz.PHP.DisallowSizeFunctionsInLoops](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/PHP/DisallowSizeFunctionsInLoopsSniff.php) |
 | [Squiz.PHP.DiscouragedFunctions](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/PHP/DiscouragedFunctionsSniff.php) |
 | [Squiz.PHP.EmbeddedPhp](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/PHP/EmbeddedPhpSniff.php) |
 | [Squiz.PHP.Eval](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/PHP/EvalSniff.php) |
@@ -231,7 +233,6 @@ squizlabs/php_codesniffer
 | [Squiz.WhiteSpace.FunctionClosingBraceSpace](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/WhiteSpace/FunctionClosingBraceSpaceSniff.php) |
 | [Squiz.WhiteSpace.FunctionOpeningBraceSpace](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/WhiteSpace/FunctionOpeningBraceSpaceSniff.php) |
 | [Squiz.WhiteSpace.FunctionSpacing](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/WhiteSpace/FunctionSpacingSniff.php) |
-| [Squiz.WhiteSpace.LanguageConstructSpacing](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/WhiteSpace/LanguageConstructSpacingSniff.php) |
 | [Squiz.WhiteSpace.LogicalOperatorSpacing](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/WhiteSpace/LogicalOperatorSpacingSniff.php) |
 | [Squiz.WhiteSpace.MemberVarSpacing](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/WhiteSpace/MemberVarSpacingSniff.php) |
 | [Squiz.WhiteSpace.ObjectOperatorSpacing](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/WhiteSpace/ObjectOperatorSpacingSniff.php) |

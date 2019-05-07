@@ -1,3 +1,18 @@
+### [2.0.4](../../compare/2.0.4...2.0.5) - 2019-05-07
+
+- Remove `Generic.WhiteSpace.LanguageConstructSpacing` sniff.
+- Remove `PEAR.Files.IncludingFile` sniff.
+- Remove `Squiz.Arrays.ArrayDeclaration.MultiLineNotAllowed` sniff.
+- Remove `Squiz.Arrays.ArrayDeclaration.NoComma` sniff.
+- Remove `Squiz.Commenting.BlockComment` sniff.
+- Remove `Squiz.Commenting.InlineComment` sniff.
+- Remove `Squiz.ControlStructures.InlineIfDeclaration.NotSingleLine` sniff.
+- Remove `Squiz.PHP.DisallowSizeFunctionsInLoops` sniff.
+- Remove `Squiz.Strings.DoubleQuoteUsage.ContainsVar` sniff.
+- Remove `Squiz.WhiteSpace.LanguageConstructSpacing` sniff.
+- Fix `DisallowShortArraySyntaxSpacesSniff`.
+- Fix `DisallowMultipleReturnSniff` when not in function.
+
 ### [2.0.4](../../compare/2.0.3...2.0.4) - 2019-04-25
 
 - Remove `Squiz.Objects.ObjectInstantiation` sniff.
