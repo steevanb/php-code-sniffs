@@ -48,7 +48,11 @@ class DisallowShortArraySyntaxSpacesSniff implements Sniff
     {
         $previousToken = $phpcsFile->getTokens()[$stackPtr - 1];
         $previousToken2 = $phpcsFile->getTokens()[$stackPtr - 2];
-        if ($previousToken['code'] === T_WHITESPACE && $previousToken2['code'] !== T_WHITESPACE) {
+        if (
+            $previousToken['code'] === T_WHITESPACE
+            && $previousToken2['code'] !== T_WHITESPACE
+            && $previousToken2['code'] !== T_CLOSE_SHORT_ARRAY
+        ) {
             $phpcsFile->addErrorOnLine(
                 'Short array syntax should not end with spaces',
                 $previousToken['line'],

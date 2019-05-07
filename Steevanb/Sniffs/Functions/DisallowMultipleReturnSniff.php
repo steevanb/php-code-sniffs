@@ -37,6 +37,7 @@ class DisallowMultipleReturnSniff implements Sniff
             $currentFunction = $phpcsFile->getTokens()[$phpcsFile->findNext(T_STRING, $stackPtr)]['content'];
         } elseif (
             $token['code'] === T_RETURN
+            && is_string($currentFunction)
             && in_array($currentFunction, static::$allowedFunctions[$phpcsFile->getFilename()] ?? []) === false
             && in_array('PHPCS_T_CLOSURE', $token['conditions']) === false
         ) {
