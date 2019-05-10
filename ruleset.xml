@@ -59,6 +59,7 @@
         <exclude name="Squiz.Commenting.VariableComment"/>
         <exclude name="Squiz.ControlStructures.ElseIfDeclaration"/>
         <exclude name="Squiz.ControlStructures.InlineIfDeclaration.NotSingleLine"/>
+        <exclude name="Squiz.ControlStructures.InlineIfDeclaration.NoBrackets"/>
         <exclude name="Squiz.Files.FileExtension"/>
         <exclude name="Squiz.Formatting.OperatorBracket.MissingBrackets"/>
         <exclude name="Squiz.Operators.ComparisonOperatorUsage.ImplicitTrue"/>
@@ -66,6 +67,7 @@
         <exclude name="Squiz.PHP.DisallowBooleanStatement.Found"/>
         <exclude name="Squiz.PHP.DisallowComparisonAssignment.AssignedComparison"/>
         <exclude name="Squiz.PHP.DisallowInlineIf"/>
+        <exclude name="Squiz.PHP.DisallowComparisonAssignment"/>
         <exclude name="Squiz.PHP.DisallowSizeFunctionsInLoops"/>
         <exclude name="Squiz.Strings.DoubleQuoteUsage.ContainsVar"/>
         <exclude name="Squiz.WhiteSpace.ControlStructureSpacing"/>
@@ -83,7 +85,7 @@
     </rule>
     <rule ref="Generic.Files.LineLength">
         <properties>
-            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="120"/>
         </properties>
     </rule>
     <rule ref="Squiz.Strings.ConcatenationSpacing">
@@ -107,6 +109,17 @@
     <rule ref="Squiz.WhiteSpace.OperatorSpacing">
         <properties>
             <property name="ignoreNewlines" value="true" />
+        </properties>
+    </rule>
+    <rule ref="Generic.PHP.ForbiddenFunctions">
+        <properties>
+            <property name="forbiddenFunctions" type="array">
+                <element key="sizeof" value="count"/>
+                <element key="delete" value="unset"/>
+                <element key="print" value="echo"/>
+                <element key="create_function" value="null"/>
+                <element key="empty" value="null"/>
+            </property>
         </properties>
     </rule>
 </ruleset>

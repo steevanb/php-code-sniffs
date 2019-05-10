@@ -1,6 +1,6 @@
-[![version](https://img.shields.io/badge/version-2.0.5-green.svg)](https://github.com/steevanb/php-code-sniffs/tree/2.0.5)
+[![version](https://img.shields.io/badge/version-2.0.6-green.svg)](https://github.com/steevanb/php-code-sniffs/tree/2.0.6)
 [![php](https://img.shields.io/badge/php-^7.1-blue.svg)](https://php.net)
-![Lines](https://img.shields.io/badge/code%20lines-1930-green.svg)
+![Lines](https://img.shields.io/badge/code%20lines-1950-green.svg)
 ![Total Downloads](https://poser.pugx.org/steevanb/php-code-sniffs/downloads)
 
 php-code-sniffs
@@ -16,7 +16,7 @@ Installation
 ============
 
 ```bash
-composer require steevanb/php-code-sniffs ^2.0.5
+composer require steevanb/php-code-sniffs ^2.0.6
 ```
 
 Or if you want to use it with Docker: [steevanb/docker-php-code-sniffs](https://github.com/steevanb/docker-php-code-sniffs).
@@ -213,7 +213,6 @@ squizlabs/php_codesniffer
 | [Squiz.Operators.ValidLogicalOperators](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/Operators/ValidLogicalOperatorsSniff.php) |
 | [Squiz.PHP.CommentedOutCode](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/PHP/CommentedOutCodeSniff.php) |
 | [Squiz.PHP.DisallowBooleanStatement](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/PHP/DisallowBooleanStatementSniff.php) |
-| [Squiz.PHP.DisallowComparisonAssignment](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/PHP/DisallowComparisonAssignmentSniff.php) |
 | [Squiz.PHP.DisallowMultipleAssignments](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/PHP/DisallowMultipleAssignmentsSniff.php) |
 | [Squiz.PHP.DiscouragedFunctions](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/PHP/DiscouragedFunctionsSniff.php) |
 | [Squiz.PHP.EmbeddedPhp](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/PHP/EmbeddedPhpSniff.php) |
