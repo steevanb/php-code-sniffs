@@ -1,6 +1,6 @@
-[![version](https://img.shields.io/badge/version-2.0.6-green.svg)](https://github.com/steevanb/php-code-sniffs/tree/2.0.6)
+[![version](https://img.shields.io/badge/version-2.0.7-green.svg)](https://github.com/steevanb/php-code-sniffs/tree/2.0.7)
 [![php](https://img.shields.io/badge/php-^7.1-blue.svg)](https://php.net)
-![Lines](https://img.shields.io/badge/code%20lines-1950-green.svg)
+![Lines](https://img.shields.io/badge/code%20lines-1952-green.svg)
 ![Total Downloads](https://poser.pugx.org/steevanb/php-code-sniffs/downloads)
 
 php-code-sniffs
@@ -16,7 +16,7 @@ Installation
 ============
 
 ```bash
-composer require steevanb/php-code-sniffs ^2.0.6
+composer require steevanb/php-code-sniffs ^2.0.7
 ```
 
 Or if you want to use it with Docker: [steevanb/docker-php-code-sniffs](https://github.com/steevanb/docker-php-code-sniffs).
@@ -258,7 +258,6 @@ steevanb/php-code-sniffer
 | [Steevanb.CodeAnalysis.StrictTypes](https://github.com/steevanb/php-code-sniffs/blob/2.0.0/Steevanb/Sniffs/CodeAnalysis/StrictTypesSniff.php) |
 | [Steevanb.Comparators.DisallowExclamationPoint](https://github.com/steevanb/php-code-sniffs/blob/2.0.0/Steevanb/Sniffs/Comparators/DisallowExclamationPointSniff.php) |
 | [Steevanb.ControlStructures.ElseIfDeclaration](https://github.com/steevanb/php-code-sniffs/blob/2.0.0/Steevanb/Sniffs/ControlStructures/ElseIfDeclarationSniff.php) |
-| [Steevanb.Functions.DisallowMultipleReturn](https://github.com/steevanb/php-code-sniffs/blob/2.0.0/Steevanb/Sniffs/Functions/DisallowMultipleReturnSniff.php) |
 | [Steevanb.Metrics.NestingLevel](https://github.com/steevanb/php-code-sniffs/blob/2.0.0/Steevanb/Sniffs/Metrics/NestingLevelSniff.php) |
 | [Steevanb.Namespaces.UseDeclaration](https://github.com/steevanb/php-code-sniffs/blob/2.0.0/Steevanb/Sniffs/Namespaces/UseDeclarationSniff.php) |
 | [Steevanb.NamingConventions.CamelCapsFunctionName](https://github.com/steevanb/php-code-sniffs/blob/2.0.0/Steevanb/Sniffs/NamingConventions/CamelCapsFunctionNameSniff.php) |

@@ -1,3 +1,7 @@
+### [2.0.7](../../compare/2.0.6...2.0.7) - 2019-05-10
+
+- Remove `Steevanb.Functions.DisallowMultipleReturn`.
+
 ### [2.0.6](../../compare/2.0.5...2.0.6) - 2019-05-10
 
 - Fix `Generic.Files.LineLength` configuration.
