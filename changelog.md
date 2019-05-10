@@ -1,4 +1,11 @@
-### [2.0.4](../../compare/2.0.4...2.0.5) - 2019-05-07
+### [2.0.6](../../compare/2.0.5...2.0.6) - 2019-05-10
+
+- Fix `Generic.Files.LineLength` configuration.
+- Allow `is_null` in `Generic.PHP.ForbiddenFunctions`.
+- Remove `Squiz.ControlStructures.InlineIfDeclaration.NoBrackets`.
+- Remove `Squiz.PHP.DisallowComparisonAssignment`.
+
+### [2.0.5](../../compare/2.0.4...2.0.5) - 2019-05-07
 
 - Remove `Generic.WhiteSpace.LanguageConstructSpacing` sniff.
 - Remove `PEAR.Files.IncludingFile` sniff.
