@@ -1,6 +1,6 @@
-[![version](https://img.shields.io/badge/version-2.0.7-green.svg)](https://github.com/steevanb/php-code-sniffs/tree/2.0.7)
+[![version](https://img.shields.io/badge/version-2.0.8-green.svg)](https://github.com/steevanb/php-code-sniffs/tree/2.0.8)
 [![php](https://img.shields.io/badge/php-^7.1-blue.svg)](https://php.net)
-![Lines](https://img.shields.io/badge/code%20lines-1952-green.svg)
+![Lines](https://img.shields.io/badge/code%20lines-1970-green.svg)
 ![Total Downloads](https://poser.pugx.org/steevanb/php-code-sniffs/downloads)
 
 php-code-sniffs
@@ -16,7 +16,7 @@ Installation
 ============
 
 ```bash
-composer require steevanb/php-code-sniffs ^2.0.7
+composer require steevanb/php-code-sniffs ^2.0.8
 ```
 
 Or if you want to use it with Docker: [steevanb/docker-php-code-sniffs](https://github.com/steevanb/docker-php-code-sniffs).

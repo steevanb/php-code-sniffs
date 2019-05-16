@@ -10,7 +10,7 @@ use PHP_CodeSniffer\{
 };
 
 /**
- * Group use on 1st, 2nd or 3rd level
+ * Group use on 1st, 2nd (default) or 3rd level
  * Example:
  * use App\{
  *     Entity\Foo
@@ -20,11 +20,22 @@ use PHP_CodeSniffer\{
  *     Request,
  *     Response
  * };
- * Call addThreeLevelsPrefix() to force this namespace to be regrouped at 3rd level
+ *
+ * Call addFirstLevelPrefix() to force this namespace to be regrouped at 1st level
+ * Call addThirdLevelPrefix() to force this namespace to be regrouped at 3rd level
  */
 class GroupUsesSniff implements Sniff
 {
+    /** @var string[] */
+    protected static $firstLevelPrefixes = [];
+
+    /** @var string[] */
     protected static $thirdLevelPrefixs = [];
+
+    public static function addFirstLevelPrefix(string $prefix): void
+    {
+        static::$firstLevelPrefixes[] = rtrim($prefix, '\\');
+    }
 
     public static function addThirdLevelPrefix(string $prefix): void
     {
@@ -52,11 +63,11 @@ class GroupUsesSniff implements Sniff
     {
         if ($phpcsFile->getTokens()[$stackPtr]['type'] === 'T_USE') {
             $useGroupPrefix = $this->getUseGroupPrefix($phpcsFile, $stackPtr);
-            if ($useGroupPrefix !== null) {
+            if (is_string($useGroupPrefix)) {
                 $this->validateUseGroupPrefixName($phpcsFile, $stackPtr, $useGroupPrefix);
             } else {
                 $currentUse = $this->getCurrentUse($phpcsFile, $stackPtr);
-                if ($currentUse !== null) {
+                if (is_string($currentUse)) {
                     $this->validateUse($phpcsFile, $stackPtr, $currentUse);
                 }
             }
@@ -170,12 +181,14 @@ class GroupUsesSniff implements Sniff
     {
         foreach ($this->uses[$phpcsFile->getFilename()] ?? [] as $use) {
             $prefix = null;
-            foreach (static::$thirdLevelPrefixs as $usePrefix3part) {
+
+            foreach (array_merge(static::$firstLevelPrefixes, static::$thirdLevelPrefixs) as $usePrefix3part) {
                 if (substr($use, 0, strlen($usePrefix3part)) === $usePrefix3part) {
                     $prefix = substr($use, 0, strpos($use, '\\', strlen($usePrefix3part)) + 1);
                     break;
                 }
             }
+
             if ($prefix === null) {
                 $useParts = explode('\\', $use);
                 if (count($useParts) >= 3) {
@@ -185,11 +198,11 @@ class GroupUsesSniff implements Sniff
                 }
             }
 
-            if ($prefix !== null && substr($useToValidate, 0, strlen($prefix)) === $prefix) {
+            if (is_string($prefix) && substr($useToValidate, 0, strlen($prefix)) === $prefix) {
                 $phpcsFile->addError(
                     'You must group the use "' . $useToValidate . '" in "' . rtrim($prefix, '\\') . '".',
                     $stackPtr,
-                    'BadRegroupment'
+                    'MustRegroup'
                 );
                 break;
             }
