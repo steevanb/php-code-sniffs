@@ -1,3 +1,8 @@
+### [2.0.8](../../compare/2.0.7...2.0.8) - 2019-05-16
+
+- Add `GroupUsesSniff::addFirstLevelPrefix()`.
+- Fix one `BadRegroupment` error group to `MustRegroup`.
+
 ### [2.0.7](../../compare/2.0.6...2.0.7) - 2019-05-10
 
 - Remove `Steevanb.Functions.DisallowMultipleReturn`.
