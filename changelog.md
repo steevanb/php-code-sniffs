@@ -1,3 +1,8 @@
+### [2.0.9](../../compare/2.0.7...2.0.8) - 2019-05-17
+
+- Remove `Steevanb.Functions.DisallowMultipleReturn` (really).
+- Update documentation to use Docker and CircleCI.
+
 ### [2.0.8](../../compare/2.0.7...2.0.8) - 2019-05-16
 
 - Add `GroupUsesSniff::addFirstLevelPrefix()`.
