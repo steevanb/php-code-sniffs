@@ -1,6 +1,6 @@
-[![version](https://img.shields.io/badge/version-2.0.8-green.svg)](https://github.com/steevanb/php-code-sniffs/tree/2.0.8)
+[![version](https://img.shields.io/badge/version-2.0.9-green.svg)](https://github.com/steevanb/php-code-sniffs/tree/2.0.9)
 [![php](https://img.shields.io/badge/php-^7.1-blue.svg)](https://php.net)
-![Lines](https://img.shields.io/badge/code%20lines-1970-green.svg)
+![Lines](https://img.shields.io/badge/code%20lines-2000-green.svg)
 ![Total Downloads](https://poser.pugx.org/steevanb/php-code-sniffs/downloads)
 
 php-code-sniffs
@@ -16,10 +16,8 @@ Installation
 ============
 
 ```bash
-composer require steevanb/php-code-sniffs ^2.0.8
+composer require steevanb/php-code-sniffs ^2.0.9
 ```
-
-Or if you want to use it with Docker: [steevanb/docker-php-code-sniffs](https://github.com/steevanb/docker-php-code-sniffs).
 
 Usage
 =====
@@ -57,12 +55,99 @@ Check coding standards in files need to be commited
 git status --porcelain | grep -E '^[^D\?]{2} .*\.php$' | awk '{print $2}' | xargs -n1 bin/phpcs --standard=vendor/steevanb/php-code-sniffs/ruleset.xml --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb
 ```
 
+Usage with Docker
+=================
+
+If you want to use it with Docker, you can create `bin/phpcs`:
+```bash
+#!/usr/bin/env sh
+
+readonly PROJECT_DIRECTORY=$(realpath $(dirname $(realpath $0))/..)
+
+set -e
+
+if [ $(which docker || false) ]; then
+    docker \
+        run \
+        --rm \
+        -v ${PROJECT_DIRECTORY}:/var/phpcs:ro \
+        -w /var/phpcs/vendor/steevanb/php-code-sniffs \
+        php:7.3.6-cli-alpine3.9 \
+        /var/phpcs/bin/phpcs
+else
+    # To use custom report we need to be in this folder
+    cd ${PROJECT_DIRECTORY}/vendor/steevanb/php-code-sniffs
+    ./../../bin/phpcs \
+        # Example of phpcs bootstrap file
+        --bootstrap=${PROJECT_DIRECTORY}/phpcs.bootstrap.php \
+        # Example of warning severity configuration
+        --warning-severity=0 \
+        --standard=ruleset.xml \
+        --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb \
+        --ignore=${PROJECT_DIRECTORY}/var,${PROJECT_DIRECTORY}/vendor \
+        ${PROJECT_DIRECTORY}
+fi
+
+```
+
+Usage with CircleCI
+===================
+
+```bash
+version: '2.1'
+
+jobs:
+    composer:
+        docker:
+            - image: composer
+        working_directory: ~/repository
+        steps:
+            - checkout
+            - restore_cache:
+                key: composer-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
+            - run:
+                command: |
+                    if [ ! -f vendor/autoload.php ];then
+                        composer global require hirak/prestissimo;
+                        composer install --ignore-platform-reqs --no-interaction --no-progress --classmap-authoritative;
+                    fi
+            - save_cache:
+                key: composer-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
+                paths:
+                    - ./vendor
+            - persist_to_workspace:
+                root: .
+                paths:
+                    - vendor
+
+    phpcs:
+        docker:
+            - image: php:7.3.6-cli-alpine3.9
+        working_directory: ~/repository
+        steps:
+            - checkout
+            - restore_cache:
+                keys:
+                    - composer-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
+            - run:
+                name: phpcs
+                command: bin/phpcs
+
+workflows:
+    version: '2.1'
+    Code quality:
+        jobs:
+            - composer
+            - phpcs:
+                requires:
+                    - composer
+```
+
 Configure sniffs
 ================
 
 Some sniffs could be configured by static methods,
-like `steevanb\PhpCodeSniffs\Steevanb\Sniffs\Functions\DisallowMultipleReturnSniff`
-and `steevanb\PhpCodeSniffs\Steevanb\Sniffs\Metrics\NestingLevelSniff`,
+like `steevanb\PhpCodeSniffs\Steevanb\Sniffs\Metrics\NestingLevelSniff`
 or the report `steevanb\PhpCodeSniffs\Reports\Steevanb`.
 
 You can configure them by adding a bootstrap script to phpcs:
@@ -80,12 +165,6 @@ cd vendor/steevanb/php-code-sniffs
 steevanb\PhpCodeSniffs\Reports\Steevanb::addReplaceInPath(
     '/var/www/docker',
     '/home/foo/dev/myproject'
-);
-
-// some functions could have more than on return keyword
-steevanb\PhpCodeSniffs\Steevanb\Sniffs\Functions\DisallowMultipleReturnSniff::addAllowedFunction(
-    '/path/foo.php',
-    'barMethod'
 );
 
 // come methods could have a nesting level greater than 5
