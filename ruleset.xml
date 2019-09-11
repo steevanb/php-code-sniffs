@@ -69,6 +69,7 @@
         <exclude name="Squiz.PHP.DisallowInlineIf"/>
         <exclude name="Squiz.PHP.DisallowComparisonAssignment"/>
         <exclude name="Squiz.PHP.DisallowSizeFunctionsInLoops"/>
+        <exclude name="Squiz.PHP.Heredoc"/>
         <exclude name="Squiz.Strings.DoubleQuoteUsage.ContainsVar"/>
         <exclude name="Squiz.WhiteSpace.ControlStructureSpacing"/>
         <exclude name="Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeClose"/>

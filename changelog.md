@@ -1,3 +1,7 @@
+### [2.0.10](../../compare/2.0.9...2.0.10) - 2019-09-11
+
+- Remove `Squiz.PHP.Heredoc`.
+
 ### [2.0.9](../../compare/2.0.7...2.0.8) - 2019-05-17
 
 - Remove `Steevanb.Functions.DisallowMultipleReturn` (really).

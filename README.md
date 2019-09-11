@@ -1,6 +1,6 @@
-[![version](https://img.shields.io/badge/version-2.0.9-green.svg)](https://github.com/steevanb/php-code-sniffs/tree/2.0.9)
+[![version](https://img.shields.io/badge/version-2.0.10-green.svg)](https://github.com/steevanb/php-code-sniffs/tree/2.0.10)
 [![php](https://img.shields.io/badge/php-^7.1-blue.svg)](https://php.net)
-![Lines](https://img.shields.io/badge/code%20lines-2000-green.svg)
+![Lines](https://img.shields.io/badge/code%20lines-2004-green.svg)
 ![Total Downloads](https://poser.pugx.org/steevanb/php-code-sniffs/downloads)
 
 php-code-sniffs
@@ -16,7 +16,7 @@ Installation
 ============
 
 ```bash
-composer require steevanb/php-code-sniffs ^2.0.9
+composer require steevanb/php-code-sniffs ^2.0.10
 ```
 
 Usage
@@ -297,7 +297,6 @@ squizlabs/php_codesniffer
 | [Squiz.PHP.EmbeddedPhp](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/PHP/EmbeddedPhpSniff.php) |
 | [Squiz.PHP.Eval](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/PHP/EvalSniff.php) |
 | [Squiz.PHP.GlobalKeyword](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/PHP/GlobalKeywordSniff.php) |
-| [Squiz.PHP.Heredoc](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/PHP/HeredocSniff.php) |
 | [Squiz.PHP.InnerFunctions](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/PHP/InnerFunctionsSniff.php) |
 | [Squiz.PHP.LowercasePHPFunctions](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/PHP/LowercasePHPFunctionsSniff.php) |
 | [Squiz.PHP.NonExecutableCode](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Squiz/Sniffs/PHP/NonExecutableCodeSniff.php) |
