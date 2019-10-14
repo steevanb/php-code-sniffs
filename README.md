@@ -3,8 +3,7 @@
 ![Lines](https://img.shields.io/badge/code%20lines-2004-green.svg)
 ![Total Downloads](https://poser.pugx.org/steevanb/php-code-sniffs/downloads)
 
-php-code-sniffs
-===============
+## php-code-sniffs
 
 Use [squizlabs/php_codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) to check your code style.
 
@@ -12,15 +11,35 @@ Remove some coding standards, and add a few more.
 
 [Changelog](changelog.md).
 
-Installation
-============
+## Installation
 
 ```bash
 composer require steevanb/php-code-sniffs ^2.0.10
 ```
 
-Usage
-=====
+## Usage
+
+### Search not respected coding standards
+
+```bash
+vendor/bin/phpcs --standard=vendor/steevanb/php-code-sniffs/Steevanb --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb src/
+```
+
+Some phpcs parameters:
+ * `-s`: show sniffer name
+ * `--report-csv=foo.csv`: write report results in CSV
+ * `--ignore=/vendor,/var`: ignore some directories or files
+ * `-e`: show enabled coding standards
+ * `--boostrap=/foo/file.php`: boostrap file to configure phpcs or init your code for example
+ * `--warning-severity=0`: do not show warnings
+
+### Check coding standards in files need to be commited
+
+```bash
+git status --porcelain | grep -E '^[^D\?]{2} .*\.php$' | awk '{print $2}' | xargs -n1 vendor/bin/phpcs --standard=vendor/steevanb/php-code-sniffs/Steevanb --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb
+```
+
+### Include this rulset in your phpcs
 
 ```xml
 <?xml version="1.0"?>
@@ -29,44 +48,15 @@ Usage
 </ruleset>
 ```
 
+## Usage with Docker
 
-Search not respected coding standards
--------------------------------------
+### Dockerhub
 
-```bash
-cd vendor/steevanb/php-code-sniffs
+You can use [steevanb/php-code-sniffs](https://github.com/steevanb/docker-php-code-sniffs) available on dockerhub.
 
-../../bin/phpcs --standard=ruleset.xml --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb src/
+### Manually
 
-# add sniff name to report
-../../bin/phpcs --standard=ruleset.xml --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb -s src/
-
-# write results in CSV file
-../../bin/phpcs --standard=ruleset.xml --report-csv=foo.csv src/
-
-# ignore directories
-../../bin/phpcs --standard=ruleset.xml --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb --ignore=/vendor,/var src/
-```
-
-Show enabled coding standards
------------------------------
-
-```bash
-cd vendor/steevanb/php-code-sniffs
-../../bin/phpcs --standard=ruleset.xml -e
-```
-
-Check coding standards in files need to be commited
----------------------------------------------------
-
-```bash
-git status --porcelain | grep -E '^[^D\?]{2} .*\.php$' | awk '{print $2}' | xargs -n1 bin/phpcs --standard=vendor/steevanb/php-code-sniffs/ruleset.xml --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb
-```
-
-Usage with Docker
-=================
-
-If you want to use it with Docker, you can create `bin/phpcs`:
+You can create `bin/phpcs`:
 ```bash
 #!/usr/bin/env sh
 
@@ -77,29 +67,20 @@ set -e
 if [ $(which docker || false) ]; then
     docker \
         run \
-        --rm \
+        -it \
         -v ${PROJECT_DIRECTORY}:/var/phpcs:ro \
-        -w /var/phpcs/vendor/steevanb/php-code-sniffs \
-        php:7.3.6-cli-alpine3.9 \
-        /var/phpcs/bin/phpcs
+        -w /var/phpcs \
+        php:7.3-cli-alpine3.10 \
+        bin/phpcs
 else
-    # To use custom report we need to be in this folder
-    cd ${PROJECT_DIRECTORY}/vendor/steevanb/php-code-sniffs
-    ./../../bin/phpcs \
-        # Example of phpcs bootstrap file
-        --bootstrap=${PROJECT_DIRECTORY}/phpcs.bootstrap.php \
-        # Example of warning severity configuration
-        --warning-severity=0 \
-        --standard=ruleset.xml \
+    vendor/bin/phpcs \
+        --standard=vendor/steevanb/php-code-sniffs/Steevanb \
         --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb \
-        --ignore=${PROJECT_DIRECTORY}/var,${PROJECT_DIRECTORY}/vendor \
-        ${PROJECT_DIRECTORY}
+        src
 fi
-
 ```
 
-Usage with CircleCI
-===================
+## Usage with CircleCI
 
 ```bash
 version: '2.1'
@@ -130,7 +111,7 @@ jobs:
 
     phpcs:
         docker:
-            - image: php:7.3.6-cli-alpine3.9
+            - image: php:7.3-cli-alpine3.10
         working_directory: ~/repository
         steps:
             - checkout
@@ -151,8 +132,7 @@ workflows:
                     - composer
 ```
 
-Configure sniffs
-================
+## Configure sniffs
 
 Some sniffs could be configured by static methods,
 like `steevanb\PhpCodeSniffs\Steevanb\Sniffs\Metrics\NestingLevelSniff`
@@ -188,11 +168,9 @@ steevanb\PhpCodeSniffs\Steevanb\Sniffs\Uses\GroupUsesSniff::addThirdLevelPrefix(
 steevanb\PhpCodeSniffs\Steevanb\Sniffs\Uses\GroupUsesSniff::addSymfonyPrefixs();
 ```
 
-Coding standards
-================
+## Coding standards
 
-squizlabs/php_codesniffer
--------------------------
+### squizlabs/php_codesniffer
 
 | Sniff |
 |-------|
@@ -333,8 +311,7 @@ squizlabs/php_codesniffer
 | [Zend.Debug.CodeAnalyzer](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Zend/Sniffs/Debug/CodeAnalyzerSniff.php) |
 | [Zend.Files.ClosingTag](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Zend/Sniffs/Files/ClosingTagSniff.php) |
   
-steevanb/php-code-sniffer
--------------------------
+### steevanb/php-code-sniffer
 
 | Sniff |
 |-------|

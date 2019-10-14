@@ -1,3 +1,7 @@
+### [3.0.0](../../compare/2.0.10...3.0.0) - 2019-09-14
+
+- [BC Break] Move `ruleset.xml` into `Steevanb`.
+
 ### [2.0.10](../../compare/2.0.9...2.0.10) - 2019-09-11
 
 - Remove `Squiz.PHP.Heredoc`.
