@@ -22,6 +22,14 @@ composer require steevanb/php-code-sniffs ^2.0.10
 Usage
 =====
 
+```xml
+<?xml version="1.0"?>
+<ruleset>
+    <rule ref="vendor/steevanb/php-code-sniffs/Steevanb/ruleset.xml"/>
+</ruleset>
+```
+
+
 Search not respected coding standards
 -------------------------------------
 
