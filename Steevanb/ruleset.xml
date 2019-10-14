@@ -7,6 +7,15 @@
     <arg name="colors"/>
     <arg name="report-width" value="200"/>
 
+    <rule ref="Generic.ControlStructures.DisallowYodaConditions"/>
+    <rule ref="PSR12.Classes.ClosingBrace"/>
+    <rule ref="PSR12.ControlStructures.BooleanOperatorPlacement"/>
+    <rule ref="PSR12.ControlStructures.ControlStructureSpacing"/>
+    <rule ref="PSR12.Files.DeclareStatement"/>
+    <rule ref="PSR12.Files.ImportStatement"/>
+    <rule ref="PSR12.Files.OpenTag"/>
+    <rule ref="PSR12.Functions.ReturnTypeDeclaration"/>
+    <rule ref="PSR12.Traits.UseDeclaration"/>
     <rule ref="Squiz">
         <exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
         <exclude name="Generic.Classes.OpeningBraceSameLine"/>

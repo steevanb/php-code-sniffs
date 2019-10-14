@@ -1,6 +1,20 @@
 ### [3.0.0](../../compare/2.0.10...3.0.0) - 2019-09-14
 
 - [BC Break] Move `ruleset.xml` into `Steevanb`.
+- Update `squizlabs/php_codesniffer` dependency to `3.5.*`
+- Added `Generic.ControlStructures.DisallowYodaConditions`: ban the use of Yoda conditions.
+- Added `Generic.PHP.DisallowAlternativePHPTags`
+- Added `PSR12.Classes.ClosingBrace`: enforces that closing braces of classes/interfaces/traits/functions are not followed by a comment or statement.
+- Added `PSR12.ControlStructures.BooleanOperatorPlacement`: enforces that boolean operators between conditions are consistently at the start or end of the line.
+- Added `PSR12.ControlStructures.ControlStructureSpacing`: enforces that spacing and indents are correct inside control structure parenthesis.
+- Added `PSR12.Files.DeclareStatement`: enforces the formatting of declare statements within a file.
+- Added `PSR12.Files.ImportStatement`: enforces the formatting of import statements within a file.
+- Added `PSR12.Files.OpenTag`: enforces that the open tag is on a line by itself when used at the start of a php-only file.
+- Added `PSR12.Functions.ReturnTypeDeclaration`: enforces the formatting of return type declarations in functions and closures.
+- Added `PSR12.Traits.UseDeclaration`: enforces the formatting of trait import statements within a class
+- Added `steevanb\PhpCodeSniffs\Steevanb\Sniffs\PHP`: enforces that constants must have their visibility defined.
+- Removed `Squiz.Commenting.FunctionCommentThrowTag`.
+- Rework `StrictTypesSniff` from `RequireStrictTypesSniff of squizlabs/php_codesniffer.
 
 ### [2.0.10](../../compare/2.0.9...2.0.10) - 2019-09-11
 
@@ -13,7 +27,7 @@
 
 ### [2.0.8](../../compare/2.0.7...2.0.8) - 2019-05-16
 
-- Add `GroupUsesSniff::addFirstLevelPrefix()`.
+- Added `GroupUsesSniff::addFirstLevelPrefix()`.
 - Fix one `BadRegroupment` error group to `MustRegroup`.
 
 ### [2.0.7](../../compare/2.0.6...2.0.7) - 2019-05-10
@@ -64,7 +78,7 @@
 - Update `squizlabs/php_codesniffer` to 3.2.*.
 - Fix `DisallowMultipleReturnSniff` when a method contains a closure.
 - Fix `DisallowSelfSniff` when used as method return type.
-- Add color to sniff name when `-s` parameter is used with `./vendor/bin/phpcs`.
+- Added color to sniff name when `-s` parameter is used with `./vendor/bin/phpcs`.
 
 ### [1.0.2](../../compare/1.0.1...1.0.2) - 2019-01-29
 
