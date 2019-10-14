@@ -3,7 +3,7 @@
 ![Lines](https://img.shields.io/badge/code%20lines-2004-green.svg)
 ![Total Downloads](https://poser.pugx.org/steevanb/php-code-sniffs/downloads)
 
-## php-code-sniffs
+## php-code-sniffs
 
 Use [squizlabs/php_codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) to check your code style.
 
@@ -17,9 +17,9 @@ Remove some coding standards, and add a few more.
 composer require steevanb/php-code-sniffs ^2.0.10
 ```
 
-## Usage
+## Usage
 
-### Search not respected coding standards
+### Search not respected coding standards
 
 ```bash
 vendor/bin/phpcs --standard=vendor/steevanb/php-code-sniffs/Steevanb --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb src/
@@ -33,7 +33,7 @@ Some phpcs parameters:
  * `--boostrap=/foo/file.php`: boostrap file to configure phpcs or init your code for example
  * `--warning-severity=0`: do not show warnings
 
-### Check coding standards in files need to be commited
+### Check coding standards in files need to be commited
 
 ```bash
 git status --porcelain | grep -E '^[^D\?]{2} .*\.php$' | awk '{print $2}' | xargs -n1 vendor/bin/phpcs --standard=vendor/steevanb/php-code-sniffs/Steevanb --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb
@@ -48,13 +48,13 @@ git status --porcelain | grep -E '^[^D\?]{2} .*\.php$' | awk '{print $2}' | xarg
 </ruleset>
 ```
 
-## Usage with Docker
+## Usage with Docker
 
-### Dockerhub
+### Dockerhub
 
 You can use [steevanb/php-code-sniffs](https://github.com/steevanb/docker-php-code-sniffs) available on dockerhub.
 
-### Manually
+### Manually
 
 You can create `bin/phpcs`:
 ```bash
@@ -311,7 +311,7 @@ steevanb\PhpCodeSniffs\Steevanb\Sniffs\Uses\GroupUsesSniff::addSymfonyPrefixs();
 | [Zend.Debug.CodeAnalyzer](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Zend/Sniffs/Debug/CodeAnalyzerSniff.php) |
 | [Zend.Files.ClosingTag](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.4.2/src/Standards/Zend/Sniffs/Files/ClosingTagSniff.php) |
   
-### steevanb/php-code-sniffer
+### steevanb/php-code-sniffer
 
 | Sniff |
 |-------|
