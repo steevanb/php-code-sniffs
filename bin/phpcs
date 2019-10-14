@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+readonly PROJECT_DIRECTORY=$(realpath $(dirname $(realpath $0))/..)
+
+set -e
+
+if [ $(which docker || false) ]; then
+    docker \
+        run \
+        -it \
+        -v ${PROJECT_DIRECTORY}:/root/repository:ro \
+        -w /root/repository \
+        php:7.3-cli-alpine3.10 \
+        bin/phpcs
+else
+    vendor/bin/phpcs \
+        --standard=Steevanb \
+        --ignore=/vendor/ \
+        .
+fi
