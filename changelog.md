@@ -1,3 +1,7 @@
+### [3.0.1](../../compare/3.0.0...3.0.1) - 2019-11-21
+
+- Add `Symfony\Contracts` to `GroupUsesSniff::addSymfonyPrefixes()`.
+
 ### [3.0.0](../../compare/2.0.10...3.0.0) - 2019-09-14
 
 - [BC Break] Move `ruleset.xml` into `Steevanb`.
