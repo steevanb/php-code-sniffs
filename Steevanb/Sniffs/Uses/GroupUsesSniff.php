@@ -45,6 +45,7 @@ class GroupUsesSniff implements Sniff
     public static function addSymfonyPrefixes(): void
     {
         static::addThirdLevelPrefix('Symfony\\Component');
+        static::addThirdLevelPrefix('Symfony\\Contracts');
         static::addThirdLevelPrefix('Symfony\\Bundle');
         static::addThirdLevelPrefix('Sensio\\Bundle');
         static::addThirdLevelPrefix('Doctrine\\Common');
