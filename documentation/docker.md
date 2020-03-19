@@ -8,7 +8,7 @@ docker \
     -it \
     --rm \
     -v /path/to/my/project:/app:ro \
-    steevanb/php-code-sniffs:4.0.0
+    steevanb/php-code-sniffs:4.0.1
 ```
 
 All files in `/app` into Docker container directory will be tested.
@@ -31,8 +31,8 @@ if [ $(which docker || false) ]; then
         -it \
         --rm \
         -v ${PROJECT_DIRECTORY}/src:/app:ro \
-        --entrypoint bin/phpcs \
-        steevanb/php-code-sniffs:4.0.0
+        --entrypoint /app/bin/phpcs \
+        steevanb/php-code-sniffs:4.0.1
 else
     # Add parameters to phpcs
     PHPCS_PARAMETERS="-p --warning-severity=0"
@@ -40,7 +40,7 @@ else
     PHPCS_BOOTSTRAP="bootstrap.php"
 
     # Run phpcs
-    docker/entrypoint.sh
+    /var/php-code-sniffs/docker/entrypoint.sh
 fi
 ```
 
