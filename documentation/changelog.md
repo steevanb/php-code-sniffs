@@ -1,3 +1,10 @@
+### [4.0.0](../../compare/3.0.1...4.0.0) - 2020-03-19
+
+- [BC Break] Move `ruleset.xml` from `Steevanb` to root.
+- Merge `docker-php-code-sniffs` repository into this one.
+- Reworked Docker image to have git and openssh for CircleCI and lower it's size.
+- Move source code files into `src` directory.
+
 ### [3.0.1](../../compare/3.0.0...3.0.1) - 2019-11-21
 
 - Add `Symfony\Contracts` to `GroupUsesSniff::addSymfonyPrefixes()`.

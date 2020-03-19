@@ -10,7 +10,6 @@ if [ $(which docker || false) ]; then
         -it \
         --rm \
         -v ${PROJECT_DIRECTORY}/src:/app:ro \
-        -w /var/php-code-sniffs \
         --entrypoint bin/phpcs \
         steevanb/php-code-sniffs:4.0.0
 else
