@@ -1,15 +1,15 @@
-### [4.0.0](../../compare/3.0.1...4.0.0) - 2020-03-19
+### [4.0.0](../../../compare/3.0.1...4.0.0) - 2020-03-19
 
 - [BC Break] Move `ruleset.xml` from `Steevanb` to root.
 - Merge `docker-php-code-sniffs` repository into this one.
 - Reworked Docker image to have git and openssh for CircleCI and lower it's size.
 - Move source code files into `src` directory.
 
-### [3.0.1](../../compare/3.0.0...3.0.1) - 2019-11-21
+### [3.0.1](../../../compare/3.0.0...3.0.1) - 2019-11-21
 
 - Add `Symfony\Contracts` to `GroupUsesSniff::addSymfonyPrefixes()`.
 
-### [3.0.0](../../compare/2.0.10...3.0.0) - 2019-09-14
+### [3.0.0](../../../compare/2.0.10...3.0.0) - 2019-09-14
 
 - [BC Break] Move `ruleset.xml` into `Steevanb`.
 - Update `squizlabs/php_codesniffer` dependency to `3.5.*`
@@ -27,32 +27,32 @@
 - Removed `Squiz.Commenting.FunctionCommentThrowTag`.
 - Rework `StrictTypesSniff` from `RequireStrictTypesSniff of squizlabs/php_codesniffer.
 
-### [2.0.10](../../compare/2.0.9...2.0.10) - 2019-09-11
+### [2.0.10](../../../compare/2.0.9...2.0.10) - 2019-09-11
 
 - Remove `Squiz.PHP.Heredoc`.
 
-### [2.0.9](../../compare/2.0.7...2.0.8) - 2019-05-17
+### [2.0.9](../../../compare/2.0.7...2.0.8) - 2019-05-17
 
 - Remove `Steevanb.Functions.DisallowMultipleReturn` (really).
 - Update documentation to use Docker and CircleCI.
 
-### [2.0.8](../../compare/2.0.7...2.0.8) - 2019-05-16
+### [2.0.8](../../../compare/2.0.7...2.0.8) - 2019-05-16
 
 - Added `GroupUsesSniff::addFirstLevelPrefix()`.
 - Fix one `BadRegroupment` error group to `MustRegroup`.
 
-### [2.0.7](../../compare/2.0.6...2.0.7) - 2019-05-10
+### [2.0.7](../../../compare/2.0.6...2.0.7) - 2019-05-10
 
 - Remove `Steevanb.Functions.DisallowMultipleReturn`.
 
-### [2.0.6](../../compare/2.0.5...2.0.6) - 2019-05-10
+### [2.0.6](../../../compare/2.0.5...2.0.6) - 2019-05-10
 
 - Fix `Generic.Files.LineLength` configuration.
 - Allow `is_null` in `Generic.PHP.ForbiddenFunctions`.
 - Remove `Squiz.ControlStructures.InlineIfDeclaration.NoBrackets`.
 - Remove `Squiz.PHP.DisallowComparisonAssignment`.
 
-### [2.0.5](../../compare/2.0.4...2.0.5) - 2019-05-07
+### [2.0.5](../../../compare/2.0.4...2.0.5) - 2019-05-07
 
 - Remove `Generic.WhiteSpace.LanguageConstructSpacing` sniff.
 - Remove `PEAR.Files.IncludingFile` sniff.
@@ -67,35 +67,35 @@
 - Fix `DisallowShortArraySyntaxSpacesSniff`.
 - Fix `DisallowMultipleReturnSniff` when not in function.
 
-### [2.0.4](../../compare/2.0.3...2.0.4) - 2019-04-25
+### [2.0.4](../../../compare/2.0.3...2.0.4) - 2019-04-25
 
 - Remove `Squiz.Objects.ObjectInstantiation` sniff.
 
-### [2.0.3](../../compare/2.0.2...2.0.3) - 2019-04-19
+### [2.0.3](../../../compare/2.0.2...2.0.3) - 2019-04-19
 
 - Fix `Squiz.Commenting.FunctionCommentThrowTag` sniff name.
 
-### [2.0.2](../../compare/2.0.1...2.0.2) - 2019-04-19
+### [2.0.2](../../../compare/2.0.1...2.0.2) - 2019-04-19
 
 - Remove `Squiz.Commenting.FunctionCommentThrowTag`.
 
-### [2.0.1](../../compare/2.0.0...2.0.1) - 2019-04-19
+### [2.0.1](../../../compare/2.0.0...2.0.1) - 2019-04-19
 
 - Remove `PEAR.ControlStructures.MultiLineCondition.Alignment`: bug with grouped conditions.
 - Remove `Squiz.WhiteSpace.ObjectOperatorSpacing.Before`: bug with one call per line.
 
-### [2.0.0](../../compare/1.0.2...2.0.0) - 2019-04-16
+### [2.0.0](../../../compare/1.0.2...2.0.0) - 2019-04-16
 
 - Update `squizlabs/php_codesniffer` to 3.2.*.
 - Fix `DisallowMultipleReturnSniff` when a method contains a closure.
 - Fix `DisallowSelfSniff` when used as method return type.
 - Added color to sniff name when `-s` parameter is used with `./vendor/bin/phpcs`.
 
-### [1.0.2](../../compare/1.0.1...1.0.2) - 2019-01-29
+### [1.0.2](../../../compare/1.0.1...1.0.2) - 2019-01-29
 
 - Fix `Steevanb_Sniffs_Functions_DisallowMultipleReturnSniff::addAllowedFunction()`.
 
-### [1.0.1](../../compare/1.0.0...1.0.1) - 2019-01-16
+### [1.0.1](../../../compare/1.0.0...1.0.1) - 2019-01-16
 
 - Fix `Steevanb_Sniffs_Uses_GroupUsesSniff::addThirdLevelPrefix()`.
 
