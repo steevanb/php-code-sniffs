@@ -1,20 +1,19 @@
 #!/usr/bin/env sh
 
-readonly PROJECT_DIRECTORY=$(realpath $(dirname $(realpath $0))/..)
+set -eu
 
-set -e
+readonly PROJECT_DIRECTORY=$(realpath $(dirname $(realpath $0))/..)
 
 if [ $(which docker || false) ]; then
     docker \
         run \
         -it \
-        -v ${PROJECT_DIRECTORY}:/root/repository:ro \
-        -w /root/repository \
-        php:7.3-cli-alpine3.10 \
-        bin/phpcs
+        --rm \
+        -v ${PROJECT_DIRECTORY}/src:/app:ro \
+        -w /var/php-code-sniffs \
+        --entrypoint bin/phpcs \
+        steevanb/php-code-sniffs:4.0.0
 else
-    vendor/bin/phpcs \
-        --standard=Steevanb \
-        --ignore=/vendor/ \
-        .
+    PHPCS_PARAMETERS="-p --warning-severity=0"
+    docker/entrypoint.sh
 fi

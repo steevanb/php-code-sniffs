@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+
+set -eu
+
+readonly PROJECT_DIRECTORY=$(realpath $(dirname $(realpath $0))/..)
+readonly DOCKER_IMAGE_NAME="steevanb/php-code-sniffs"
+readonly DOCKER_IMAGE_TAG="${DOCKER_IMAGE_NAME}:4.0.0"
+readonly LOG_FILE="/tmp/php-code-sniffs.build.log"
+
+function rmLogFile() {
+    if [ -f "${LOG_FILE}" ]; then
+        rm ${LOG_FILE};
+    fi
+}
+
+function onError() {
+    if [ -f "${LOG_FILE}" ]; then
+        cat ${LOG_FILE}
+        rmLogFile
+    fi
+
+    echo -e "\e[41m Error, build canceled. \e[0m"
+}
+
+trap onError ERR
+rmLogFile
+
+echo -en "Docker image tag: \e[32m${DOCKER_IMAGE_TAG}\e[0m? [Y/n] "
+read validate
+if [ "${validate}" != "" ] && [ "${validate}" != "y" ] && [ "${validate}" != "y" ]; then
+    echo -e "\e[41m Build canceled. \e[0m"
+    exit 1
+fi
+
+dockerQuiet="-q"
+dockerNoCache=""
+push=false
+for param in "$@"; do
+    if [ "${param}" == "-v" ]; then
+        dockerQuiet=""
+    elif [ "${param}" == "--no-cache" ]; then
+        dockerNoCache="--no-cache"
+    elif [ "${param}" == "--push" ]; then
+        push=true
+    fi
+done
+
+echo "Build Docker image."
+docker \
+    build \
+    ${PROJECT_DIRECTORY} \
+    --file=docker/Dockerfile \
+    --tag=${DOCKER_IMAGE_TAG} \
+    ${dockerQuiet} \
+    ${dockerNoCache} \
+    > ${LOG_FILE} \
+    2>&1
+rmLogFile
+docker images | grep ${DOCKER_IMAGE_NAME}
+
+if [ ${push} == true ]; then
+    echo "Login to dockerhub."
+    docker logout > $LOG_FILE 2>&1
+    rmLogFile
+    docker login --username=steevanb
+
+    echo "Push Docker image ${DOCKER_IMAGE_TAG}."
+    docker push ${DOCKER_IMAGE_TAG} > $LOG_FILE 2>&1
+    rmLogFile
+fi
