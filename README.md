@@ -1,4 +1,4 @@
-[![version](https://img.shields.io/badge/version-3.0.1-green.svg)](https://github.com/steevanb/php-code-sniffs/tree/3.0.1)
+[![version](https://img.shields.io/badge/version-4.0.0-green.svg)](https://github.com/steevanb/php-code-sniffs/tree/4.0.0)
 [![php](https://img.shields.io/badge/php-^7.1-blue.svg)](https://php.net)
 ![Lines](https://img.shields.io/badge/code%20lines-2165-green.svg)
 ![Total Downloads](https://poser.pugx.org/steevanb/php-code-sniffs/downloads)
@@ -39,12 +39,12 @@ Some phpcs parameters:
 git status --porcelain | grep -E '^[^D\?]{2} .*\.php$' | awk '{print $2}' | xargs -n1 vendor/bin/phpcs --standard=vendor/steevanb/php-code-sniffs/Steevanb --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb
 ```
 
-### Include this rulset in your phpcs
+### Include this ruleset in your phpcs
 
 ```xml
 <?xml version="1.0"?>
 <ruleset>
-    <rule ref="vendor/steevanb/php-code-sniffs/Steevanb/ruleset.xml"/>
+    <rule ref="vendor/steevanb/php-code-sniffs/ruleset.xml"/>
 </ruleset>
 ```
 

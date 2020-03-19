@@ -1,46 +1,18 @@
 version: '2.1'
 
 jobs:
-    composer:
-        docker:
-            - image: composer
-        working_directory: ~/repository
-        steps:
-            - checkout
-            - restore_cache:
-                  key: composer-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
-            - run:
-                  command: |
-                      if [ ! -f vendor/autoload.php ];then
-                          composer install --ignore-platform-reqs --no-interaction --no-progress --classmap-authoritative;
-                      fi
-            - save_cache:
-                  key: composer-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
-                  paths:
-                      - ./vendor
-            - persist_to_workspace:
-                  root: .
-                  paths:
-                      - vendor
-
     phpcs:
         docker:
-            - image: php:7.3-cli-alpine3.10
-        working_directory: ~/repository
+            - image: steevanb/php-code-sniffs:4.0.0
+        working_directory: /app
         steps:
             - checkout
-            - restore_cache:
-                  keys:
-                      - composer-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
             - run:
-                  name: phpcs
-                  command: bin/phpcs
+                name: phpcs
+                command: /var/php-code-sniffs/bin/phpcs
 
 workflows:
     version: '2.1'
-    Code quality:
+    CI:
         jobs:
-            - composer
-            - phpcs:
-                  requires:
-                      - composer
+            - phpcs
