@@ -1,3 +1,7 @@
+### [4.0.1](../../../compare/4.0.0...4.0.1) - 2020-03-19
+
+- Fix paths in Docker image
+
 ### [4.0.0](../../../compare/3.0.1...4.0.0) - 2020-03-19
 
 - [BC Break] Move `ruleset.xml` from `Steevanb` to root.

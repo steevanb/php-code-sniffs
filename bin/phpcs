@@ -10,9 +10,9 @@ if [ $(which docker || false) ]; then
         -it \
         --rm \
         -v ${PROJECT_DIRECTORY}/src:/app:ro \
-        --entrypoint bin/phpcs \
-        steevanb/php-code-sniffs:4.0.0
+        --entrypoint /app/bin/phpcs \
+        steevanb/php-code-sniffs:4.0.1
 else
     PHPCS_PARAMETERS="-p --warning-severity=0"
-    docker/entrypoint.sh
+    /var/php-code-sniffs/docker/entrypoint.sh
 fi
