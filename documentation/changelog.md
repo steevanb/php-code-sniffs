@@ -1,6 +1,10 @@
+### [4.0.2](../../../compare/4.0.1...4.0.2) - 2020-04-28
+
+- Fix all `Steevanb` sniffs wo where not enabled.
+
 ### [4.0.1](../../../compare/4.0.0...4.0.1) - 2020-03-19
 
-- Fix paths in Docker image
+- Fix paths in Docker image.
 
 ### [4.0.0](../../../compare/3.0.1...4.0.0) - 2020-03-19
 
