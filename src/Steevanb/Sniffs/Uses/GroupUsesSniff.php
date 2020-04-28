@@ -201,7 +201,7 @@ class GroupUsesSniff implements Sniff
 
             if (is_string($prefix) && substr($useToValidate, 0, strlen($prefix)) === $prefix) {
                 $phpcsFile->addError(
-                    'You must group the use "' . $useToValidate . '" in "' . rtrim($prefix, '\\') . '".',
+                    'You must group the use "' . $useToValidate . '" under "' . rtrim($prefix, '\\') . '".',
                     $stackPtr,
                     'MustRegroup'
                 );
