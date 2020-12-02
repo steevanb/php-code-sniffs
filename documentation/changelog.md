@@ -1,3 +1,7 @@
+### [4.0.3](../../../compare/4.0.2...4.0.3) - 2020-11-02
+
+- Fix `DisallowShortArraySyntaxSpacesSniff` when array is defined without indentation (outside of class / function etc)
+
 ### [4.0.2](../../../compare/4.0.1...4.0.2) - 2020-04-28
 
 - Fix all `Steevanb` sniffs wo where not enabled.
