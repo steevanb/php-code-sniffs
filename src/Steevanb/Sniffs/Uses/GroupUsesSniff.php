@@ -106,6 +106,9 @@ class GroupUsesSniff implements Sniff
     protected function getCurrentUse(File $phpcsFile, int $stackPtr): ?string
     {
         $startUse = $phpcsFile->findNext(T_STRING, $stackPtr);
+        if (is_int($startUse) === false) {
+            return null;
+        }
         $tokenEndLine = $phpcsFile->findNext(T_SEMICOLON, $startUse + 1, null, false, ';');
 
         $return = null;
