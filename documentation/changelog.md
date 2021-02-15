@@ -1,3 +1,7 @@
+### [4.0.4](../../../compare/4.0.2...4.0.3) - 2021-02-15
+
+- Fix `getCurrentUse` when no use found
+
 ### [4.0.3](../../../compare/4.0.2...4.0.3) - 2020-11-02
 
 - Fix `DisallowShortArraySyntaxSpacesSniff` when array is defined without indentation (outside of class / function etc)
