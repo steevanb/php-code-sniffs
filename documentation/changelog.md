@@ -1,4 +1,9 @@
-### [4.0.4](../../../compare/4.0.2...4.0.3) - 2021-02-15
+### [4.1.0](../../../compare/4.0.4...4.1.0) - 2021-04-14
+
+- `GroupUsesSniff`: force new line after open use group brace
+- `GroupUsesSniff`: force new line before close use group brace
+
+### [4.0.4](../../../compare/4.0.3...4.0.4) - 2021-02-15
 
 - Fix `getCurrentUse` when no use found
 
