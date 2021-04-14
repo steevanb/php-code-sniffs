@@ -56,51 +56,93 @@ class GroupUsesSniff implements Sniff
 
     public function register(): array
     {
-        return [T_USE, T_OPEN_USE_GROUP];
+        return [T_USE, T_OPEN_USE_GROUP, T_CLOSE_USE_GROUP];
     }
 
     /** @param int $stackPtr */
     public function process(File $phpcsFile, $stackPtr): void
     {
         if ($phpcsFile->getTokens()[$stackPtr]['type'] === 'T_USE') {
-            $useGroupPrefix = $this->getUseGroupPrefix($phpcsFile, $stackPtr);
-            if (is_string($useGroupPrefix)) {
-                $this->validateUseGroupPrefixName($phpcsFile, $stackPtr, $useGroupPrefix);
-            } else {
-                $currentUse = $this->getCurrentUse($phpcsFile, $stackPtr);
-                if (is_string($currentUse)) {
-                    $this->validateUse($phpcsFile, $stackPtr, $currentUse);
-                }
-            }
+            $this->processUse($phpcsFile, $stackPtr);
+        } elseif ($phpcsFile->getTokens()[$stackPtr]['type'] === 'T_OPEN_USE_GROUP') {
+            $this->processOpenUseGroup($phpcsFile, $stackPtr);
         } else {
-            $comaPtr = $phpcsFile->findNext(
-                [T_COMMA],
-                $stackPtr,
-                $phpcsFile->findNext([T_CLOSE_USE_GROUP], $stackPtr + 1)
-            );
-            $errorLines = [];
-            while (is_int($comaPtr)) {
-                $nextToken = $phpcsFile->getTokens()[$comaPtr + 1];
-                if (
-                    $nextToken['type'] === 'T_WHITESPACE'
-                    && strpos($nextToken['content'], "\n") === false
-                    && in_array($nextToken['line'], $errorLines) === false
-                ) {
-                    $phpcsFile->addError(
-                        'Only one use per line allowed.',
-                        $comaPtr + 1,
-                        'OneUsePerLine'
-                    );
-                    $errorLines[] = $nextToken['line'];
-                }
+            $this->processCloseUseGroup($phpcsFile, $stackPtr);
+        }
+    }
 
-                $comaPtr = $phpcsFile->findNext(
-                    [T_COMMA],
-                    $comaPtr + 1,
-                    $phpcsFile->findNext([T_CLOSE_USE_GROUP], $comaPtr)
-                );
+    /** @param int $stackPtr */
+    protected function processUse(File $phpcsFile, $stackPtr): self
+    {
+        $useGroupPrefix = $this->getUseGroupPrefix($phpcsFile, $stackPtr);
+        if (is_string($useGroupPrefix)) {
+            $this->validateUseGroupPrefixName($phpcsFile, $stackPtr, $useGroupPrefix);
+        } else {
+            $currentUse = $this->getCurrentUse($phpcsFile, $stackPtr);
+            if (is_string($currentUse)) {
+                $this->validateUse($phpcsFile, $stackPtr, $currentUse);
             }
         }
+
+        return $this;
+    }
+
+    /** @param int $stackPtr */
+    protected function processOpenUseGroup(File $phpcsFile, $stackPtr): self
+    {
+        $nextToken = $phpcsFile->getTokens()[$stackPtr + 1];
+        if ($nextToken['type'] !== 'T_WHITESPACE' || $nextToken['content'] !== "\n") {
+            $phpcsFile->addError(
+                'Open use group brace should have a new line after',
+                $stackPtr + 1,
+                'LineAfterOpenBrace'
+            );
+        }
+
+        $comaPtr = $phpcsFile->findNext(
+            [T_COMMA],
+            $stackPtr,
+            $phpcsFile->findNext([T_CLOSE_USE_GROUP], $stackPtr + 1)
+        );
+        $errorLines = [];
+        while (is_int($comaPtr)) {
+            $nextToken = $phpcsFile->getTokens()[$comaPtr + 1];
+            if (
+                $nextToken['type'] === 'T_WHITESPACE'
+                && strpos($nextToken['content'], "\n") === false
+                && in_array($nextToken['line'], $errorLines) === false
+            ) {
+                $phpcsFile->addError(
+                    'Only one use per line allowed.',
+                    $comaPtr + 1,
+                    'OneUsePerLine'
+                );
+                $errorLines[] = $nextToken['line'];
+            }
+
+            $comaPtr = $phpcsFile->findNext(
+                [T_COMMA],
+                $comaPtr + 1,
+                $phpcsFile->findNext([T_CLOSE_USE_GROUP], $comaPtr)
+            );
+        }
+
+        return $this;
+    }
+
+    /** @param int $stackPtr */
+    protected function processCloseUseGroup(File $phpcsFile, $stackPtr): self
+    {
+        $previousToken = $phpcsFile->getTokens()[$stackPtr - 1];
+        if ($previousToken['type'] !== 'T_WHITESPACE' || $previousToken['content'] !== "\n") {
+            $phpcsFile->addError(
+                'Use group close brace should be on it\'s own line whithout spaces before',
+                $stackPtr - 1,
+                'CloseBraceOwnLine'
+            );
+        }
+
+        return $this;
     }
 
     protected function getCurrentUse(File $phpcsFile, int $stackPtr): ?string
