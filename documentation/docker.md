@@ -5,10 +5,10 @@ You can run phpcs without installing it as dependency with Docker:
 ```bash
 docker \
     run \
-    -it \
-    --rm \
-    -v /path/to/my/project:/app:ro \
-    steevanb/php-code-sniffs:4.1.0
+        -it \
+        --rm \
+        -v /path/to/my/project:/app:ro \
+        steevanb/php-code-sniffs:4.1.0
 ```
 
 All files in `/app` into Docker container directory will be tested.
@@ -28,14 +28,14 @@ readonly PROJECT_DIRECTORY=$(realpath $(dirname $(realpath $0))/..)
 if [ $(which docker || false) ]; then
     docker \
         run \
-        -it \
-        --rm \
-        -v ${PROJECT_DIRECTORY}/src:/app:ro \
-        --entrypoint /app/bin/phpcs \
-        steevanb/php-code-sniffs:4.1.0
+            -it \
+            --rm \
+            -v ${PROJECT_DIRECTORY}:/app:ro \
+            --entrypoint /app/bin/phpcs \
+            steevanb/php-code-sniffs:4.1.0
 else
     # Add parameters to phpcs
-    PHPCS_PARAMETERS="-p --warning-severity=0"
+    PHPCS_PARAMETERS="-p --warning-severity=0 --ignore=vendor/"
     # Configure your bootstrap file
     PHPCS_BOOTSTRAP="bootstrap.php"
 

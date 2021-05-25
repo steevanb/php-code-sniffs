@@ -26,7 +26,7 @@ steevanb\PhpCodeSniffs\Steevanb\Sniffs\PHP\DeprecatedFunctionsSniff::addAllowDep
 // Example : Symfony\Component\Form\{...}
 steevanb\PhpCodeSniffs\Steevanb\Sniffs\Uses\GroupUsesSniff::addThirdLevelPrefix('Symfony\Component');
 // If you want to configure it for a Symfony project, you can use addSymfonyPrefixes()
-steevanb\PhpCodeSniffs\Steevanb\Sniffs\Uses\GroupUsesSniff::addSymfonyPrefixs();
+steevanb\PhpCodeSniffs\Steevanb\Sniffs\Uses\GroupUsesSniff::addSymfonyPrefixes();
 ```
 
 # Add your bootstrap file to phpcs
