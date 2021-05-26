@@ -1,3 +1,8 @@
+### [4.2.0](../../../compare/4.1.0...4.2.0) - 2021-05-26
+
+- Allow `PHP ^8.0`
+- Upgrade `squizlabs/php_codesniffer` dependency to `3.6.*`
+
 ### [4.1.0](../../../compare/4.0.4...4.1.0) - 2021-04-14
 
 - `GroupUsesSniff`: force new line after open use group brace
