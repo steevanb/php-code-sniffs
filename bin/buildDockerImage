@@ -4,7 +4,7 @@ set -eu
 
 readonly PROJECT_DIRECTORY=$(realpath $(dirname $(realpath $0))/..)
 readonly DOCKER_IMAGE_NAME="steevanb/php-code-sniffs"
-readonly DOCKER_IMAGE_TAG="${DOCKER_IMAGE_NAME}:4.1.0"
+readonly DOCKER_IMAGE_TAG="${DOCKER_IMAGE_NAME}:4.2.0"
 readonly LOG_FILE="/tmp/php-code-sniffs.build.log"
 
 function rmLogFile() {
@@ -48,13 +48,13 @@ done
 echo "Build Docker image."
 docker \
     build \
-    ${PROJECT_DIRECTORY} \
-    --file=docker/Dockerfile \
-    --tag=${DOCKER_IMAGE_TAG} \
-    ${dockerQuiet} \
-    ${dockerNoCache} \
-    > ${LOG_FILE} \
-    2>&1
+        ${PROJECT_DIRECTORY} \
+        --file=docker/Dockerfile \
+        --tag=${DOCKER_IMAGE_TAG} \
+        ${dockerQuiet} \
+        ${dockerNoCache} \
+        > ${LOG_FILE} \
+        2>&1
 rmLogFile
 docker images | grep ${DOCKER_IMAGE_NAME}
 

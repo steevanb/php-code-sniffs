@@ -1,4 +1,4 @@
-[![version](https://img.shields.io/badge/version-4.1.0-green.svg)](https://github.com/steevanb/php-code-sniffs/tree/4.1.0)
+[![version](https://img.shields.io/badge/version-4.2.0-green.svg)](https://github.com/steevanb/php-code-sniffs/tree/4.2.0)
 [![php](https://img.shields.io/badge/php-^7.1-blue.svg)](https://php.net)
 ![Lines](https://img.shields.io/badge/code%20lines-2445-green.svg)
 ![Total Downloads](https://poser.pugx.org/steevanb/php-code-sniffs/downloads)
