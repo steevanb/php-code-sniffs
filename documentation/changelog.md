@@ -1,3 +1,7 @@
+### master
+
+- Add `NumberOfRowsRelativeToContentSniff`
+
 ### [4.2.0](../../../compare/4.1.0...4.2.0) - 2021-05-26
 
 - Allow `PHP ^8.0`
