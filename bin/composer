@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+set -eu
+
+readonly PROJECT_DIRECTORY="$(realpath "$(dirname "$(realpath "$0")")/..")"
+
+. "${PROJECT_DIRECTORY}"/bin/docker-run-parameter-interactive.inc.sh
+
+docker \
+    run \
+        --rm \
+        ${DOCKER_RUN_PARAMETER_INTERACTIVE} \
+        --tty \
+        --volume "${PROJECT_DIRECTORY}":/app \
+        --user "$(id -u)":"$(id -g)" \
+        composer:2.2.4 \
+            "${@}"

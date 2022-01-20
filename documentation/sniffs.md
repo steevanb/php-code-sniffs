@@ -160,19 +160,19 @@ Here is the list of enabled sniffs.
 
 | Sniff |
 |-------|
-| [Steevanb.Arrays.DisallowShortArraySyntaxSpaces](https://github.com/steevanb/php-code-sniffs/blob/3.0.0/Steevanb/Sniffs/Arrays/DisallowShortArraySyntaxSpacesSniff.php) |
-| [Steevanb.Classes.ClassNameIsFileName](https://github.com/steevanb/php-code-sniffs/blob/3.0.0/Steevanb/Sniffs/Classes/ClassNameIsFileNameSniff.php) |
-| [Steevanb.CodeAnalysis.EmptyStatement](https://github.com/steevanb/php-code-sniffs/blob/3.0.0/Steevanb/Sniffs/CodeAnalysis/EmptyStatementSniff.php) |
-| [Steevanb.CodeAnalysis.StrictTypes](https://github.com/steevanb/php-code-sniffs/blob/3.0.0/Steevanb/Sniffs/CodeAnalysis/StrictTypesSniff.php) |
-| [Steevanb.Comparators.DisallowExclamationPoint](https://github.com/steevanb/php-code-sniffs/blob/3.0.0/Steevanb/Sniffs/Comparators/DisallowExclamationPointSniff.php) |
-| [Steevanb.ControlStructures.ElseIfDeclaration](https://github.com/steevanb/php-code-sniffs/blob/3.0.0/Steevanb/Sniffs/ControlStructures/ElseIfDeclarationSniff.php) |
-| [Steevanb.Metrics.NestingLevel](https://github.com/steevanb/php-code-sniffs/blob/3.0.0/Steevanb/Sniffs/Metrics/NestingLevelSniff.php) |
-| [Steevanb.Namespaces.UseDeclaration](https://github.com/steevanb/php-code-sniffs/blob/3.0.0/Steevanb/Sniffs/Namespaces/UseDeclarationSniff.php) |
-| [Steevanb.NamingConventions.CamelCapsFunctionName](https://github.com/steevanb/php-code-sniffs/blob/3.0.0/Steevanb/Sniffs/NamingConventions/CamelCapsFunctionNameSniff.php) |
-| [Steevanb.NamingConventions.ValidVariableName](https://github.com/steevanb/php-code-sniffs/blob/3.0.0/Steevanb/Sniffs/NamingConventions/ValidVariableNameSniff.php) |
-| [Steevanb.PHP.ConstantVisibility](https://github.com/steevanb/php-code-sniffs/blob/3.0.0/Steevanb/Sniffs/PHP/ConstantVisibilitySniff.php) |
-| [Steevanb.PHP.DeprecatedFunctions](https://github.com/steevanb/php-code-sniffs/blob/3.0.0/Steevanb/Sniffs/PHP/DeprecatedFunctionsSniff.php) |
-| [Steevanb.PHP.DisallowMultipleEmptyLines](https://github.com/steevanb/php-code-sniffs/blob/3.0.0/Steevanb/Sniffs/PHP/DisallowMultipleEmptyLinesSniff.php) |
-| [Steevanb.PHP.DisallowSelf](https://github.com/steevanb/php-code-sniffs/blob/3.0.0/Steevanb/Sniffs/PHP/DisallowSelfSniff.php) |
-| [Steevanb.Syntax.Concatenation](https://github.com/steevanb/php-code-sniffs/blob/3.0.0/Steevanb/Sniffs/Syntax/ConcatenationSniff.php) |
-| [Steevanb.Uses.GroupUses](https://github.com/steevanb/php-code-sniffs/blob/3.0.0/Steevanb/Sniffs/Uses/GroupUsesSniff.php) |
+| [Steevanb.Arrays.DisallowShortArraySyntaxSpaces](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/Arrays/DisallowShortArraySyntaxSpacesSniff.php) |
+| [Steevanb.CodeAnalysis.EmptyStatement](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/CodeAnalysis/EmptyStatementSniff.php) |
+| [Steevanb.CodeAnalysis.StrictTypes](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/CodeAnalysis/StrictTypesSniff.php) |
+| [Steevanb.Comparators.DisallowExclamationPoint](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/Comparators/DisallowExclamationPointSniff.php) |
+| [Steevanb.ControlStructures.ElseIfDeclaration](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/ControlStructures/ElseIfDeclarationSniff.php) |
+| [Steevanb.Metrics.NestingLevel](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/Metrics/NestingLevelSniff.php) |
+| [Steevanb.Namespaces.UseDeclaration](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/Namespaces/UseDeclarationSniff.php) |
+| [Steevanb.NamingConventions.CamelCapsFunctionName](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/NamingConventions/CamelCapsFunctionNameSniff.php) |
+| [Steevanb.NamingConventions.ValidVariableName](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/NamingConventions/ValidVariableNameSniff.php) |
+| [Steevanb.PHP.DeprecatedFunctions](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/PHP/DeprecatedFunctionsSniff.php) |
+| [Steevanb.PHP.DisallowMultipleEmptyLines](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/PHP/DisallowMultipleEmptyLinesSniff.php) |
+| [Steevanb.PHP.DisallowSelf](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/PHP/DisallowSelfSniff.php) |
+| [Steevanb.PhpDoc.NumberOfRowsRelativeToContent](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/PhpDoc/NumberOfRowsRelativeToContentSniff.php) |
+| [Steevanb.Properties.ConstantVisibility](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/Properties/ConstantVisibilitySniff.php) |
+| [Steevanb.Syntax.Concatenation](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/Syntax/ConcatenationSniff.php) |
+| [Steevanb.Uses.GroupUses](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/Uses/GroupUsesSniff.php) |
