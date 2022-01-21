@@ -25,13 +25,24 @@ class BlankLineBeforeReturnSniff implements Sniff
         $blankLinesCount = 1;
         $previousStackPtr = $stackPtr - 1;
         $previousTokenType = $phpcsFile->getTokens()[$previousStackPtr]['type'];
-        while (in_array($previousTokenType, ['T_WHITESPACE', 'T_COMMENT'], true)) {
-            $previousStackPtr--;
-            if ($previousTokenType === 'T_COMMENT') {
-                $blankLinesCount++;
-            }
 
-            $previousTokenType = $phpcsFile->getTokens()[$previousStackPtr]['type'];
+        while (in_array($previousTokenType, ['T_WHITESPACE', 'T_COMMENT', 'T_DOC_COMMENT_CLOSE_TAG'], true)) {
+            if ($previousTokenType === 'T_DOC_COMMENT_CLOSE_TAG') {
+                $commentCloseTagLine = $phpcsFile->getTokens()[$previousStackPtr]['line'];
+                $commentOpenerPtr = $phpcsFile->getTokens()[$previousStackPtr]['comment_opener'];
+
+                $blankLinesCount += 1 + ($commentCloseTagLine - $phpcsFile->getTokens()[$commentOpenerPtr]['line']);
+
+                $previousStackPtr = $commentOpenerPtr - 1;
+                $previousTokenType = $phpcsFile->getTokens()[$previousStackPtr]['type'];
+            } else {
+                $previousStackPtr--;
+                if (in_array($previousTokenType, ['T_COMMENT', 'T_DOC_COMMENT'], true)) {
+                    $blankLinesCount++;
+                }
+
+                $previousTokenType = $phpcsFile->getTokens()[$previousStackPtr]['type'];
+            }
         }
 
         $previousToken = $phpcsFile->getTokens()[$previousStackPtr];

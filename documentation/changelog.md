@@ -1,3 +1,7 @@
+### [4.3.1](../../../compare/4.3.0...4.3.1) - 2022-01-21
+
+- Fix `BlankLineBeforeReturnSniff` when a PHPDoc precede `return` keyword
+
 ### [4.3.0](../../../compare/4.2.0...4.3.0) - 2022-01-21
 
 - Add `NumberOfRowsRelativeToContentSniff`
