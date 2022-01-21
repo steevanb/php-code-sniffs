@@ -4,7 +4,7 @@ set -eu
 
 readonly PROJECT_DIRECTORY="$(realpath "$(dirname "$(realpath "$0")")/..")"
 readonly DOCKER_IMAGE_NAME="steevanb/php-code-sniffs"
-readonly DOCKER_IMAGE_TAG="${DOCKER_IMAGE_NAME}:4.2.0"
+readonly DOCKER_IMAGE_TAG="${DOCKER_IMAGE_NAME}:4.3.0"
 readonly LOG_FILE="/tmp/php-code-sniffs.build.log"
 
 function rmLogFile() {

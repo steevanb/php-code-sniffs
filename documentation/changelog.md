@@ -1,4 +1,4 @@
-### master
+### [4.3.0](../../../compare/4.2.0...4.3.0) - 2022-01-21
 
 - Add `NumberOfRowsRelativeToContentSniff`
 - Move CI from CircleCI to GitHub Actions
