@@ -175,5 +175,6 @@ Here is the list of enabled sniffs.
 | [Steevanb.PhpDoc.NumberOfRowsRelativeToContent](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/PhpDoc/NumberOfRowsRelativeToContentSniff.php) |
 | [Steevanb.Properties.ConstantVisibility](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/Properties/ConstantVisibilitySniff.php) |
 | [Steevanb.ReturnType.Php81StaticInsteadOfSelf](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/ReturnType/Php81StaticInsteadOfSelfSniff.php) |
+| [Steevanb.Syntax.BlankLineBeforeReturnSniff](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/Syntax/BlankLineBeforeReturnSniff.php) |
 | [Steevanb.Syntax.Concatenation](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/Syntax/ConcatenationSniff.php) |
 | [Steevanb.Uses.GroupUses](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/Uses/GroupUsesSniff.php) |

@@ -35,6 +35,7 @@ class ElseIfDeclarationSniff implements Sniff
 
         if ($tokens[$stackPtr]['code'] === T_ELSEIF) {
             $phpcsFile->recordMetric($stackPtr, 'Use of ELSE IF or ELSEIF', 'elseif');
+
             return;
         }
 
