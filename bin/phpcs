@@ -18,5 +18,6 @@ if [ "$(which docker || false)" ]; then
             php:8.1.1-cli-alpine3.15
 else
     PHPCS_PARAMETERS="-p --warning-severity=0 --ignore=/app/vendor/" \
-        /var/php-code-sniffs/docker/entrypoint.sh
+        PHPCS_PHP_VERSION_ID=70100 \
+            /var/php-code-sniffs/docker/entrypoint.sh
 fi

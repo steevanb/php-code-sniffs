@@ -1,6 +1,9 @@
 ### master
 
 - Add `NumberOfRowsRelativeToContentSniff`
+- Move CI from CircleCI to GitHub Actions
+- Add `Php81StaticInsteadOfSelfSniff`
+- Add `PHPCS_PHP_VERSION_ID` env var and `PhpVersionId` to get it's value
 
 ### [4.2.0](../../../compare/4.1.0...4.2.0) - 2021-05-26
 

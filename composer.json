@@ -20,5 +20,8 @@
             "@rm-composer-lock"
         ],
         "rm-composer-lock": "rm composer.lock"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^6.0"
     }
 }

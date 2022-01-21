@@ -252,7 +252,6 @@ class GroupUsesSniff implements Sniff
                 );
                 break;
             }
-
         }
 
         if (array_key_exists($phpcsFile->getFilename(), $this->uses) === false) {

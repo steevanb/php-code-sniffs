@@ -34,13 +34,16 @@ if [ $(which docker || false) ]; then
             --entrypoint /app/bin/phpcs \
             steevanb/php-code-sniffs:4.2.0
 else
-    # Add parameters to phpcs
+    # Add parameters to phpcs (not mandatory)
     PHPCS_PARAMETERS="-p --warning-severity=0 --ignore=vendor/"
-    # Configure your bootstrap file
+    # Configure your bootstrap file (not mandatory)
     PHPCS_BOOTSTRAP="bootstrap.php"
+    # Configure PHP version id (example for PHP 8.12.34: 81234, 8.1.2: 80102) (not mandatory)
+    # Some sniffs will have differents behaviors depends on PHP version
+    # We can't configure it in bootstrap because this file is included after calling Sniff::register()
+    PHPCS_PHP_VERSION_ID=80102
 
     # Run phpcs
     /var/php-code-sniffs/docker/entrypoint.sh
 fi
 ```
-
