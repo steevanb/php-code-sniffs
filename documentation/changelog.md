@@ -1,3 +1,7 @@
+### [4.3.2](../../../compare/4.3.1...4.3.2) - 2022-01-30
+
+- Search for `PHPCS_PHP_VERSION_ID` in `$_SERVER` after `$_ENV`
+
 ### [4.3.1](../../../compare/4.3.0...4.3.1) - 2022-01-21
 
 - Fix `BlankLineBeforeReturnSniff` when a PHPDoc precede `return` keyword
