@@ -8,9 +8,14 @@ class PhpVersionId
 {
     public static function get(): int
     {
-        return
-            array_key_exists('PHPCS_PHP_VERSION_ID', $_ENV)
-                ? (int) $_ENV['PHPCS_PHP_VERSION_ID']
-                : PHP_VERSION_ID;
+        if (array_key_exists('PHPCS_PHP_VERSION_ID', $_ENV)) {
+            $return = (int) $_ENV['PHPCS_PHP_VERSION_ID'];
+        } elseif (array_key_exists('PHPCS_PHP_VERSION_ID', $_SERVER)) {
+            $return = (int) $_SERVER['PHPCS_PHP_VERSION_ID'];
+        } else {
+            $return = PHP_VERSION_ID;
+        }
+
+        return $return;
     }
 }
