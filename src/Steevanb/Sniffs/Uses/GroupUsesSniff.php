@@ -48,7 +48,6 @@ class GroupUsesSniff implements Sniff
         static::addThirdLevelPrefix('Symfony\\Contracts');
         static::addThirdLevelPrefix('Symfony\\Bundle');
         static::addThirdLevelPrefix('Sensio\\Bundle');
-        static::addThirdLevelPrefix('Doctrine\\Common');
     }
 
     /** @var string[] */
@@ -239,8 +238,6 @@ class GroupUsesSniff implements Sniff
                 $useParts = explode('\\', $use);
                 if (count($useParts) >= 3) {
                     $prefix = implode('\\', array_slice($useParts, 0, 2)) . '\\';
-                } else {
-                    $prefix = null;
                 }
             }
 
