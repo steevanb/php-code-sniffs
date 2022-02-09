@@ -1,3 +1,7 @@
+### [4.3.3](../../../compare/4.3.2...4.3.3) - 2022-02-09
+
+- Remove `Doctrine\Common` in `GroupUsesSniff::addSymfonyPrefixes()`: it should not be grouped at 3rd level for this namespace prefix
+
 ### [4.3.2](../../../compare/4.3.1...4.3.2) - 2022-01-30
 
 - Search for `PHPCS_PHP_VERSION_ID` in `$_SERVER` after `$_ENV`
