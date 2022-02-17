@@ -10,7 +10,7 @@ use PHP_CodeSniffer\{
 };
 
 /**
- * Group use on 1st, 2nd (default) or 3rd level
+ * Group use on 1st, 2nd (default), 3rd level or 4th level
  * Example:
  * use App\{
  *     Entity\Foo
@@ -30,7 +30,10 @@ class GroupUsesSniff implements Sniff
     protected static $firstLevelPrefixes = [];
 
     /** @var string[] */
-    protected static $thirdLevelPrefixs = [];
+    protected static $thirdLevelPrefixes = [];
+
+    /** @var string[] */
+    protected static $fourthLevelPrefixes = [];
 
     public static function addFirstLevelPrefix(string $prefix): void
     {
@@ -39,7 +42,12 @@ class GroupUsesSniff implements Sniff
 
     public static function addThirdLevelPrefix(string $prefix): void
     {
-        static::$thirdLevelPrefixs[] = rtrim($prefix, '\\') . '\\';
+        static::$thirdLevelPrefixes[] = rtrim($prefix, '\\') . '\\';
+    }
+
+    public static function addFourthLevelPrefix(string $prefix): void
+    {
+        static::$fourthLevelPrefixes[] = rtrim($prefix, '\\') . '\\';
     }
 
     public static function addSymfonyPrefixes(): void
@@ -53,6 +61,7 @@ class GroupUsesSniff implements Sniff
     /** @var string[] */
     protected $uses = [];
 
+    /** @return string[] */
     public function register(): array
     {
         return [T_USE, T_OPEN_USE_GROUP, T_CLOSE_USE_GROUP];
@@ -70,8 +79,7 @@ class GroupUsesSniff implements Sniff
         }
     }
 
-    /** @param int $stackPtr */
-    protected function processUse(File $phpcsFile, $stackPtr): self
+    protected function processUse(File $phpcsFile, int $stackPtr): self
     {
         $useGroupPrefix = $this->getUseGroupPrefix($phpcsFile, $stackPtr);
         if (is_string($useGroupPrefix)) {
@@ -86,8 +94,7 @@ class GroupUsesSniff implements Sniff
         return $this;
     }
 
-    /** @param int $stackPtr */
-    protected function processOpenUseGroup(File $phpcsFile, $stackPtr): self
+    protected function processOpenUseGroup(File $phpcsFile, int $stackPtr): self
     {
         $nextToken = $phpcsFile->getTokens()[$stackPtr + 1];
         if ($nextToken['type'] !== 'T_WHITESPACE' || $nextToken['content'] !== "\n") {
@@ -129,8 +136,7 @@ class GroupUsesSniff implements Sniff
         return $this;
     }
 
-    /** @param int $stackPtr */
-    protected function processCloseUseGroup(File $phpcsFile, $stackPtr): self
+    protected function processCloseUseGroup(File $phpcsFile, int $stackPtr): self
     {
         $previousToken = $phpcsFile->getTokens()[$stackPtr - 1];
         if ($previousToken['type'] !== 'T_WHITESPACE' || $previousToken['content'] !== "\n") {
@@ -186,38 +192,71 @@ class GroupUsesSniff implements Sniff
     protected function validateUseGroupPrefixName(File $phpcsFile, int $stackPtr, string $prefix): self
     {
         $is3parts = false;
-        foreach (static::$thirdLevelPrefixs as $usePrefix3part) {
-            if (substr($usePrefix3part, 0, strlen($prefix)) === $prefix) {
-                $phpcsFile->addError(
-                    'Use group "'
-                        . $prefix
-                        . '" is invalid, you must group at 3rd level for '
-                        . implode(', ', static::$thirdLevelPrefixs),
-                    $stackPtr,
-                    'GroupAt3rdLevel'
-                );
-            } elseif (substr($prefix, 0, strlen($usePrefix3part)) === $usePrefix3part) {
+        foreach (static::$thirdLevelPrefixes as $usePrefix3parts) {
+            if (substr($usePrefix3parts, 0, strlen($prefix)) === $prefix) {
+                $this->addGroupAtLevelError($phpcsFile, $stackPtr, '3rd', $prefix, static::$thirdLevelPrefixes);
+            } elseif (substr($prefix, 0, strlen($usePrefix3parts)) === $usePrefix3parts) {
                 $is3parts = true;
                 $countBackSlash = substr_count($prefix, '\\');
                 if ($countBackSlash === 1 || $countBackSlash > 2) {
-                    $allowedPrefix = substr($prefix, 0, strpos($prefix, '\\', strlen($usePrefix3part)) + 1);
-                    $phpcsFile->addError(
-                        '"' . $prefix . '" use group is invalid, use "' . $allowedPrefix . '" instead.',
-                        $stackPtr,
-                        'BadRegroupment'
-                    );
+                    $this->addBadRegroupmentError($phpcsFile, $stackPtr, $prefix, strlen($usePrefix3parts));
                     break;
                 }
             }
         }
-        if ($is3parts === false && substr_count($prefix, '\\') > 1) {
-            $allowedPrefix = substr($prefix, 0, strpos($prefix, '\\', strpos($prefix, '\\') + 1) + 1);
-            $phpcsFile->addError(
-                '"' . $prefix . '" use group is invalid, use "' . rtrim($allowedPrefix, '\\') . '" instead',
-                $stackPtr,
-                'BadRegroupment'
-            );
+
+        if ($is3parts === false) {
+            $is4parts = false;
+            foreach (static::$fourthLevelPrefixes as $usePrefix4parts) {
+                if (substr($usePrefix4parts, 0, strlen($prefix)) === $prefix) {
+                    $this->addGroupAtLevelError($phpcsFile, $stackPtr, '4th', $prefix, static::$fourthLevelPrefixes);
+                } elseif (substr($prefix, 0, strlen($usePrefix4parts)) === $usePrefix4parts) {
+                    $is4parts = true;
+                    $countBackSlash = substr_count($prefix, '\\');
+                    if ($countBackSlash < 2 || $countBackSlash > 3) {
+                        $this->addBadRegroupmentError($phpcsFile, $stackPtr, $prefix, strlen($usePrefix4parts));
+                        break;
+                    }
+                }
+            }
         }
+
+        if ($is3parts === false && $is4parts === false && substr_count($prefix, '\\') > 1) {
+            $this->addBadRegroupmentError($phpcsFile, $stackPtr, $prefix, strpos($prefix, '\\') + 1);
+        }
+
+        return $this;
+    }
+
+    protected function addBadRegroupmentError(File $phpcsFile, int $stackPtr, string $prefix, int $offset): self
+    {
+        $allowedPrefix = substr($prefix, 0, strpos($prefix, '\\', $offset));
+        $phpcsFile->addError(
+            '"' . $prefix . '" use group is invalid, use "' . $allowedPrefix . '" instead.',
+            $stackPtr,
+            'BadRegroupment'
+        );
+
+        return $this;
+    }
+
+    protected function addGroupAtLevelError(
+        File $phpcsFile,
+        int $stackPtr,
+        string $level,
+        string $prefix,
+        array $prefixes
+    ): self {
+        $phpcsFile->addError(
+            'Use group "'
+                . $prefix
+                . '" is invalid, you must group at '
+                . $level
+                . ' level for '
+                . implode(', ', $prefixes),
+            $stackPtr,
+            'GroupAt3rdLevel'
+        );
 
         return $this;
     }
@@ -227,9 +266,14 @@ class GroupUsesSniff implements Sniff
         foreach ($this->uses[$phpcsFile->getFilename()] ?? [] as $use) {
             $prefix = null;
 
-            foreach (array_merge(static::$firstLevelPrefixes, static::$thirdLevelPrefixs) as $usePrefix3part) {
-                if (substr($use, 0, strlen($usePrefix3part)) === $usePrefix3part) {
-                    $prefix = substr($use, 0, strpos($use, '\\', strlen($usePrefix3part)) + 1);
+            $usePrefixes = array_merge(
+                static::$firstLevelPrefixes,
+                static::$thirdLevelPrefixes,
+                static::$fourthLevelPrefixes
+            );
+            foreach ($usePrefixes as $usePefix) {
+                if (substr($use, 0, strlen($usePefix)) === $usePefix) {
+                    $prefix = substr($use, 0, strpos($use, '\\', strlen($usePefix)) + 1);
                     break;
                 }
             }
