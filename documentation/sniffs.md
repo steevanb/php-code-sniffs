@@ -156,25 +156,25 @@ Here is the list of enabled sniffs.
 | [Zend.Debug.CodeAnalyzer](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.5.0/src/Standards/Zend/Sniffs/Debug/CodeAnalyzerSniff.php) |
 | [Zend.Files.ClosingTag](https://github.com/squizlabs/PHP_CodeSniffer/blob/3.5.0/src/Standards/Zend/Sniffs/Files/ClosingTagSniff.php) |
   
-## steevanb/php-code-sniffer
+## ubitransport/php-code-sniffer
 
 | Sniff |
 |-------|
-| [Steevanb.Arrays.DisallowShortArraySyntaxSpaces](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/Arrays/DisallowShortArraySyntaxSpacesSniff.php) |
-| [Steevanb.CodeAnalysis.EmptyStatement](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/CodeAnalysis/EmptyStatementSniff.php) |
-| [Steevanb.CodeAnalysis.StrictTypes](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/CodeAnalysis/StrictTypesSniff.php) |
-| [Steevanb.Comparators.DisallowExclamationPoint](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/Comparators/DisallowExclamationPointSniff.php) |
-| [Steevanb.ControlStructures.ElseIfDeclaration](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/ControlStructures/ElseIfDeclarationSniff.php) |
-| [Steevanb.Metrics.NestingLevel](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/Metrics/NestingLevelSniff.php) |
-| [Steevanb.Namespaces.UseDeclaration](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/Namespaces/UseDeclarationSniff.php) |
-| [Steevanb.NamingConventions.CamelCapsFunctionName](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/NamingConventions/CamelCapsFunctionNameSniff.php) |
-| [Steevanb.NamingConventions.ValidVariableName](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/NamingConventions/ValidVariableNameSniff.php) |
-| [Steevanb.PHP.DeprecatedFunctions](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/PHP/DeprecatedFunctionsSniff.php) |
-| [Steevanb.PHP.DisallowMultipleEmptyLines](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/PHP/DisallowMultipleEmptyLinesSniff.php) |
-| [Steevanb.PHP.DisallowSelf](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/PHP/DisallowSelfSniff.php) |
-| [Steevanb.PhpDoc.NumberOfRowsRelativeToContent](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/PhpDoc/NumberOfRowsRelativeToContentSniff.php) |
-| [Steevanb.Properties.ConstantVisibility](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/Properties/ConstantVisibilitySniff.php) |
-| [Steevanb.ReturnType.Php81StaticInsteadOfSelf](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/ReturnType/Php81StaticInsteadOfSelfSniff.php) |
-| [Steevanb.Syntax.BlankLineBeforeReturnSniff](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/Syntax/BlankLineBeforeReturnSniff.php) |
-| [Steevanb.Syntax.Concatenation](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/Syntax/ConcatenationSniff.php) |
-| [Steevanb.Uses.GroupUses](https://github.com/steevanb/php-code-sniffs/blob/4.3.0/Steevanb/Sniffs/Uses/GroupUsesSniff.php) |
+| [Ubitransport.Arrays.DisallowShortArraySyntaxSpaces](https://github.com/ubitransport/php-code-sniffs/blob/4.3.0/Ubitransport/Sniffs/Arrays/DisallowShortArraySyntaxSpacesSniff.php) |
+| [Ubitransport.CodeAnalysis.EmptyStatement](https://github.com/ubitransport/php-code-sniffs/blob/4.3.0/Ubitransport/Sniffs/CodeAnalysis/EmptyStatementSniff.php) |
+| [Ubitransport.CodeAnalysis.StrictTypes](https://github.com/ubitransport/php-code-sniffs/blob/4.3.0/Ubitransport/Sniffs/CodeAnalysis/StrictTypesSniff.php) |
+| [Ubitransport.Comparators.DisallowExclamationPoint](https://github.com/ubitransport/php-code-sniffs/blob/4.3.0/Ubitransport/Sniffs/Comparators/DisallowExclamationPointSniff.php) |
+| [Ubitransport.ControlStructures.ElseIfDeclaration](https://github.com/ubitransport/php-code-sniffs/blob/4.3.0/Ubitransport/Sniffs/ControlStructures/ElseIfDeclarationSniff.php) |
+| [Ubitransport.Metrics.NestingLevel](https://github.com/ubitransport/php-code-sniffs/blob/4.3.0/Ubitransport/Sniffs/Metrics/NestingLevelSniff.php) |
+| [Ubitransport.Namespaces.UseDeclaration](https://github.com/ubitransport/php-code-sniffs/blob/4.3.0/Ubitransport/Sniffs/Namespaces/UseDeclarationSniff.php) |
+| [Ubitransport.NamingConventions.CamelCapsFunctionName](https://github.com/ubitransport/php-code-sniffs/blob/4.3.0/Ubitransport/Sniffs/NamingConventions/CamelCapsFunctionNameSniff.php) |
+| [Ubitransport.NamingConventions.ValidVariableName](https://github.com/ubitransport/php-code-sniffs/blob/4.3.0/Ubitransport/Sniffs/NamingConventions/ValidVariableNameSniff.php) |
+| [Ubitransport.PHP.DeprecatedFunctions](https://github.com/ubitransport/php-code-sniffs/blob/4.3.0/Ubitransport/Sniffs/PHP/DeprecatedFunctionsSniff.php) |
+| [Ubitransport.PHP.DisallowMultipleEmptyLines](https://github.com/ubitransport/php-code-sniffs/blob/4.3.0/Ubitransport/Sniffs/PHP/DisallowMultipleEmptyLinesSniff.php) |
+| [Ubitransport.PHP.DisallowSelf](https://github.com/ubitransport/php-code-sniffs/blob/4.3.0/Ubitransport/Sniffs/PHP/DisallowSelfSniff.php) |
+| [Ubitransport.PhpDoc.NumberOfRowsRelativeToContent](https://github.com/ubitransport/php-code-sniffs/blob/4.3.0/Ubitransport/Sniffs/PhpDoc/NumberOfRowsRelativeToContentSniff.php) |
+| [Ubitransport.Properties.ConstantVisibility](https://github.com/ubitransport/php-code-sniffs/blob/4.3.0/Ubitransport/Sniffs/Properties/ConstantVisibilitySniff.php) |
+| [Ubitransport.ReturnType.Php81StaticInsteadOfSelf](https://github.com/ubitransport/php-code-sniffs/blob/4.3.0/Ubitransport/Sniffs/ReturnType/Php81StaticInsteadOfSelfSniff.php) |
+| [Ubitransport.Syntax.BlankLineBeforeReturnSniff](https://github.com/ubitransport/php-code-sniffs/blob/4.3.0/Ubitransport/Sniffs/Syntax/BlankLineBeforeReturnSniff.php) |
+| [Ubitransport.Syntax.Concatenation](https://github.com/ubitransport/php-code-sniffs/blob/4.3.0/Ubitransport/Sniffs/Syntax/ConcatenationSniff.php) |
+| [Ubitransport.Uses.GroupUses](https://github.com/ubitransport/php-code-sniffs/blob/4.3.0/Ubitransport/Sniffs/Uses/GroupUsesSniff.php) |

@@ -1,4 +1,9 @@
-### [4.4.0](../../../compare/4.3.3...4.4.0) - 2022-02-17
+### [4.5.0](../../../compare/4.3.3...4.4.0) - 2022-02-17
+
+- Update phpcs to 3.7.*
+- Change SteevanB namespace and Report to ubitransport
+
+- ### [4.4.0](../../../compare/4.3.3...4.4.0) - 2022-02-17
 
 - Add `GroupUsesSniff::addFourthLevelPrefix()`
 
@@ -42,7 +47,7 @@
 
 ### [4.0.2](../../../compare/4.0.1...4.0.2) - 2020-04-28
 
-- Fix all `Steevanb` sniffs wo where not enabled.
+- Fix all `Ubitransport` sniffs wo where not enabled.
 
 ### [4.0.1](../../../compare/4.0.0...4.0.1) - 2020-03-19
 
@@ -50,7 +55,7 @@
 
 ### [4.0.0](../../../compare/3.0.1...4.0.0) - 2020-03-19
 
-- [BC Break] Move `ruleset.xml` from `Steevanb` to root.
+- [BC Break] Move `ruleset.xml` from `Ubitransport` to root.
 - Merge `docker-php-code-sniffs` repository into this one.
 - Reworked Docker image to have git and openssh for CircleCI and lower it's size.
 - Move source code files into `src` directory.
@@ -61,7 +66,7 @@
 
 ### [3.0.0](../../../compare/2.0.10...3.0.0) - 2019-09-14
 
-- [BC Break] Move `ruleset.xml` into `Steevanb`.
+- [BC Break] Move `ruleset.xml` into `Ubitransport`.
 - Update `squizlabs/php_codesniffer` dependency to `3.5.*`
 - Added `Generic.ControlStructures.DisallowYodaConditions`: ban the use of Yoda conditions.
 - Added `Generic.PHP.DisallowAlternativePHPTags`
@@ -73,7 +78,7 @@
 - Added `PSR12.Files.OpenTag`: enforces that the open tag is on a line by itself when used at the start of a php-only file.
 - Added `PSR12.Functions.ReturnTypeDeclaration`: enforces the formatting of return type declarations in functions and closures.
 - Added `PSR12.Traits.UseDeclaration`: enforces the formatting of trait import statements within a class
-- Added `steevanb\PhpCodeSniffs\Steevanb\Sniffs\PHP`: enforces that constants must have their visibility defined.
+- Added `ubitransport\PhpCodeSniffs\Ubitransport\Sniffs\PHP`: enforces that constants must have their visibility defined.
 - Removed `Squiz.Commenting.FunctionCommentThrowTag`.
 - Rework `StrictTypesSniff` from `RequireStrictTypesSniff of squizlabs/php_codesniffer.
 
@@ -83,7 +88,7 @@
 
 ### [2.0.9](../../../compare/2.0.7...2.0.8) - 2019-05-17
 
-- Remove `Steevanb.Functions.DisallowMultipleReturn` (really).
+- Remove `Ubitransport.Functions.DisallowMultipleReturn` (really).
 - Update documentation to use Docker and CircleCI.
 
 ### [2.0.8](../../../compare/2.0.7...2.0.8) - 2019-05-16
@@ -93,7 +98,7 @@
 
 ### [2.0.7](../../../compare/2.0.6...2.0.7) - 2019-05-10
 
-- Remove `Steevanb.Functions.DisallowMultipleReturn`.
+- Remove `Ubitransport.Functions.DisallowMultipleReturn`.
 
 ### [2.0.6](../../../compare/2.0.5...2.0.6) - 2019-05-10
 
@@ -143,11 +148,11 @@
 
 ### [1.0.2](../../../compare/1.0.1...1.0.2) - 2019-01-29
 
-- Fix `Steevanb_Sniffs_Functions_DisallowMultipleReturnSniff::addAllowedFunction()`.
+- Fix `Ubitransport_Sniffs_Functions_DisallowMultipleReturnSniff::addAllowedFunction()`.
 
 ### [1.0.1](../../../compare/1.0.0...1.0.1) - 2019-01-16
 
-- Fix `Steevanb_Sniffs_Uses_GroupUsesSniff::addThirdLevelPrefix()`.
+- Fix `Ubitransport_Sniffs_Uses_GroupUsesSniff::addThirdLevelPrefix()`.
 
 ### 1.0.0 - 2019-01-16
 
