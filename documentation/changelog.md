@@ -1,5 +1,9 @@
 ### [4.5.0](../../../compare/4.4.0...4.5.0) - 2024-04-11
 
+- Update [squizlabs/php_codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) from `3.7` to `3.9`
+
+### [4.5.0](../../../compare/4.4.0...4.5.0) - 2024-04-11
+
 - Update [squizlabs/php_codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) from `3.6` to `3.7`
 
 ### [4.4.0](../../../compare/4.3.3...4.4.0) - 2022-02-17
