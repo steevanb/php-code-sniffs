@@ -1,7 +1,7 @@
 ## Installation as dependency
 
 ```bash
-composer require steevanb/php-code-sniffs ^4.4
+composer require steevanb/php-code-sniffs ^4.5
 ```
 
 ## Usage

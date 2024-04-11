@@ -15,7 +15,7 @@ if [ "$(which docker || false)" ]; then
             --volume ${PROJECT_DIRECTORY}:/app:ro \
             --volume ${PROJECT_DIRECTORY}:/var/php-code-sniffs:ro \
             --entrypoint /app/bin/phpcs \
-            php:8.1.1-cli-alpine3.15
+            php:8.3.4-cli-alpine3.19
 else
     PHPCS_PARAMETERS="-p --warning-severity=0 --ignore=/app/vendor/" \
         PHPCS_PHP_VERSION_ID=70100 \
