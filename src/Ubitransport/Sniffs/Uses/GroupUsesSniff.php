@@ -140,11 +140,17 @@ class GroupUsesSniff implements Sniff
     {
         $previousToken = $phpcsFile->getTokens()[$stackPtr - 1];
         if ($previousToken['type'] !== 'T_WHITESPACE' || $previousToken['content'] !== "\n") {
-            $phpcsFile->addError(
+            $fixable = $phpcsFile->addFixableError(
                 'Use group close brace should be on it\'s own line whithout spaces before',
                 $stackPtr - 1,
                 'CloseBraceOwnLine'
             );
+
+            if ($fixable) {
+                $phpcsFile->fixer->beginChangeset();
+                $phpcsFile->fixer->replaceToken($stackPtr, "\n}");
+                $phpcsFile->fixer->endChangeset();
+            }
         }
 
         return $this;

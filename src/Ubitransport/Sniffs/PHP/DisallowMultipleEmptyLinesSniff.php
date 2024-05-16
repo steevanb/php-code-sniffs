@@ -31,11 +31,19 @@ class DisallowMultipleEmptyLinesSniff implements Sniff
                 && $nextToken2['code'] === T_WHITESPACE
                 && $nextToken2['content'] === "\n"
             ) {
-                $phpcsFile->addErrorOnLine(
+                $message = $phpcsFile->addErrorOnLine(
                     'Multiple empty lines are not allowed',
                     $nextToken['line'],
                     'NotAllowed'
                 );
+
+                // If the message is ok and the fixer is enabled, we fix it
+                if ($message === true && $phpcsFile->fixer->enabled === true) {
+                    $phpcsFile->fixer->beginChangeset();
+                    $phpcsFile->fixer->replaceToken($stackPtr + 1, '');
+                    $phpcsFile->fixer->replaceToken($stackPtr + 2, '');
+                    $phpcsFile->fixer->endChangeset();
+                }
             }
         }
     }
