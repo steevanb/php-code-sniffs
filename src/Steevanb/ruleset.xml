@@ -2,7 +2,6 @@
 <ruleset name="Steevanb">
     <description>Steevan BARBOYON coding standards</description>
 
-    <exclude-pattern>*/Resources/*</exclude-pattern>
     <arg name="extensions" value="php"/>
     <arg name="colors"/>
     <arg name="report-width" value="200"/>

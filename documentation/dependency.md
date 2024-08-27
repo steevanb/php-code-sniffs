@@ -1,10 +1,36 @@
 ## Installation as dependency
 
 ```bash
-composer require steevanb/php-code-sniffs ^4.5
+composer require --dev steevanb/php-code-sniffs ^4.5
 ```
 
 ## Usage
+
+### Configuration file
+
+Example of `phpcs.xml`:
+
+```xml
+<?xml version="1.0"?>
+<ruleset name="phpcs">
+    <rule ref="vendor/steevanb/php-code-sniffs/src/Steevanb/ruleset.xml"/>
+    <arg name="warning-severity" value="0"/>
+    <exclude-pattern>/var</exclude-pattern>
+    <exclude-pattern>/vendor</exclude-pattern>
+    <arg name="report" value="steevanb\PhpCodeSniffs\Reports\Steevanb"/>
+    <arg name="cache" value="var/ci/phpcs/cache"/>
+    <file>.</file>
+    <rule ref="Steevanb.Uses.GroupUses">
+        <properties>
+            <property name="firstLevelPrefixes" type="array">
+                <element value="App"/>
+            </property>
+        </properties>
+    </rule>
+</ruleset>
+```
+
+Paths in this file are relatives to this file.
 
 ### Scan files
 

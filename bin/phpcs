@@ -17,7 +17,7 @@ if [ "$(which docker || false)" ]; then
             --entrypoint /app/bin/phpcs \
             php:8.3.4-cli-alpine3.19
 else
-    PHPCS_PARAMETERS="-p --warning-severity=0 --ignore=/app/vendor/" \
+    PHPCS_PARAMETERS="--standard=/app/standard.xml" \
         PHPCS_PHP_VERSION_ID=70100 \
             /var/php-code-sniffs/docker/entrypoint.sh
 fi

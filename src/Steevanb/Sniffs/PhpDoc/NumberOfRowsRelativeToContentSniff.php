@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\PhpDoc;
 
-use PHP_CodeSniffer\Sniffs\Sniff;
-use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\{
+    Sniffs\Sniff,
+    Files\File
+};
 
 /** Force PHPDoc to be on one line if PHPDoc contains only one line */
 class NumberOfRowsRelativeToContentSniff implements Sniff

@@ -21,7 +21,7 @@ You can install phpcs with this 2 methods:
 
 List of enabled code sniffs is [available here](documentation/sniffs.md).
 
-You can configure some of them with a [bootstrap file](documentation/bootstrap.md).
+You can [configure some sniffs](documentation/configuration.md).
 
 # Run phpcs with CircleCI
 

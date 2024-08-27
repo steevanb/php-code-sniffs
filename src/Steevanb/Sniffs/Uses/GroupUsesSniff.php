@@ -27,36 +27,13 @@ use PHP_CodeSniffer\{
 class GroupUsesSniff implements Sniff
 {
     /** @var string[] */
-    protected static $firstLevelPrefixes = [];
+    public $firstLevelPrefixes = [];
 
     /** @var string[] */
-    protected static $thirdLevelPrefixes = [];
+    public $thirdLevelPrefixes = [];
 
     /** @var string[] */
-    protected static $fourthLevelPrefixes = [];
-
-    public static function addFirstLevelPrefix(string $prefix): void
-    {
-        static::$firstLevelPrefixes[] = rtrim($prefix, '\\');
-    }
-
-    public static function addThirdLevelPrefix(string $prefix): void
-    {
-        static::$thirdLevelPrefixes[] = rtrim($prefix, '\\') . '\\';
-    }
-
-    public static function addFourthLevelPrefix(string $prefix): void
-    {
-        static::$fourthLevelPrefixes[] = rtrim($prefix, '\\') . '\\';
-    }
-
-    public static function addSymfonyPrefixes(): void
-    {
-        static::addThirdLevelPrefix('Symfony\\Component');
-        static::addThirdLevelPrefix('Symfony\\Contracts');
-        static::addThirdLevelPrefix('Symfony\\Bundle');
-        static::addThirdLevelPrefix('Sensio\\Bundle');
-    }
+    public $fourthLevelPrefixes = [];
 
     /** @var string[] */
     protected $uses = [];
@@ -192,9 +169,9 @@ class GroupUsesSniff implements Sniff
     protected function validateUseGroupPrefixName(File $phpcsFile, int $stackPtr, string $prefix): self
     {
         $is3parts = false;
-        foreach (static::$thirdLevelPrefixes as $usePrefix3parts) {
+        foreach ($this->thirdLevelPrefixes as $usePrefix3parts) {
             if (substr($usePrefix3parts, 0, strlen($prefix)) === $prefix) {
-                $this->addGroupAtLevelError($phpcsFile, $stackPtr, '3rd', $prefix, static::$thirdLevelPrefixes);
+                $this->addGroupAtLevelError($phpcsFile, $stackPtr, '3rd', $prefix, $this->thirdLevelPrefixes);
             } elseif (substr($prefix, 0, strlen($usePrefix3parts)) === $usePrefix3parts) {
                 $is3parts = true;
                 $countBackSlash = substr_count($prefix, '\\');
@@ -207,9 +184,9 @@ class GroupUsesSniff implements Sniff
 
         if ($is3parts === false) {
             $is4parts = false;
-            foreach (static::$fourthLevelPrefixes as $usePrefix4parts) {
+            foreach ($this->fourthLevelPrefixes as $usePrefix4parts) {
                 if (substr($usePrefix4parts, 0, strlen($prefix)) === $prefix) {
-                    $this->addGroupAtLevelError($phpcsFile, $stackPtr, '4th', $prefix, static::$fourthLevelPrefixes);
+                    $this->addGroupAtLevelError($phpcsFile, $stackPtr, '4th', $prefix, $this->fourthLevelPrefixes);
                 } elseif (substr($prefix, 0, strlen($usePrefix4parts)) === $usePrefix4parts) {
                     $is4parts = true;
                     $countBackSlash = substr_count($prefix, '\\');
@@ -267,9 +244,9 @@ class GroupUsesSniff implements Sniff
             $prefix = null;
 
             $usePrefixes = array_merge(
-                static::$firstLevelPrefixes,
-                static::$thirdLevelPrefixes,
-                static::$fourthLevelPrefixes
+                $this->firstLevelPrefixes,
+                $this->thirdLevelPrefixes,
+                $this->fourthLevelPrefixes
             );
             foreach ($usePrefixes as $usePefix) {
                 if (substr($use, 0, strlen($usePefix)) === $usePefix) {
