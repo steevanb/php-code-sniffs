@@ -44,7 +44,6 @@ class Steevanb implements Report
     public function generateFileReport($report, File $phpcsFile, $showSources = false, $width = 80): bool
     {
         if ($report['errors'] === 0 && $report['warnings'] === 0) {
-            // Nothing to print.
             return false;
         }
 
@@ -179,36 +178,68 @@ class Steevanb implements Report
         $interactive = false,
         $toScreen = true
     ) {
-        if ($cachedData === '') {
-            return;
-        }
-
         echo $cachedData;
 
         if ($toScreen === true && $interactive === false) {
-            $time = ((microtime(true) - $this->getStartTime()) * 1000);
+            $time = $this->calculateTime();
 
-            if ($time > 60000) {
-                $mins = floor($time / 60000);
-                $secs = round((($time % 60000) / 1000), 2);
-                $time = $mins . ' mins';
-                if ($secs !== 0) {
-                    $time .= ', ' . $secs . ' secs';
-                }
-            } elseif ($time > 1000) {
-                $time = round(($time / 1000), 2) . ' secs';
-            } else {
-                $time = round($time) . 'ms';
+            $parts = [];
+            $filesLabel = $this->getFilesLabel($totalFiles, $totalErrors, $totalWarnings);
+            if (is_string($filesLabel)) {
+                $parts[] = $filesLabel;
             }
 
-            $parts = [
-                $totalFiles . ' file' . ($totalFiles > 1 ? 's' : null),
-                $totalErrors . ' error' . ($totalErrors > 1 ? 's' : null),
-                $totalWarnings . ' warning' . ($totalWarnings > 1 ? 's' : null),
-                $time
-            ];
-            echo "\e[44m " . implode(' - ', $parts) . " \e[0m" . PHP_EOL;
+            $parts[] = $this->getErrorsLabel($totalErrors);
+            $parts[] = $this->getWarningsLabel($totalWarnings);
+            $parts[] = $time;
+
+            echo implode(' - ', $parts) . PHP_EOL;
         }
+    }
+
+    protected function getFilesLabel(int $totalFiles, int $totalErrors, int $totalWarnings): ?string
+    {
+        return ($totalErrors > 0 || $totalWarnings > 0)
+            ? $totalFiles . ' file' . ($totalFiles > 1 ? 's' : null)
+            : null;
+    }
+
+    protected function getErrorsLabel(int $totalErrors): string
+    {
+        $color = $totalErrors === 0 ? "\e[42m\e[30m" : "\e[41m";
+
+        return $color . ' ' . $totalErrors . ' error' . ($totalErrors !== 1 ? 's' : null) . " \e[0m";
+    }
+
+    protected function getWarningsLabel(int $totalWarnings): string
+    {
+        $return = $totalWarnings . ' warning' . ($totalWarnings !== 1 ? 's' : null);
+
+        if ($totalWarnings > 0) {
+            $return = "\e[43m\e[30m " . $return . " \e[0m";
+        }
+
+        return $return;
+    }
+
+    protected function calculateTime(): string
+    {
+        $time = ((microtime(true) - $this->getStartTime()) * 1000);
+
+        if ($time > 60000) {
+            $mins = floor($time / 60000);
+            $secs = round((($time % 60000) / 1000), 2);
+            $return = $mins . ' mins';
+            if ($secs !== 0) {
+                $return .= ', ' . $secs . ' secs';
+            }
+        } elseif ($time > 1000) {
+            $return = round(($time / 1000), 2) . ' secs';
+        } else {
+            $return = round($time) . 'ms';
+        }
+
+        return $return;
     }
 
     protected function getStartTime(): float

@@ -1,3 +1,9 @@
+### [5.0.0](../../../compare/4.5.0...5.0.0) - 2024-08-27
+
+- [BC Break] Remove `GroupUsesSniffs::addFirstLevelPrefix()`, `addThirdLevelPrefix()`, `addFourthLevelPrefix()` and `addSymfonyPrefixes()`. Use xml instead.
+- [BC Break] Remove `*/Resources/*` in `ruleset.xml`: it's specific to Symfony, it should not be there.
+- Rework summary: add colors, show summary when no errors.
+
 ### [4.5.0](../../../compare/4.4.0...4.5.0) - 2024-04-11
 
 - Update [squizlabs/php_codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) from `3.7` to `3.9`
