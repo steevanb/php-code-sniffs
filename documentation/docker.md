@@ -8,7 +8,7 @@ docker \
         -it \
         --rm \
         -v /path/to/my/project:/app:ro \
-        steevanb/php-code-sniffs:4.5.1
+        steevanb/php-code-sniffs:5.0.0
 ```
 
 All files in `/app` into Docker container directory will be tested.
@@ -32,7 +32,7 @@ if [ $(which docker || false) ]; then
             --rm \
             -v ${PROJECT_DIRECTORY}:/app:ro \
             --entrypoint /app/bin/phpcs \
-            steevanb/php-code-sniffs:4.5.1
+            steevanb/php-code-sniffs:5.0.0
 else
     # Add parameters to phpcs (not mandatory)
     PHPCS_PARAMETERS="-p --warning-severity=0 --ignore=vendor/"
