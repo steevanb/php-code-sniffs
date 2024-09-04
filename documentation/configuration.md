@@ -20,13 +20,13 @@ Some other sniffs can be configured in xml.
     
     <properties>
         <property name="thirdLevelPrefixes" type="array">
-            <element value="Foo\Bar"/>
+            <element value="Foo\Bar\"/>
         </property>
     </properties>
     
     <properties>
         <property name="fourthLevelPrefixes" type="array">
-            <element value="Foop\Bar\Baz"/>
+            <element value="Foop\Bar\Baz\"/>
         </property>
     </properties>
 </rule>
