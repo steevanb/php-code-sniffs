@@ -16,17 +16,13 @@ Some other sniffs can be configured in xml.
         <property name="firstLevelPrefixes" type="array">
             <element value="Foo"/>
         </property>
-    </properties>
-    
-    <properties>
+
         <property name="thirdLevelPrefixes" type="array">
-            <element value="Foo\Bar"/>
+            <element value="Foo\Bar\"/>
         </property>
-    </properties>
-    
-    <properties>
+
         <property name="fourthLevelPrefixes" type="array">
-            <element value="Foop\Bar\Baz"/>
+            <element value="Foop\Bar\Baz\"/>
         </property>
     </properties>
 </rule>
@@ -39,13 +35,14 @@ Example for a project who use Symfony:
         <property name="firstLevelPrefixes" type="array">
             <element value="App"/>
         </property>
-    </properties>
-    
-    <properties>
+
         <property name="thirdLevelPrefixes" type="array">
-            <element value="Symfony\Component"/>
-            <element value="Symfony\Contracts"/>
-            <element value="Symfony\Bundle"/>
+            <element value="Symfony\Component\"/>
+            <element value="Symfony\Contracts\"/>
+            <element value="Symfony\Bundle\"/>
+            <element value="Symfony\Bridge\"/>
+            <element value="Doctrine\Common\"/>
+            <element value="Doctrine\Bundle\"/>
         </property>
     </properties>
 </rule>
