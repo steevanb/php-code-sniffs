@@ -2,7 +2,7 @@
     "name": "steevanb/php-code-sniffs",
     "description": "Steevan BARBOYON coding standards.",
     "license": "MIT",
-    "type": "library",
+    "type": "phpcodesniffer-standard",
     "autoload": {
         "psr-4": {
             "Steevanb\\PhpCodeSniffs\\": "src/"
