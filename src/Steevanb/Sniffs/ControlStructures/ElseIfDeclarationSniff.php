@@ -1,12 +1,12 @@
 <?php
 /**
- * Fork from squizlabs/php_codesniffer/src/Standards/PSR2/Sniffs/ControlStructures/ElseIfDeclarationSniff.php
+ * Fork from PHPCSStandards/PHP_CodeSniffer/src/Standards/PSR2/Sniffs/ControlStructures/ElseIfDeclarationSniff.php
  * Change warning into error
  * Verifies that there are no else if statements (elseif should be used instead).
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
 declare(strict_types=1);

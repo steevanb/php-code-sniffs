@@ -5,7 +5,7 @@
 
 # php-code-sniffs
 
-Use [squizlabs/php_codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) to check your code style.
+Use [squizlabs/php_codesniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer) to check your code style.
 
 Remove some coding standards, and add a few more.
 

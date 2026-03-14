@@ -137,13 +137,7 @@ class Steevanb implements Report
                         echo '] ';
                     }
 
-                    echo
-                        wordwrap(
-                            $message,
-                            $maxErrorSpace,
-                            PHP_EOL . $paddingLine2
-                        )
-                        . PHP_EOL;
+                    echo wordwrap($message, $maxErrorSpace, PHP_EOL . $paddingLine2) . PHP_EOL;
                 }
             }
         }
