@@ -20,13 +20,11 @@
         <exclude name="Generic.Classes.OpeningBraceSameLine"/>
         <exclude name="Generic.CodeAnalysis.EmptyStatement"/>
         <exclude name="Generic.Commenting.DocComment"/>
-        <exclude name="Generic.Debug.CSSLint"/>
-        <exclude name="Generic.Debug.ESLint"/>
-        <exclude name="Generic.Debug.JSHint"/>
+
         <exclude name="Generic.Files.EndFileNoNewline"/>
         <exclude name="Generic.Files.LowercasedFilename"/>
         <exclude name="Generic.Formatting.MultipleStatementAlignment"/>
-        <exclude name="Generic.Formatting.NoSpaceAfterCast"/>
+
         <exclude name="Generic.Formatting.SpaceAfterNot"/>
         <exclude name="Generic.Functions.OpeningFunctionBraceBsdAllman"/>
         <exclude name="Generic.Functions.OpeningFunctionBraceKernighanRitchie"/>
@@ -41,7 +39,6 @@
         <exclude name="Generic.Commenting.Todo"/>
         <exclude name="Generic.VersionControl.SubversionProperties"/>
         <exclude name="Generic.WhiteSpace.DisallowSpaceIndent"/>
-        <exclude name="Generic.WhiteSpace.LanguageConstructSpacing"/>
         <exclude name="PEAR.Formatting.MultiLineAssignment.EqualSignLine"/>
         <!-- Bug when grouped conditions with () -->
         <exclude name="PEAR.ControlStructures.MultiLineCondition.Alignment"/>
@@ -81,7 +78,6 @@
         <exclude name="Squiz.Strings.DoubleQuoteUsage.ContainsVar"/>
         <exclude name="Squiz.WhiteSpace.ControlStructureSpacing"/>
         <exclude name="Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeClose"/>
-        <exclude name="Squiz.WhiteSpace.LanguageConstructSpacing"/>
         <exclude name="Squiz.WhiteSpace.ObjectOperatorSpacing.Before"/>
         <exclude name="Zend.NamingConventions.ValidVariableName"/>
     </rule>
