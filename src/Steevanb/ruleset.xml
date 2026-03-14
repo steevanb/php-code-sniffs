@@ -17,6 +17,8 @@
     <rule ref="PSR12.Traits.UseDeclaration"/>
     <rule ref="Squiz">
         <exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+        <!-- Replaced by Steevanb\PhpCodeSniffs\Steevanb\Sniffs\Formatting\DisallowMultipleStatementsSniff -->
+        <exclude name="Generic.Formatting.DisallowMultipleStatements"/>
         <exclude name="Generic.Classes.OpeningBraceSameLine"/>
         <exclude name="Generic.CodeAnalysis.EmptyStatement"/>
         <exclude name="Generic.Commenting.DocComment"/>
@@ -84,7 +86,7 @@
     <rule ref="PSR2">
         <exclude name="PSR2.Namespaces.UseDeclaration.MultipleDeclarations"/>
         <exclude name="PSR2.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace"/>
-        <!-- Replaced by steevanb\PhpCodeSniffs\Steevanb\Sniffs\ControlStructures\ElseIfDeclarationSniff -->
+        <!-- Replaced by Steevanb\PhpCodeSniffs\Steevanb\Sniffs\ControlStructures\ElseIfDeclarationSniff -->
         <exclude name="PSR2.ControlStructures.ElseIfDeclaration.NotAllowed"/>
     </rule>
     <rule ref="Generic.Files.LineLength">

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\NamingConventions;
+namespace Steevanb\PhpCodeSniffs\Steevanb\Sniffs\NamingConventions;
 
 use PHP_CodeSniffer\{
     Files\File,
@@ -16,6 +16,9 @@ use PHP_CodeSniffer\{
  */
 class CamelCapsFunctionNameSniff extends AbstractScopeSniff
 {
+    /** @var string[] */
+    public $allowedNotCamelCase = [];
+
     /** A list of all PHP magic methods */
     protected $magicMethods = [
         'construct' => true,
@@ -28,6 +31,8 @@ class CamelCapsFunctionNameSniff extends AbstractScopeSniff
         'unset' => true,
         'sleep' => true,
         'wakeup' => true,
+        'serialize' => true,
+        'unserialize' => true,
         'tostring' => true,
         'set_state' => true,
         'clone' => true,
@@ -53,17 +58,8 @@ class CamelCapsFunctionNameSniff extends AbstractScopeSniff
         'setsoapheaders' => true
     ];
 
-    protected $allowedNotCamelCase = [
-        'getSQLDeclaration',
-        'convertToPHPValue',
-        'requiresSQLCommentHint'
-    ];
-
     /** A list of all PHP magic functions */
     protected $magicFunctions = ['autoload' => true];
-
-    /** If TRUE, the string must not have two capital letters next to each other. */
-    public $strict = true;
 
     public function __construct()
     {
@@ -74,11 +70,12 @@ class CamelCapsFunctionNameSniff extends AbstractScopeSniff
      * @param int $stackPtr
      * @param int $currScope
      */
-    protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope): void
+    protected function processTokenWithinScope(File $phpcsFile, int $stackPtr, int $currScope): void
     {
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
         if ($methodName === null) {
             // Ignore closures.
+
             return;
         }
 
@@ -115,7 +112,7 @@ class CamelCapsFunctionNameSniff extends AbstractScopeSniff
         $methodName = ltrim($methodName, '_');
 
         $methodProps = $phpcsFile->getMethodProperties($stackPtr);
-        if (Common::isCamelCaps($methodName, false, true, $this->strict) === false) {
+        if (Common::isCamelCaps($methodName, false, true, true) === false) {
             if ($methodProps['scope_specified'] === true) {
                 if (in_array($methodName, $this->allowedNotCamelCase) === false) {
                     $error = '%s method name "%s" is not in camel caps format';
@@ -138,12 +135,12 @@ class CamelCapsFunctionNameSniff extends AbstractScopeSniff
         }
     }
 
-    /** @param int $stackPtr */
-    protected function processTokenOutsideScope(File $phpcsFile, $stackPtr): void
+    protected function processTokenOutsideScope(File $phpcsFile, int $stackPtr): void
     {
         $functionName = $phpcsFile->getDeclarationName($stackPtr);
         if ($functionName === null) {
             // Ignore closures.
+
             return;
         }
 
@@ -165,7 +162,7 @@ class CamelCapsFunctionNameSniff extends AbstractScopeSniff
         // Ignore first underscore in functions prefixed with "_".
         $functionName = ltrim($functionName, '_');
 
-        if (Common::isCamelCaps($functionName, false, true, $this->strict) === false) {
+        if (Common::isCamelCaps($functionName, false, true, true) === false) {
             $error = 'Function name "%s" is not in camel caps format';
             $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $errorData);
             $phpcsFile->recordMetric($stackPtr, 'CamelCase function name', 'no');

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<ruleset name="GroupUsesTest">
+    <config name="installed_paths" value="/app/src"/>
+    <rule ref="Steevanb.Uses.GroupUses">
+        <properties>
+            <property name="groupPrefixes" type="array">
+                <element value="App\Foo"/>
+                <element value="Symfony\Component\HttpFoundation"/>
+            </property>
+        </properties>
+    </rule>
+    <arg name="extensions" value="php"/>
+</ruleset>

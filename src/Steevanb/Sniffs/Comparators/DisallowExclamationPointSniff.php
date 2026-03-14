@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\Comparators;
+namespace Steevanb\PhpCodeSniffs\Steevanb\Sniffs\Comparators;
 
 use PHP_CodeSniffer\{
     Files\File,
@@ -17,11 +17,10 @@ class DisallowExclamationPointSniff implements Sniff
         return [T_BOOLEAN_NOT];
     }
 
-    /** @param int $stackPtr */
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, int $stackPtr): void
     {
         $phpcsFile->addError(
-            '"!" to compare as false is not allowed, use "=== false" instead',
+            'Exclamation mark to compare as false is not allowed, use === false instead',
             $stackPtr,
             'NotAllowed'
         );

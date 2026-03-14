@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\Uses;
+namespace Steevanb\PhpCodeSniffs\Steevanb\Sniffs\Uses;
 
 use PHP_CodeSniffer\{
     Files\File,
@@ -10,273 +10,284 @@ use PHP_CodeSniffer\{
 };
 
 /**
- * Group use on 1st, 2nd (default), 3rd level or 4th level
- * Example:
- * use App\{
- *     Entity\Foo
- *     Repository\FooRepository
- * };
- * use Symfony\Component\HttpFoundation\{
- *     Request,
- *     Response
- * };
+ * Enforce grouped use statements for namespaces sharing a configured prefix.
  *
- * Call addFirstLevelPrefix() to force this namespace to be regrouped at 1st level
- * Call addThirdLevelPrefix() to force this namespace to be regrouped at 3rd level
+ * Example configuration:
+ * <rule ref="Steevanb.Uses.GroupUses">
+ *     <properties>
+ *         <property name="groupPrefixes" type="array">
+ *             <element value="App\Foo"/>
+ *             <element value="Symfony\Component\HttpFoundation"/>
+ *         </property>
+ *     </properties>
+ * </rule>
+ *
+ * With groupPrefixes = ["App\Foo"], the following is invalid:
+ *     use App\Foo\Bar;
+ *     use App\Foo\Baz;
+ *
+ * And must be written as:
+ *     use App\Foo\{
+ *         Bar,
+ *         Baz
+ *     };
  */
 class GroupUsesSniff implements Sniff
 {
     /** @var string[] */
-    public $firstLevelPrefixes = [];
+    public $groupPrefixes = [];
 
-    /** @var string[] */
-    public $thirdLevelPrefixes = [];
-
-    /** @var string[] */
-    public $fourthLevelPrefixes = [];
-
-    /** @var string[] */
-    protected $uses = [];
-
-    /** @return string[] */
     public function register(): array
     {
-        return [T_USE, T_OPEN_USE_GROUP, T_CLOSE_USE_GROUP];
+        return [T_OPEN_TAG];
     }
 
-    /** @param int $stackPtr */
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, int $stackPtr): void
     {
-        if ($phpcsFile->getTokens()[$stackPtr]['type'] === 'T_USE') {
-            $this->processUse($phpcsFile, $stackPtr);
-        } elseif ($phpcsFile->getTokens()[$stackPtr]['type'] === 'T_OPEN_USE_GROUP') {
-            $this->processOpenUseGroup($phpcsFile, $stackPtr);
-        } else {
-            $this->processCloseUseGroup($phpcsFile, $stackPtr);
-        }
+        $tokens = $phpcsFile->getTokens();
+        $uses = $this->collectUseStatements($phpcsFile);
+
+        $this->validateUngroupedUses($phpcsFile, $uses);
+        $this->validateGroupedUseFormat($phpcsFile, $uses);
+
+        // Only process once per file.
+        return;
     }
 
-    protected function processUse(File $phpcsFile, int $stackPtr): self
+    /**
+     * @return list<array{
+     *     ptr: int,
+     *     name: string,
+     *     isGrouped: bool,
+     *     groupPrefix: string|null,
+     *     groupMembers: list<string>
+     * }>
+     */
+    private function collectUseStatements(File $phpcsFile): array
     {
-        $useGroupPrefix = $this->getUseGroupPrefix($phpcsFile, $stackPtr);
-        if (is_string($useGroupPrefix)) {
-            $this->validateUseGroupPrefixName($phpcsFile, $stackPtr, $useGroupPrefix);
-        } else {
-            $currentUse = $this->getCurrentUse($phpcsFile, $stackPtr);
-            if (is_string($currentUse)) {
-                $this->validateUse($phpcsFile, $stackPtr, $currentUse);
+        $tokens = $phpcsFile->getTokens();
+        $uses = [];
+        $ptr = 0;
+
+        while ($ptr < $phpcsFile->numTokens) {
+            $ptr = $phpcsFile->findNext(T_USE, $ptr);
+            if ($ptr === false) {
+                break;
+            }
+
+            // Skip trait use and closure use.
+            if ($this->isNamespaceUse($phpcsFile, $ptr) === false) {
+                $ptr++;
+                continue;
+            }
+
+            $semicolon = $phpcsFile->findNext(T_SEMICOLON, $ptr + 1);
+            if ($semicolon === false) {
+                break;
+            }
+
+            $groupOpen = $phpcsFile->findNext(T_OPEN_USE_GROUP, $ptr + 1, $semicolon);
+
+            if ($groupOpen !== false) {
+                $groupClose = $phpcsFile->findNext(T_CLOSE_USE_GROUP, $groupOpen + 1);
+                if ($groupClose === false) {
+                    break;
+                }
+
+                $prefix = $this->getTokenContent($phpcsFile, $ptr + 1, $groupOpen);
+                $members = $this->getGroupMembers($phpcsFile, $groupOpen, $groupClose);
+
+                $uses[] = [
+                    'ptr' => $ptr,
+                    'name' => $prefix,
+                    'isGrouped' => true,
+                    'groupPrefix' => rtrim($prefix, '\\'),
+                    'groupMembers' => $members,
+                ];
+
+                $ptr = $semicolon + 1;
+            } else {
+                $name = $this->getTokenContent($phpcsFile, $ptr + 1, $semicolon);
+
+                $uses[] = [
+                    'ptr' => $ptr,
+                    'name' => $name,
+                    'isGrouped' => false,
+                    'groupPrefix' => null,
+                    'groupMembers' => [],
+                ];
+
+                $ptr = $semicolon + 1;
             }
         }
 
-        return $this;
+        return $uses;
     }
 
-    protected function processOpenUseGroup(File $phpcsFile, int $stackPtr): self
+    /** @param list<array{ptr: int, name: string, isGrouped: bool, groupPrefix: string|null, groupMembers: list<string>}> $uses */
+    private function validateUngroupedUses(File $phpcsFile, array $uses): void
     {
-        $nextToken = $phpcsFile->getTokens()[$stackPtr + 1];
-        if ($nextToken['type'] !== 'T_WHITESPACE' || $nextToken['content'] !== "\n") {
-            $phpcsFile->addError(
-                'Open use group brace should have a new line after',
-                $stackPtr + 1,
-                'LineAfterOpenBrace'
-            );
+        $ungrouped = [];
+        foreach ($uses as $use) {
+            if ($use['isGrouped'] === false) {
+                $ungrouped[] = $use;
+            }
         }
 
-        $comaPtr = $phpcsFile->findNext(
-            [T_COMMA],
-            $stackPtr,
-            $phpcsFile->findNext([T_CLOSE_USE_GROUP], $stackPtr + 1)
-        );
-        $errorLines = [];
-        while (is_int($comaPtr)) {
-            $nextToken = $phpcsFile->getTokens()[$comaPtr + 1];
+        if (count($ungrouped) < 2) {
+            return;
+        }
+
+        foreach ($this->groupPrefixes as $prefix) {
+            $prefixWithSeparator = rtrim($prefix, '\\') . '\\';
+            $matching = [];
+            foreach ($ungrouped as $use) {
+                if (str_starts_with($use['name'], $prefixWithSeparator)) {
+                    $matching[] = $use;
+                }
+            }
+
+            if (count($matching) >= 2) {
+                foreach ($matching as $use) {
+                    $phpcsFile->addError(
+                        'Use "%s" must be grouped under "%s"',
+                        $use['ptr'],
+                        'MustGroup',
+                        [$use['name'], $prefix]
+                    );
+                }
+            }
+        }
+    }
+
+    /** @param list<array{ptr: int, name: string, isGrouped: bool, groupPrefix: string|null, groupMembers: list<string>}> $uses */
+    private function validateGroupedUseFormat(File $phpcsFile, array $uses): void
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        foreach ($uses as $use) {
+            if ($use['isGrouped'] === false) {
+                continue;
+            }
+
+            $groupOpen = $phpcsFile->findNext(T_OPEN_USE_GROUP, $use['ptr'] + 1);
+            if ($groupOpen === false) {
+                continue;
+            }
+
+            $groupClose = $phpcsFile->findNext(T_CLOSE_USE_GROUP, $groupOpen + 1);
+            if ($groupClose === false) {
+                continue;
+            }
+
+            // Open brace must be followed by a newline.
+            $afterOpen = $groupOpen + 1;
             if (
-                $nextToken['type'] === 'T_WHITESPACE'
-                && strpos($nextToken['content'], "\n") === false
-                && in_array($nextToken['line'], $errorLines) === false
+                isset($tokens[$afterOpen])
+                && (
+                    $tokens[$afterOpen]['code'] !== T_WHITESPACE
+                    || str_contains($tokens[$afterOpen]['content'], "\n") === false
+                )
             ) {
                 $phpcsFile->addError(
-                    'Only one use per line allowed.',
-                    $comaPtr + 1,
+                    'Each grouped use must be on its own line',
+                    $groupOpen,
                     'OneUsePerLine'
                 );
-                $errorLines[] = $nextToken['line'];
             }
 
-            $comaPtr = $phpcsFile->findNext(
-                [T_COMMA],
-                $comaPtr + 1,
-                $phpcsFile->findNext([T_CLOSE_USE_GROUP], $comaPtr)
-            );
-        }
-
-        return $this;
-    }
-
-    protected function processCloseUseGroup(File $phpcsFile, int $stackPtr): self
-    {
-        $previousToken = $phpcsFile->getTokens()[$stackPtr - 1];
-        if ($previousToken['type'] !== 'T_WHITESPACE' || $previousToken['content'] !== "\n") {
-            $phpcsFile->addError(
-                'Use group close brace should be on it\'s own line whithout spaces before',
-                $stackPtr - 1,
-                'CloseBraceOwnLine'
-            );
-        }
-
-        return $this;
-    }
-
-    protected function getCurrentUse(File $phpcsFile, int $stackPtr): ?string
-    {
-        $startUse = $phpcsFile->findNext(T_STRING, $stackPtr);
-        if (is_int($startUse) === false) {
-            return null;
-        }
-        $tokenEndLine = $phpcsFile->findNext(T_SEMICOLON, $startUse + 1, null, false, ';');
-
-        $return = null;
-        for ($index = $startUse; $index < $tokenEndLine; $index++) {
-            $currentToken = $phpcsFile->getTokens()[$index];
-            if ($currentToken['code'] === T_OPEN_USE_GROUP) {
-                $return = null;
-                break;
-            }
-            $return .= $currentToken['content'];
-        }
-
-        return $return;
-    }
-
-    protected function getUseGroupPrefix(File $phpcsFile, int $stackPtr): ?string
-    {
-        $return = null;
-        $nextStackPtr = $stackPtr;
-        $urrentUseString = null;
-        do {
-            $nextStackPtr++;
-            $currentToken = $phpcsFile->getTokens()[$nextStackPtr];
-            if (is_array($currentToken) && $currentToken['code'] === T_OPEN_USE_GROUP) {
-                $return = $urrentUseString;
-                break;
-            }
-            $urrentUseString .= $currentToken['content'];
-        } while ($currentToken['code'] !== T_SEMICOLON);
-
-        return ($return === null) ? null : trim(rtrim($return, '\\'));
-    }
-
-    protected function validateUseGroupPrefixName(File $phpcsFile, int $stackPtr, string $prefix): self
-    {
-        $is3parts = false;
-        foreach ($this->thirdLevelPrefixes as $usePrefix3parts) {
-            if (substr($usePrefix3parts, 0, strlen($prefix)) === $prefix) {
-                $this->addGroupAtLevelError($phpcsFile, $stackPtr, '3rd', $prefix, $this->thirdLevelPrefixes);
-            } elseif (substr($prefix, 0, strlen($usePrefix3parts)) === $usePrefix3parts) {
-                $is3parts = true;
-                $countBackSlash = substr_count($prefix, '\\');
-                if ($countBackSlash === 1 || $countBackSlash > 2) {
-                    $this->addBadRegroupmentError($phpcsFile, $stackPtr, $prefix, strlen($usePrefix3parts));
-                    break;
-                }
-            }
-        }
-
-        if ($is3parts === false) {
-            $is4parts = false;
-            foreach ($this->fourthLevelPrefixes as $usePrefix4parts) {
-                if (substr($usePrefix4parts, 0, strlen($prefix)) === $prefix) {
-                    $this->addGroupAtLevelError($phpcsFile, $stackPtr, '4th', $prefix, $this->fourthLevelPrefixes);
-                } elseif (substr($prefix, 0, strlen($usePrefix4parts)) === $usePrefix4parts) {
-                    $is4parts = true;
-                    $countBackSlash = substr_count($prefix, '\\');
-                    if ($countBackSlash < 2 || $countBackSlash > 3) {
-                        $this->addBadRegroupmentError($phpcsFile, $stackPtr, $prefix, strlen($usePrefix4parts));
-                        break;
-                    }
-                }
-            }
-        }
-
-        if ($is3parts === false && $is4parts === false && substr_count($prefix, '\\') > 1) {
-            $this->addBadRegroupmentError($phpcsFile, $stackPtr, $prefix, strpos($prefix, '\\') + 1);
-        }
-
-        return $this;
-    }
-
-    protected function addBadRegroupmentError(File $phpcsFile, int $stackPtr, string $prefix, int $offset): self
-    {
-        $allowedPrefix = substr($prefix, 0, strpos($prefix, '\\', $offset));
-        $phpcsFile->addError(
-            '"' . $prefix . '" use group is invalid, use "' . $allowedPrefix . '" instead.',
-            $stackPtr,
-            'BadRegroupment'
-        );
-
-        return $this;
-    }
-
-    protected function addGroupAtLevelError(
-        File $phpcsFile,
-        int $stackPtr,
-        string $level,
-        string $prefix,
-        array $prefixes
-    ): self {
-        $phpcsFile->addError(
-            'Use group "'
-                . $prefix
-                . '" is invalid, you must group at '
-                . $level
-                . ' level for '
-                . implode(', ', $prefixes),
-            $stackPtr,
-            'GroupAt3rdLevel'
-        );
-
-        return $this;
-    }
-
-    protected function validateUse(File $phpcsFile, int $stackPtr, string $useToValidate): self
-    {
-        foreach ($this->uses[$phpcsFile->getFilename()] ?? [] as $use) {
-            $prefix = null;
-
-            $usePrefixes = array_merge(
-                $this->firstLevelPrefixes,
-                $this->thirdLevelPrefixes,
-                $this->fourthLevelPrefixes
-            );
-            foreach ($usePrefixes as $usePefix) {
-                if (substr($use, 0, strlen($usePefix)) === $usePefix) {
-                    $prefix = substr($use, 0, strpos($use, '\\', strlen($usePefix)) + 1);
-                    break;
-                }
-            }
-
-            if ($prefix === null) {
-                $useParts = explode('\\', $use);
-                if (count($useParts) >= 3) {
-                    $prefix = implode('\\', array_slice($useParts, 0, 2)) . '\\';
-                }
-            }
-
-            if (is_string($prefix) && substr($useToValidate, 0, strlen($prefix)) === $prefix) {
+            // Close brace must be on its own line.
+            $beforeClose = $groupClose - 1;
+            if (
+                isset($tokens[$beforeClose])
+                && ($tokens[$beforeClose]['code'] !== T_WHITESPACE || $tokens[$beforeClose]['content'] !== "\n")
+            ) {
                 $phpcsFile->addError(
-                    'You must group the use "' . $useToValidate . '" under "' . rtrim($prefix, '\\') . '".',
-                    $stackPtr,
-                    'MustRegroup'
+                    'Use group close brace must be on its own line',
+                    $groupClose,
+                    'CloseBraceOwnLine'
                 );
-                break;
+            }
+
+            // Each comma must be followed by a newline (one use per line).
+            $commaPtr = $phpcsFile->findNext(T_COMMA, $groupOpen + 1, $groupClose);
+            while ($commaPtr !== false) {
+                $afterComma = $commaPtr + 1;
+                if (
+                    isset($tokens[$afterComma])
+                    && $tokens[$afterComma]['code'] === T_WHITESPACE
+                    && str_contains($tokens[$afterComma]['content'], "\n") === false
+                ) {
+                    $phpcsFile->addError(
+                        'Each grouped use must be on its own line',
+                        $commaPtr,
+                        'OneUsePerLine'
+                    );
+                }
+
+                $commaPtr = $phpcsFile->findNext(T_COMMA, $commaPtr + 1, $groupClose);
+            }
+        }
+    }
+
+    private function isNamespaceUse(File $phpcsFile, int $stackPtr): bool
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        // Inside a class/trait/interface = trait use.
+        if ($phpcsFile->hasCondition($stackPtr, [T_CLASS, T_TRAIT, T_INTERFACE, T_ENUM, T_ANON_CLASS])) {
+            return false;
+        }
+
+        // Closure use.
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
+        if ($prev !== false && $tokens[$prev]['code'] === T_CLOSE_PARENTHESIS) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private function getTokenContent(File $phpcsFile, int $start, int $end): string
+    {
+        $tokens = $phpcsFile->getTokens();
+        $content = '';
+
+        for ($i = $start; $i < $end; $i++) {
+            if ($tokens[$i]['code'] !== T_WHITESPACE) {
+                $content .= $tokens[$i]['content'];
             }
         }
 
-        if (array_key_exists($phpcsFile->getFilename(), $this->uses) === false) {
-            $this->uses[$phpcsFile->getFilename()] = [];
-        }
-        $this->uses[$phpcsFile->getFilename()][] = $useToValidate;
+        return $content;
+    }
 
-        return $this;
+    /** @return list<string> */
+    private function getGroupMembers(File $phpcsFile, int $openPtr, int $closePtr): array
+    {
+        $tokens = $phpcsFile->getTokens();
+        $members = [];
+        $current = '';
+
+        for ($i = $openPtr + 1; $i < $closePtr; $i++) {
+            $code = $tokens[$i]['code'];
+            if ($code === T_COMMA) {
+                $trimmed = trim($current);
+                if ($trimmed !== '') {
+                    $members[] = $trimmed;
+                }
+
+                $current = '';
+            } elseif ($code === T_STRING || $code === T_NS_SEPARATOR) {
+                $current .= $tokens[$i]['content'];
+            }
+        }
+
+        $trimmed = trim($current);
+        if ($trimmed !== '') {
+            $members[] = $trimmed;
+        }
+
+        return $members;
     }
 }

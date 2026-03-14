@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpCodeSniffs\Reports;
+namespace Steevanb\PhpCodeSniffs\Reports;
 
 use PHP_CodeSniffer\{
     Files\File,
@@ -12,9 +12,6 @@ use PHP_CodeSniffer\{
 
 class Steevanb implements Report
 {
-    /** @var string[] */
-    protected static $replacesInPath = [];
-
     public static function addReplaceInPath(string $search, string $replace): void
     {
         static::$replacesInPath[$search] = $replace;
@@ -29,6 +26,9 @@ class Steevanb implements Report
 
         return $return;
     }
+
+    /** @var string[] */
+    protected static $replacesInPath = [];
 
     /**
      * Generate a partial report for a single processed file.

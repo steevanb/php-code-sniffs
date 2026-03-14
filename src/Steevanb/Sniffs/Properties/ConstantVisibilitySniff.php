@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\Properties;
+namespace Steevanb\PhpCodeSniffs\Steevanb\Sniffs\Properties;
 
 use PHP_CodeSniffer\{
-    Sniffs\Sniff,
     Files\File,
+    Sniffs\Sniff,
     Util\Tokens
 };
 
@@ -21,8 +21,7 @@ class ConstantVisibilitySniff implements Sniff
         return [T_CONST];
     }
 
-    /** @param int $stackPtr */
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, int $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
         $prev   = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\NamingConventions;
+namespace Steevanb\PhpCodeSniffs\Steevanb\Sniffs\NamingConventions;
 
 use PHP_CodeSniffer\{
     Files\File,
@@ -17,15 +17,9 @@ use PHP_CodeSniffer\{
 class ValidVariableNameSniff extends AbstractVariableSniff
 {
     /** @var string[] */
-    protected static $allowedVariableNames = [];
+    public $allowedVariableNames = [];
 
-    public static function addAllowedVariableName(string $name)
-    {
-        static::$allowedVariableNames[] = $name;
-    }
-
-    /** @param int $stackPtr */
-    protected function processVariable(File $phpcsFile, $stackPtr): void
+    protected function processVariable(File $phpcsFile, int $stackPtr): void
     {
         $tokens  = $phpcsFile->getTokens();
         $varName = ltrim($tokens[$stackPtr]['content'], '$');
@@ -45,7 +39,7 @@ class ValidVariableNameSniff extends AbstractVariableSniff
             'php_errormsg'
         ];
 
-        // If it's a php reserved var, then its ok.
+        // If it's a php reserved var, then it's ok.
         if (in_array($varName, $phpReservedVars) === true) {
             return;
         }
@@ -99,7 +93,7 @@ class ValidVariableNameSniff extends AbstractVariableSniff
 
         if (
             Common::isCamelCaps($varName, false, true, false) === false
-            && in_array($varName, static::$allowedVariableNames) === false
+            && in_array($varName, $this->allowedVariableNames) === false
         ) {
             $error = 'Variable "%s" is not in valid camel caps format';
             $data = [$originalVarName];
@@ -107,8 +101,7 @@ class ValidVariableNameSniff extends AbstractVariableSniff
         }
     }
 
-    /** @param int $stackPtr */
-    protected function processMemberVar(File $phpcsFile, $stackPtr): void
+    protected function processMemberVar(File $phpcsFile, int $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
         $varName = ltrim($tokens[$stackPtr]['content'], '$');
@@ -132,8 +125,7 @@ class ValidVariableNameSniff extends AbstractVariableSniff
         }
     }
 
-    /** @param int $stackPtr */
-    protected function processVariableInString(File $phpcsFile, $stackPtr): void
+    protected function processVariableInString(File $phpcsFile, int $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
 
