@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<ruleset name="SteevanB Doctrine">
+    <description>GroupUses configuration for Doctrine namespaces</description>
+
+    <rule ref="Steevanb.Uses.GroupUses">
+        <properties>
+            <property name="groupPrefixes" type="array">
+                <element value="Doctrine\Bundle\DoctrineBundle"/>
+                <element value="Doctrine\Bundle\FixturesBundle"/>
+                <element value="Doctrine\Bundle\MigrationsBundle"/>
+                <element value="Doctrine\Common\Annotations"/>
+                <element value="Doctrine\Common\Cache"/>
+                <element value="Doctrine\Common\Collections"/>
+                <element value="Doctrine\Common\DataFixtures"/>
+                <element value="Doctrine\Common\Lexer"/>
+                <element value="Doctrine\DBAL"/>
+                <element value="Doctrine\Deprecations"/>
+                <element value="Doctrine\Inflector"/>
+                <element value="Doctrine\Instantiator"/>
+                <element value="Doctrine\Migrations"/>
+                <element value="Doctrine\ODM\MongoDB"/>
+                <element value="Doctrine\ORM"/>
+                <element value="Doctrine\Persistence"/>
+                <element value="Doctrine\SqlFormatter"/>
+            </property>
+        </properties>
+    </rule>
+</ruleset>

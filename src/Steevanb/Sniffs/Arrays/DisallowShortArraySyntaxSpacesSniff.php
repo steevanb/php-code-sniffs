@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\Arrays;
+namespace Steevanb\PhpCodeSniffs\Steevanb\Sniffs\Arrays;
 
 use PHP_CodeSniffer\{
     Files\File,
@@ -17,8 +17,7 @@ class DisallowShortArraySyntaxSpacesSniff implements Sniff
         return [T_OPEN_SHORT_ARRAY, T_CLOSE_SHORT_ARRAY];
     }
 
-    /** @param int $stackPtr */
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, int $stackPtr): void
     {
         $token = $phpcsFile->getTokens()[$stackPtr];
         if ($token['code'] === 'PHPCS_T_OPEN_SHORT_ARRAY') {
@@ -28,8 +27,7 @@ class DisallowShortArraySyntaxSpacesSniff implements Sniff
         }
     }
 
-    /** @param int $stackPtr */
-    protected function processOpenShortArray(File $phpcsFile, $stackPtr): self
+    protected function processOpenShortArray(File $phpcsFile, int $stackPtr): static
     {
         $nextToken = $phpcsFile->getTokens()[$stackPtr + 1];
         if ($nextToken['code'] === T_WHITESPACE && substr($nextToken['content'], 0, 1) !== "\n") {
@@ -43,8 +41,7 @@ class DisallowShortArraySyntaxSpacesSniff implements Sniff
         return $this;
     }
 
-    /** @param int $stackPtr */
-    protected function processCloseShortArray(File $phpcsFile, $stackPtr): self
+    protected function processCloseShortArray(File $phpcsFile, int $stackPtr): static
     {
         $previousToken = $phpcsFile->getTokens()[$stackPtr - 1];
         $previousToken2 = $phpcsFile->getTokens()[$stackPtr - 2];

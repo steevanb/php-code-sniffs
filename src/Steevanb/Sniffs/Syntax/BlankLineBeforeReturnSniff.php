@@ -2,59 +2,59 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\Syntax;
+namespace Steevanb\PhpCodeSniffs\Steevanb\Sniffs\Syntax;
 
 use PHP_CodeSniffer\{
     Files\File,
     Sniffs\Sniff
 };
 
-/** Force to have a blank line before return keyword */
+/** Force a blank line before return keyword, except when return is the only statement in a block */
 class BlankLineBeforeReturnSniff implements Sniff
 {
-    /** @return int[] */
     public function register(): array
     {
         return [T_RETURN];
     }
 
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, int $stackPtr): void
     {
-        $token = $phpcsFile->getTokens()[$stackPtr];
+        $tokens = $phpcsFile->getTokens();
 
-        $blankLinesCount = 1;
-        $previousStackPtr = $stackPtr - 1;
-        $previousTokenType = $phpcsFile->getTokens()[$previousStackPtr]['type'];
-
-        while (in_array($previousTokenType, ['T_WHITESPACE', 'T_COMMENT', 'T_DOC_COMMENT_CLOSE_TAG'], true)) {
-            if ($previousTokenType === 'T_DOC_COMMENT_CLOSE_TAG') {
-                $commentCloseTagLine = $phpcsFile->getTokens()[$previousStackPtr]['line'];
-                $commentOpenerPtr = $phpcsFile->getTokens()[$previousStackPtr]['comment_opener'];
-
-                $blankLinesCount += 1 + ($commentCloseTagLine - $phpcsFile->getTokens()[$commentOpenerPtr]['line']);
-
-                $previousStackPtr = $commentOpenerPtr - 1;
-                $previousTokenType = $phpcsFile->getTokens()[$previousStackPtr]['type'];
-            } else {
-                $previousStackPtr--;
-                if (in_array($previousTokenType, ['T_COMMENT', 'T_DOC_COMMENT'], true)) {
-                    $blankLinesCount++;
-                }
-
-                $previousTokenType = $phpcsFile->getTokens()[$previousStackPtr]['type'];
-            }
+        $previousPtr = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
+        if ($previousPtr === false) {
+            return;
         }
 
-        $previousToken = $phpcsFile->getTokens()[$previousStackPtr];
+        if ($tokens[$previousPtr]['code'] === T_OPEN_CURLY_BRACKET) {
+            return;
+        }
+
+        if ($tokens[$stackPtr]['line'] - $tokens[$previousPtr]['line'] >= 2) {
+            return;
+        }
+
         if (
-            $previousToken['type'] !== 'T_OPEN_CURLY_BRACKET'
-            && $token['line'] - $previousToken['line'] <= $blankLinesCount
+            $tokens[$previousPtr]['code'] === T_COMMENT
+            || $tokens[$previousPtr]['code'] === T_DOC_COMMENT_CLOSE_TAG
         ) {
-            $phpcsFile->addError(
-                'Add a blank line before return keyword',
-                $stackPtr,
-                'BlankLineBeforeReturnKeyword'
-            );
+            return;
+        }
+
+        $fix = $phpcsFile->addFixableError(
+            'Add a blank line before return keyword',
+            $stackPtr,
+            'BlankLineBeforeReturnKeyword'
+        );
+
+        if ($fix === true) {
+            $eol = $phpcsFile->eolChar;
+            $wsPtr = $stackPtr - 1;
+            if ($tokens[$wsPtr]['code'] === T_WHITESPACE) {
+                $phpcsFile->fixer->replaceToken($wsPtr, $eol . $tokens[$wsPtr]['content']);
+            } else {
+                $phpcsFile->fixer->addContent($wsPtr, $eol);
+            }
         }
     }
 }

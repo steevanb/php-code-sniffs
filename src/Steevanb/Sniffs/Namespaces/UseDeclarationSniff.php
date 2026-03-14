@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\Namespaces;
+namespace Steevanb\PhpCodeSniffs\Steevanb\Sniffs\Namespaces;
 
 use PHP_CodeSniffer\{
     Files\File,
@@ -20,8 +20,7 @@ class UseDeclarationSniff implements Sniff
         return [T_USE];
     }
 
-    /** @param int $stackPtr */
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, int $stackPtr): void
     {
         if ($this->shouldIgnoreUse($phpcsFile, $stackPtr) === true) {
             return;
@@ -77,7 +76,7 @@ class UseDeclarationSniff implements Sniff
                 $diff = 0;
             }
 
-            $error = 'There must be one blank line after the last USE statement; %s found;';
+            $error = 'There must be one blank line after the last USE statement; %s found';
             $data = [$diff];
             $fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterLastUse', $data);
             if ($fix === true) {

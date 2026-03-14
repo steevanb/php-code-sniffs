@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\CodeAnalysis;
+namespace Steevanb\PhpCodeSniffs\Steevanb\Sniffs\CodeAnalysis;
 
 use PHP_CodeSniffer\{
     Files\File,
@@ -23,7 +23,7 @@ class StrictTypesSniff implements Sniff
         return [T_OPEN_TAG];
     }
 
-    public function process(File $phpcsFile, $stackPtr): int
+    public function process(File $phpcsFile, int $stackPtr): int
     {
         $tokens = $phpcsFile->getTokens();
         $declare = $phpcsFile->findNext(T_DECLARE, $stackPtr);
@@ -63,6 +63,7 @@ class StrictTypesSniff implements Sniff
 
         // Skip the rest of the file so we don't pick up additional
         // open tags, typically embedded in HTML.
+
         return $phpcsFile->numTokens;
     }
 }

@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\ControlStructures;
+namespace Steevanb\PhpCodeSniffs\Steevanb\Sniffs\ControlStructures;
 
 use PHP_CodeSniffer\{
-    Sniffs\Sniff,
-    Files\File
+    Files\File,
+    Sniffs\Sniff
 };
 
 class ElseIfDeclarationSniff implements Sniff
@@ -28,8 +28,7 @@ class ElseIfDeclarationSniff implements Sniff
         ];
     }
 
-    /** @param int $stackPtr  The position of the current token in the stack passed in $tokens. */
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, int $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
 

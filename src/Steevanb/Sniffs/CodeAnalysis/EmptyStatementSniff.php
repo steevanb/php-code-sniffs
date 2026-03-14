@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace steevanb\PhpCodeSniffs\Steevanb\Sniffs\CodeAnalysis;
+namespace Steevanb\PhpCodeSniffs\Steevanb\Sniffs\CodeAnalysis;
 
 use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyStatementSniff as PhpCodeSnifferEmptyStatementSniff;
 

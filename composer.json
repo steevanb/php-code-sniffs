@@ -5,11 +5,16 @@
     "type": "library",
     "autoload": {
         "psr-4": {
-            "steevanb\\PhpCodeSniffs\\": "src/"
+            "Steevanb\\PhpCodeSniffs\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Steevanb\\PhpCodeSniffs\\Tests\\": "tests/"
         }
     },
     "require": {
-        "php": "^7.1||^8.0",
+        "php": "^8.4",
         "squizlabs/php_codesniffer": "4.0.*"
     },
     "scripts": {
@@ -22,6 +27,8 @@
         "rm-composer-lock": "rm composer.lock"
     },
     "require-dev": {
-        "symfony/var-dumper": "^6.0"
+        "symfony/var-dumper": "^8.0",
+        "phpunit/phpunit": "^12.0",
+        "brianium/paratest": "^7.19"
     }
 }

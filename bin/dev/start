@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+set -eu
+
+readonly PROJECT_DIRECTORY="$(realpath "$(dirname "$(realpath "$0")")/../..")"
+
+docker pull php:8.4.19-cli-alpine3.23
+
+"${PROJECT_DIRECTORY}"/bin/composer update

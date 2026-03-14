@@ -10,5 +10,8 @@ jobs:
                 name: bin/composer update
                 run: bin/composer update
             -
-                name: bin/phpcs
-                run: bin/phpcs
+                name: bin/ci/phpcs
+                run: bin/ci/phpcs
+            -
+                name: bin/ci/phpunit
+                run: bin/ci/phpunit

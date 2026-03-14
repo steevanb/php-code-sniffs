@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<ruleset name="SteevanB Symfony">
+    <description>GroupUses configuration for Symfony namespaces</description>
+
+    <rule ref="Steevanb.Uses.GroupUses">
+        <properties>
+            <property name="groupPrefixes" type="array">
+                <!-- Bridge -->
+                <element value="Symfony\Bridge\Doctrine"/>
+                <element value="Symfony\Bridge\Monolog"/>
+                <element value="Symfony\Bridge\PhpUnit"/>
+                <element value="Symfony\Bridge\PsrHttpMessage"/>
+                <element value="Symfony\Bridge\Twig"/>
+                <!-- Bundle -->
+                <element value="Symfony\Bundle\DebugBundle"/>
+                <element value="Symfony\Bundle\FrameworkBundle"/>
+                <element value="Symfony\Bundle\SecurityBundle"/>
+                <element value="Symfony\Bundle\TwigBundle"/>
+                <element value="Symfony\Bundle\WebProfilerBundle"/>
+                <!-- Component -->
+                <element value="Symfony\Component\Asset"/>
+                <element value="Symfony\Component\AssetMapper"/>
+                <element value="Symfony\Component\BrowserKit"/>
+                <element value="Symfony\Component\Cache"/>
+                <element value="Symfony\Component\Clock"/>
+                <element value="Symfony\Component\Config"/>
+                <element value="Symfony\Component\Console"/>
+                <element value="Symfony\Component\CssSelector"/>
+                <element value="Symfony\Component\DependencyInjection"/>
+                <element value="Symfony\Component\DomCrawler"/>
+                <element value="Symfony\Component\Dotenv"/>
+                <element value="Symfony\Component\Emoji"/>
+                <element value="Symfony\Component\ErrorHandler"/>
+                <element value="Symfony\Component\EventDispatcher"/>
+                <element value="Symfony\Component\ExpressionLanguage"/>
+                <element value="Symfony\Component\Filesystem"/>
+                <element value="Symfony\Component\Finder"/>
+                <element value="Symfony\Component\Form"/>
+                <element value="Symfony\Component\HtmlSanitizer"/>
+                <element value="Symfony\Component\HttpClient"/>
+                <element value="Symfony\Component\HttpFoundation"/>
+                <element value="Symfony\Component\HttpKernel"/>
+                <element value="Symfony\Component\Intl"/>
+                <element value="Symfony\Component\JsonPath"/>
+                <element value="Symfony\Component\JsonStreamer"/>
+                <element value="Symfony\Component\Ldap"/>
+                <element value="Symfony\Component\Lock"/>
+                <element value="Symfony\Component\Mailer"/>
+                <element value="Symfony\Component\Messenger"/>
+                <element value="Symfony\Component\Mime"/>
+                <element value="Symfony\Component\Notifier"/>
+                <element value="Symfony\Component\ObjectMapper"/>
+                <element value="Symfony\Component\OptionsResolver"/>
+                <element value="Symfony\Component\PasswordHasher"/>
+                <element value="Symfony\Component\Process"/>
+                <element value="Symfony\Component\PropertyAccess"/>
+                <element value="Symfony\Component\PropertyInfo"/>
+                <element value="Symfony\Component\RateLimiter"/>
+                <element value="Symfony\Component\RemoteEvent"/>
+                <element value="Symfony\Component\Routing"/>
+                <element value="Symfony\Component\Runtime"/>
+                <element value="Symfony\Component\Scheduler"/>
+                <element value="Symfony\Component\Security"/>
+                <element value="Symfony\Component\Semaphore"/>
+                <element value="Symfony\Component\Serializer"/>
+                <element value="Symfony\Component\Stopwatch"/>
+                <element value="Symfony\Component\String"/>
+                <element value="Symfony\Component\Translation"/>
+                <element value="Symfony\Component\TypeInfo"/>
+                <element value="Symfony\Component\Uid"/>
+                <element value="Symfony\Component\Validator"/>
+                <element value="Symfony\Component\VarDumper"/>
+                <element value="Symfony\Component\VarExporter"/>
+                <element value="Symfony\Component\WebLink"/>
+                <element value="Symfony\Component\Webhook"/>
+                <element value="Symfony\Component\Workflow"/>
+                <element value="Symfony\Component\Yaml"/>
+                <!-- Contracts -->
+                <element value="Symfony\Contracts\Cache"/>
+                <element value="Symfony\Contracts\Deprecation"/>
+                <element value="Symfony\Contracts\EventDispatcher"/>
+                <element value="Symfony\Contracts\HttpClient"/>
+                <element value="Symfony\Contracts\Service"/>
+                <element value="Symfony\Contracts\Translation"/>
+            </property>
+        </properties>
+    </rule>
+</ruleset>

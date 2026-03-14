@@ -1,48 +1,95 @@
 # Configure sniffs
 
-Some sniffs could be configured by static methods,
-like `steevanb\PhpCodeSniffs\Steevanb\Sniffs\Metrics\NestingLevelSniff`
-or the report `steevanb\PhpCodeSniffs\Reports\Steevanb`.
+Some sniffs can be configured in xml.
 
-Some other sniffs can be configured in xml.
+The report `steevanb\PhpCodeSniffs\Reports\Steevanb` can be configured with a bootstrap file.
 
 # Configuration with xml
 
-### GroupUseSniff
+### GroupUsesSniff
 
+Configure namespace prefixes that must be grouped when multiple `use` statements share the same prefix:
 ```xml
 <rule ref="Steevanb.Uses.GroupUses">
     <properties>
-        <property name="firstLevelPrefixes" type="array">
-            <element value="Foo"/>
-        </property>
-
-        <property name="thirdLevelPrefixes" type="array">
-            <element value="Foo\Bar\"/>
-        </property>
-
-        <property name="fourthLevelPrefixes" type="array">
-            <element value="Foop\Bar\Baz\"/>
+        <property name="groupPrefixes" type="array">
+            <element value="App\Foo"/>
+            <element value="Symfony\Component\HttpFoundation"/>
         </property>
     </properties>
 </rule>
 ```
 
-Example for a project who use Symfony:
+### CamelCapsFunctionNameSniff
+
+Allow some method names to not follow the camelCase convention (e.g. for external libraries like Doctrine):
 ```xml
+<rule ref="Steevanb.NamingConventions.CamelCapsFunctionName">
+    <properties>
+        <property name="allowedNotCamelCase" type="array">
+            <element value="getSQLDeclaration"/>
+            <element value="convertToPHPValue"/>
+            <element value="requiresSQLCommentHint"/>
+        </property>
+    </properties>
+</rule>
+```
+
+### ValidVariableNameSniff
+
+Allow some variable names to not follow the camelCase convention:
+```xml
+<rule ref="Steevanb.NamingConventions.ValidVariableName">
+    <properties>
+        <property name="allowedVariableNames" type="array">
+            <element value="my_variable"/>
+        </property>
+    </properties>
+</rule>
+```
+
+### NestingLevelSniff
+
+Allow some methods to exceed the nesting level limit:
+```xml
+<rule ref="Steevanb.Metrics.NestingLevel">
+    <properties>
+        <property name="allowedNestingLevelMethods" type="array">
+            <element value="foo.php::barMethod"/>
+        </property>
+    </properties>
+</rule>
+```
+
+### DeprecatedFunctionsSniff
+
+Allow some deprecated functions to be used:
+```xml
+<rule ref="Steevanb.Php.DeprecatedFunctions">
+    <properties>
+        <property name="allowedDeprecatedFunctions" type="array">
+            <element value="deprecated_function"/>
+        </property>
+    </properties>
+</rule>
+```
+
+### GroupUsesSniff presets
+
+Pre-configured rulesets are available for Symfony and Doctrine namespaces in the `rulesets/` directory:
+```xml
+<rule ref="vendor/steevanb/php-code-sniffs/rulesets/symfony.xml"/>
+<rule ref="vendor/steevanb/php-code-sniffs/rulesets/doctrine.xml"/>
+```
+
+You can combine them with your own prefixes:
+```xml
+<rule ref="vendor/steevanb/php-code-sniffs/rulesets/symfony.xml"/>
+<rule ref="vendor/steevanb/php-code-sniffs/rulesets/doctrine.xml"/>
 <rule ref="Steevanb.Uses.GroupUses">
     <properties>
-        <property name="firstLevelPrefixes" type="array">
+        <property name="groupPrefixes" type="array">
             <element value="App"/>
-        </property>
-
-        <property name="thirdLevelPrefixes" type="array">
-            <element value="Symfony\Component\"/>
-            <element value="Symfony\Contracts\"/>
-            <element value="Symfony\Bundle\"/>
-            <element value="Symfony\Bridge\"/>
-            <element value="Doctrine\Common\"/>
-            <element value="Doctrine\Bundle\"/>
         </property>
     </properties>
 </rule>
@@ -60,11 +107,6 @@ You can add a bootstrap file to phpcs to configure sniffs:
 // You can change a part of the path to files who have errors, to make file:// works in bash.
 steevanb\PhpCodeSniffs\Reports\Steevanb::addReplaceInPath('/app', __DIR__);
 
-// Add methods who could have a nesting level greater than 5.
-steevanb\PhpCodeSniffs\Steevanb\Sniffs\Metrics\NestingLevelSniff::addAllowedNestingLevelMethods('foo.php', 'barMethod');
-
-// Allow some deprecated function
-steevanb\PhpCodeSniffs\Steevanb\Sniffs\PHP\DeprecatedFunctionsSniff::addAllowDeprecatedFunction('deprecated_function');
 ```
 
 # Add your bootstrap file to phpcs

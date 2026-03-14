@@ -87,7 +87,7 @@
 - Added `PSR12.Files.OpenTag`: enforces that the open tag is on a line by itself when used at the start of a php-only file.
 - Added `PSR12.Functions.ReturnTypeDeclaration`: enforces the formatting of return type declarations in functions and closures.
 - Added `PSR12.Traits.UseDeclaration`: enforces the formatting of trait import statements within a class
-- Added `steevanb\PhpCodeSniffs\Steevanb\Sniffs\PHP`: enforces that constants must have their visibility defined.
+- Added `steevanb\PhpCodeSniffs\Steevanb\Sniffs\Php`: enforces that constants must have their visibility defined.
 - Removed `Squiz.Commenting.FunctionCommentThrowTag`.
 - Rework `StrictTypesSniff` from `RequireStrictTypesSniff of squizlabs/php_codesniffer.
 

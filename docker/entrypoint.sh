@@ -16,6 +16,6 @@ fi
 /var/php-code-sniffs/vendor/bin/phpcs \
     ${bootstrap} \
     --standard=/var/php-code-sniffs/src/Steevanb/ruleset.xml \
-    --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb \
+    --report=Steevanb\\PhpCodeSniffs\\Reports\\Steevanb \
     ${PHPCS_PARAMETERS} \
     ${appDir}
