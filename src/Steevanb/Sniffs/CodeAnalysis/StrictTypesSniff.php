@@ -37,8 +37,8 @@ class StrictTypesSniff implements Sniff
                 if (strtolower($tokens[$nextString]['content']) === 'strict_types') {
                     $found = true;
                     if (
-                        $tokens[$nextString + 1]['type'] === T_EQUAL
-                        || $tokens[$nextString + 2]['type'] === T_LNUMBER
+                        $tokens[$nextString + 1]['code'] === T_EQUAL
+                        || $tokens[$nextString + 2]['code'] === T_LNUMBER
                         || $tokens[$nextString + 2]['content'] === '1'
                     ) {
                         $strictTypesEnabled = true;

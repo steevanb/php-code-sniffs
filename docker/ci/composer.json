@@ -1,0 +1,18 @@
+{
+    "require": {
+        "insolita/unused-scanner": "2.4.0",
+        "maglnet/composer-require-checker": "4.22.0",
+        "phpstan/phpstan": "2.1.16",
+        "phpstan/phpstan-deprecation-rules": "2.0.3",
+        "phpstan/phpstan-phpunit": "2.0.6",
+        "phpstan/phpstan-strict-rules": "2.0.4",
+        "steevanb/php-parallel-processes": "1.2.0"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    }
+}

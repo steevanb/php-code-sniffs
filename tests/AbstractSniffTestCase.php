@@ -10,12 +10,20 @@ abstract class AbstractSniffTestCase extends TestCase
 {
     abstract protected static function getSniffName(): string;
 
+    private static string $phpcs;
+
+    private static string $phpcbf;
+
+    private static string $standard;
+
+    private static string $fixturesDir;
+
     public static function setUpBeforeClass(): void
     {
-        static::$phpcs = realpath(__DIR__ . '/../vendor/bin/phpcs');
-        static::$phpcbf = realpath(__DIR__ . '/../vendor/bin/phpcbf');
-        static::$standard = realpath(__DIR__ . '/../src/Steevanb');
-        static::$fixturesDir = dirname(new \ReflectionClass(static::class)->getFileName()) . '/Fixtures';
+        self::$phpcs = self::realpath(__DIR__ . '/../vendor/bin/phpcs');
+        self::$phpcbf = self::realpath(__DIR__ . '/../vendor/bin/phpcbf');
+        self::$standard = self::realpath(__DIR__ . '/../src/Steevanb');
+        self::$fixturesDir = self::getClassDirectory() . '/Fixtures';
     }
 
     protected static function getRuleset(): ?string
@@ -26,7 +34,7 @@ abstract class AbstractSniffTestCase extends TestCase
     /** @return list<array{line: int, column: int, message: string, source: string}> */
     protected static function getErrors(string $fixture): array
     {
-        return static::getErrorsForFile(static::$fixturesDir . '/' . $fixture);
+        return static::getErrorsForFile(self::$fixturesDir . '/' . $fixture);
     }
 
     /** @return list<array{line: int, column: int, message: string, source: string}> */
@@ -34,12 +42,12 @@ abstract class AbstractSniffTestCase extends TestCase
     {
         $ruleset = static::getRuleset();
         $standardArg = $ruleset !== null
-            ? '--standard=' . dirname(new \ReflectionClass(static::class)->getFileName()) . '/' . $ruleset
-            : '--standard=' . static::$standard . ' --sniffs=' . static::getSniffName();
+            ? '--standard=' . self::getClassDirectory() . '/' . $ruleset
+            : '--standard=' . self::$standard . ' --sniffs=' . static::getSniffName();
 
         $command = sprintf(
             '%s %s --report=csv --no-colors %s 2>&1',
-            static::$phpcs,
+            self::$phpcs,
             $standardArg,
             $filePath
         );
@@ -57,8 +65,8 @@ abstract class AbstractSniffTestCase extends TestCase
                 $errors[] = [
                     'line' => (int) $row[1],
                     'column' => (int) $row[2],
-                    'message' => $row[4],
-                    'source' => $row[5],
+                    'message' => (string) $row[4],
+                    'source' => (string) $row[5],
                 ];
             }
         }
@@ -89,35 +97,47 @@ abstract class AbstractSniffTestCase extends TestCase
         }
 
         $tempFile = $varDir . '/' . uniqid('phpcbf_test_') . '.php';
-        copy(static::$fixturesDir . '/' . $fixture, $tempFile);
+        copy(self::$fixturesDir . '/' . $fixture, $tempFile);
 
         try {
             $ruleset = static::getRuleset();
             $standardArg = $ruleset !== null
-                ? '--standard=' . dirname(new \ReflectionClass(static::class)->getFileName()) . '/' . $ruleset
-                : '--standard=' . static::$standard . ' --sniffs=' . static::getSniffName();
+                ? '--standard=' . self::getClassDirectory() . '/' . $ruleset
+                : '--standard=' . self::$standard . ' --sniffs=' . static::getSniffName();
 
             $command = sprintf(
                 '%s %s --no-colors %s 2>&1',
-                static::$phpcbf,
+                self::$phpcbf,
                 $standardArg,
                 $tempFile
             );
 
             exec($command);
 
-            static::assertFileEquals(static::$fixturesDir . '/' . $expectedFixture, $tempFile);
+            static::assertFileEquals(self::$fixturesDir . '/' . $expectedFixture, $tempFile);
             static::assertCount(0, static::getErrorsForFile($tempFile));
         } finally {
             unlink($tempFile);
         }
     }
 
-    private static string $phpcs;
+    private static function realpath(string $path): string
+    {
+        $resolved = \realpath($path);
+        if ($resolved === false) {
+            throw new \RuntimeException('Path not found: ' . $path);
+        }
 
-    private static string $phpcbf;
+        return $resolved;
+    }
 
-    private static string $standard;
+    private static function getClassDirectory(): string
+    {
+        $fileName = new \ReflectionClass(static::class)->getFileName();
+        if ($fileName === false) {
+            throw new \RuntimeException('Could not determine file name for class ' . static::class);
+        }
 
-    private static string $fixturesDir;
+        return dirname($fileName);
+    }
 }

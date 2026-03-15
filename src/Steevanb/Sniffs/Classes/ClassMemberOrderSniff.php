@@ -5,11 +5,12 @@
  * 2. Abstract properties (public, protected)
  * 3. Abstract methods (public, protected)
  * 4. Constants (public, protected, private)
- * 5. Static methods (public, protected, private)
- * 6. Properties (public, protected, private)
- * 7. __construct
- * 8. Magic methods (__*)
- * 9. Methods (public, protected, private)
+ * 5. Static properties (public, protected, private)
+ * 6. Static methods (public, protected, private)
+ * 7. Properties (public, protected, private)
+ * 8. __construct
+ * 9. Magic methods (__*)
+ * 10. Methods (public, protected, private)
  */
 
 declare(strict_types=1);
@@ -31,6 +32,9 @@ class ClassMemberOrderSniff implements Sniff
     private const int GROUP_CONSTANT_PUBLIC = 40;
     private const int GROUP_CONSTANT_PROTECTED = 41;
     private const int GROUP_CONSTANT_PRIVATE = 42;
+    private const int GROUP_STATIC_PROPERTY_PUBLIC = 45;
+    private const int GROUP_STATIC_PROPERTY_PROTECTED = 46;
+    private const int GROUP_STATIC_PROPERTY_PRIVATE = 47;
     private const int GROUP_STATIC_METHOD_PUBLIC = 50;
     private const int GROUP_STATIC_METHOD_PROTECTED = 51;
     private const int GROUP_STATIC_METHOD_PRIVATE = 52;
@@ -52,6 +56,9 @@ class ClassMemberOrderSniff implements Sniff
         self::GROUP_CONSTANT_PUBLIC => 'public constant',
         self::GROUP_CONSTANT_PROTECTED => 'protected constant',
         self::GROUP_CONSTANT_PRIVATE => 'private constant',
+        self::GROUP_STATIC_PROPERTY_PUBLIC => 'public static property',
+        self::GROUP_STATIC_PROPERTY_PROTECTED => 'protected static property',
+        self::GROUP_STATIC_PROPERTY_PRIVATE => 'private static property',
         self::GROUP_STATIC_METHOD_PUBLIC => 'public static method',
         self::GROUP_STATIC_METHOD_PROTECTED => 'protected static method',
         self::GROUP_STATIC_METHOD_PRIVATE => 'private static method',
@@ -74,7 +81,10 @@ class ClassMemberOrderSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        if (isset($tokens[$stackPtr]['scope_opener'], $tokens[$stackPtr]['scope_closer']) === false) {
+        if (
+            array_key_exists('scope_opener', $tokens[$stackPtr]) === false
+            || array_key_exists('scope_closer', $tokens[$stackPtr]) === false
+        ) {
             return;
         }
 
@@ -148,6 +158,7 @@ class ClassMemberOrderSniff implements Sniff
 
             if ($code === T_VARIABLE) {
                 $isAbstract = $this->hasModifierBefore($phpcsFile, $ptr, $classOpen, T_ABSTRACT);
+                $isStatic = $this->hasModifierBefore($phpcsFile, $ptr, $classOpen, T_STATIC);
                 $visibility = $this->findVisibilityBefore($phpcsFile, $ptr, $classOpen);
 
                 if ($isAbstract) {
@@ -156,6 +167,15 @@ class ClassMemberOrderSniff implements Sniff
                         'weight' => match ($visibility) {
                         T_PROTECTED => self::GROUP_ABSTRACT_PROPERTY_PROTECTED,
                         default => self::GROUP_ABSTRACT_PROPERTY_PUBLIC,
+                        }
+                    ];
+                } elseif ($isStatic) {
+                    $members[] = [
+                        'ptr' => $ptr,
+                        'weight' => match ($visibility) {
+                        T_PROTECTED => self::GROUP_STATIC_PROPERTY_PROTECTED,
+                        T_PRIVATE => self::GROUP_STATIC_PROPERTY_PRIVATE,
+                        default => self::GROUP_STATIC_PROPERTY_PUBLIC,
                         }
                     ];
                 } else {
@@ -170,14 +190,17 @@ class ClassMemberOrderSniff implements Sniff
                 }
 
                 // Skip past property hooks or semicolon.
-                if (isset($tokens[$ptr]['scope_closer'])) {
+                if (array_key_exists('scope_closer', $tokens[$ptr])) {
                     $ptr = $tokens[$ptr]['scope_closer'] + 1;
                 } else {
                     $next = $phpcsFile->findNext([T_SEMICOLON, T_OPEN_CURLY_BRACKET], $ptr + 1, $classClose);
                     if ($next === false) {
                         break;
                     }
-                    if ($tokens[$next]['code'] === T_OPEN_CURLY_BRACKET && isset($tokens[$next]['bracket_closer'])) {
+                    if (
+                        $tokens[$next]['code'] === T_OPEN_CURLY_BRACKET
+                        && array_key_exists('bracket_closer', $tokens[$next])
+                    ) {
                         $ptr = $tokens[$next]['bracket_closer'] + 1;
                     } else {
                         $ptr = $next + 1;
@@ -226,7 +249,7 @@ class ClassMemberOrderSniff implements Sniff
                 }
 
                 // Skip past method body or semicolon (abstract).
-                if (isset($tokens[$ptr]['scope_closer'])) {
+                if (array_key_exists('scope_closer', $tokens[$ptr])) {
                     $ptr = $tokens[$ptr]['scope_closer'] + 1;
                 } else {
                     $next = $phpcsFile->findNext(T_SEMICOLON, $ptr + 1, $classClose);

@@ -9,17 +9,26 @@ PHP CodeSniffer custom standard ("Steevanb") that extends PSR12/Squiz with addit
 ## Common Commands
 
 ```bash
-# Initial setup (pull Docker image + composer update)
+# Initial setup (pull CI Docker image + composer update)
 bin/dev/start
 
-# Run phpcs (auto-detects Docker; falls back to local execution)
+# CI environment setup (composer install inside Docker)
+bin/ci/env
+
+# Run phpcs (auto-dockerised)
 bin/ci/phpcs
 
-# Run unit tests
+# Run unit tests (auto-dockerised)
 bin/ci/phpunit
 
-# Build the Docker image
-bin/buildDockerImage
+# Run phpcbf (auto-dockerised)
+bin/ci/phpcbf
+
+# Build CI Docker image (GHCR)
+bin/ci/docker [--refresh] [--push]
+
+# Build release Docker image (DockerHub)
+bin/release/docker <version> [--refresh] [--push]
 ```
 
 ## Architecture
@@ -43,9 +52,12 @@ Key sniff: `GroupUsesSniff` enforces grouped `use` statements with configurable 
 
 ### Docker execution model
 
-`bin/ci/phpcs` detects Docker availability. With Docker: runs `php:8.4.19-cli-alpine3.23` mounting the project as `/app:ro`. Without Docker: executes `docker/entrypoint.sh` directly. The entrypoint invokes `vendor/bin/phpcs` with the Steevanb standard and custom report.
+The project uses the `dockerise.inc.bash` pattern: scripts auto-detect Docker availability and re-execute themselves inside the CI container (`ghcr.io/steevanb/php-code-sniffs:ci`) if Docker is present.
 
-Environment variables: `PHPCS_PARAMETERS` (extra CLI args), `PHPCS_BOOTSTRAP` (bootstrap file path), `PHPCS_PHP_VERSION_ID` (override PHP version detection, e.g., `80102`).
+- **CI image** (`docker/ci/Dockerfile`): `php:8.4.19-cli-alpine3.23` + `composer:2.9.5`. Built/pushed via `bin/ci/docker`.
+- **Release image** (`docker/release/Dockerfile`): Self-contained image that clones the repo at a given version tag. Built via `bin/release/docker <version>`.
+
+Environment variables (release image): `PHPCS_PARAMETERS` (extra CLI args), `PHPCS_BOOTSTRAP` (bootstrap file path).
 
 ### Tests
 
@@ -65,7 +77,7 @@ tests/Steevanb/Sniffs/Formatting/DisallowMultipleStatements/
 
 `composer.lock` is intentionally deleted after install/update via composer scripts. It is not tracked in git.
 
-`bin/composer` must not be modified. It uses the `composer:2.2.4` Docker image.
+`bin/composer` uses the `dockerise.inc.bash` pattern and runs `composer` from the CI Docker image.
 
 ## Code style
 
@@ -81,19 +93,26 @@ Strict ordering by weight (lower weight must come first):
 6. Public constants (weight 40)
 7. Protected constants (weight 41)
 8. Private constants (weight 42)
-9. Public static methods (weight 50)
-10. Protected static methods (weight 51)
-11. Private static methods (weight 52)
-12. Public properties (weight 60)
-13. Protected properties (weight 61)
-14. Private properties (weight 62)
-15. `__construct` (weight 70)
-16. Magic methods `__*` (weight 80)
-17. Public methods (weight 90)
-18. Protected methods (weight 91)
-19. Private methods (weight 92)
+9. Public static properties (weight 45)
+10. Protected static properties (weight 46)
+11. Private static properties (weight 47)
+12. Public static methods (weight 50)
+13. Protected static methods (weight 51)
+14. Private static methods (weight 52)
+15. Public properties (weight 60)
+16. Protected properties (weight 61)
+17. Private properties (weight 62)
+18. `__construct` (weight 70)
+19. Magic methods `__*` (weight 80)
+20. Public methods (weight 90)
+21. Protected methods (weight 91)
+22. Private methods (weight 92)
 
 Maximum line length is 120 characters.
+
+### Array key existence
+
+Always use `array_key_exists()` instead of `isset()` to check if a key exists in an array. `isset()` also returns `false` when the value is `null`, which can hide bugs.
 
 Example:
 ```php
@@ -110,6 +129,10 @@ abstract class Foo
     public const string PUBLIC_CONST = 'a';
     protected const string PROTECTED_CONST = 'b';
     private const string PRIVATE_CONST = 'c';
+
+    public static string $staticPublicProp = 'a';
+    protected static string $staticProtectedProp = 'b';
+    private static string $staticPrivateProp = 'c';
 
     public static function staticPublicMethod(): void { }
     protected static function staticProtectedMethod(): void { }

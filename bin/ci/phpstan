@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+set -eu
+
+readonly ROOT_PATH="$(realpath "$(dirname "$(realpath "$0")")/../..")"
+source "${ROOT_PATH}"/bin/common.inc.sh
+source "${ROOT_PATH}"/bin/dockerise.inc.bash
+
+if [ ! -d "${ROOT_PATH}"/var/ci/phpstan ]; then
+    mkdir -p "${ROOT_PATH}"/var/ci/phpstan
+fi
+
+clearCache=false
+phpstanParameters=
+for arg in "${@}"; do
+    if [ "${arg}" == "--clear-cache" ]; then
+        clearCache=true
+    else
+        phpstanParameters="${phpstanParameters} ${arg}"
+    fi
+done
+
+if ${clearCache} && [ -d "${ROOT_PATH}"/var/ci/phpstan ]; then
+    echo "Clear cache"
+    rm -rf "${ROOT_PATH}"/var/ci/phpstan
+fi
+
+phpstan \
+    analyse \
+        --ansi \
+        --configuration "${ROOT_PATH}"/config/ci/phpstan.neon \
+        ${phpstanParameters}

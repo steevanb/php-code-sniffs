@@ -33,7 +33,7 @@ class NewWithoutParenthesesSniff implements Sniff
         $openParen = $prevPtr;
 
         // Find the matching close parenthesis.
-        if (isset($tokens[$openParen]['parenthesis_closer']) === false) {
+        if (array_key_exists('parenthesis_closer', $tokens[$openParen]) === false) {
             return;
         }
 

@@ -20,7 +20,10 @@ class TraitUseAlphabeticalOrderSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        if (isset($tokens[$stackPtr]['scope_opener'], $tokens[$stackPtr]['scope_closer']) === false) {
+        if (
+            array_key_exists('scope_opener', $tokens[$stackPtr]) === false
+            || array_key_exists('scope_closer', $tokens[$stackPtr]) === false
+        ) {
             return;
         }
 
@@ -80,7 +83,7 @@ class TraitUseAlphabeticalOrderSniff implements Sniff
             while ($namePtr < $semicolonOrBrace) {
                 $code = $tokens[$namePtr]['code'];
                 if ($code === T_COMMA) {
-                    if ($nameStart !== null) {
+                    if ($nameStart !== null && $nameEnd !== null) {
                         $entries[] = ['nameStart' => $nameStart, 'nameEnd' => $nameEnd, 'name' => $name];
                     }
                     $nameStart = null;
@@ -96,12 +99,12 @@ class TraitUseAlphabeticalOrderSniff implements Sniff
                 $namePtr++;
             }
 
-            if ($nameStart !== null) {
+            if ($nameStart !== null && $nameEnd !== null) {
                 $entries[] = ['nameStart' => $nameStart, 'nameEnd' => $nameEnd, 'name' => $name];
             }
 
             if ($tokens[$semicolonOrBrace]['code'] === T_OPEN_CURLY_BRACKET) {
-                if (isset($tokens[$semicolonOrBrace]['bracket_closer'])) {
+                if (array_key_exists('bracket_closer', $tokens[$semicolonOrBrace])) {
                     $ptr = $tokens[$semicolonOrBrace]['bracket_closer'] + 1;
                 } else {
                     break;

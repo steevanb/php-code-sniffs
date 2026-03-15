@@ -1,9 +1,19 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 set -eu
 
-readonly PROJECT_DIRECTORY="$(realpath "$(dirname "$(realpath "$0")")/../..")"
+readonly ROOT_PATH="$(realpath "$(dirname "$(realpath "$0")")/../..")"
+source "${ROOT_PATH}"/bin/common.inc.sh
 
-docker pull php:8.4.19-cli-alpine3.23
+local=false
+for param in "${@}"; do
+    if [ "${param}" == "--local" ] || [ "${param}" == "-l" ]; then
+        local=true
+    fi
+done
 
-"${PROJECT_DIRECTORY}"/bin/composer update
+if ! ${local}; then
+    docker pull "${CI_DOCKER_IMAGE_NAME}"
+fi
+
+"${ROOT_PATH}"/bin/composer update

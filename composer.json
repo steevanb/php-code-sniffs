@@ -15,6 +15,7 @@
     },
     "require": {
         "php": "^8.4",
+        "ext-tokenizer": "*",
         "squizlabs/php_codesniffer": "4.0.*"
     },
     "scripts": {

@@ -26,6 +26,12 @@ abstract class CorrectOrder
 
     private const string PRIVATE_CONST = 'c';
 
+    public static string $staticPublicProp = 'a';
+
+    protected static string $staticProtectedProp = 'b';
+
+    private static string $staticPrivateProp = 'c';
+
     public static function staticPublicMethod(): void
     {
     }

@@ -1,20 +1,13 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 set -eu
 
-readonly PROJECT_DIRECTORY="$(realpath "$(dirname "$(realpath "$0")")/../..")"
+readonly ROOT_PATH="$(realpath "$(dirname "$(realpath "$0")")/../..")"
+source "${ROOT_PATH}"/bin/common.inc.sh
+source "${ROOT_PATH}"/bin/dockerise.inc.bash
 
-. "${PROJECT_DIRECTORY}"/bin/docker-run-parameter-interactive.inc.sh
+if [ ! -d "${ROOT_PATH}"/var/ci/phpcs ]; then
+    mkdir -p "${ROOT_PATH}"/var/ci/phpcs
+fi
 
-mkdir -p "${PROJECT_DIRECTORY}/var/ci/phpcs"
-
-docker \
-    run \
-        --rm \
-        --tty \
-        ${DOCKER_RUN_PARAMETER_INTERACTIVE} \
-        --volume "${PROJECT_DIRECTORY}":/app \
-        --workdir /app \
-        --user "$(id -u)":"$(id -g)" \
-        php:8.4.19-cli-alpine3.23 \
-            vendor/bin/phpcs --standard=config/ci/phpcs.xml "${@}"
+vendor/bin/phpcs --standard=config/ci/phpcs.xml "${@}"

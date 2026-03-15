@@ -46,7 +46,7 @@ class DisallowShortArraySyntaxSpacesSniff implements Sniff
         $previousToken = $phpcsFile->getTokens()[$stackPtr - 1];
         $previousToken2 = $phpcsFile->getTokens()[$stackPtr - 2];
         if (
-            ($previousToken['content'] ?? null) !== "\n"
+            $previousToken['content'] !== "\n"
             && $previousToken['code'] === T_WHITESPACE
             && $previousToken2['code'] !== T_WHITESPACE
             && $previousToken2['code'] !== T_CLOSE_SHORT_ARRAY

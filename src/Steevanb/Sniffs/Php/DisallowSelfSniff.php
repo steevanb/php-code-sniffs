@@ -83,7 +83,7 @@ class DisallowSelfSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        if (isset($tokens[$stackPtr]['nested_parenthesis']) === false) {
+        if (array_key_exists('nested_parenthesis', $tokens[$stackPtr]) === false) {
             return false;
         }
 
@@ -105,12 +105,19 @@ class DisallowSelfSniff implements Sniff
     }
 
     /** @return int|null Token code (T_PUBLIC, T_PROTECTED, T_PRIVATE) or null if not found. */
-    private function findMethodVisibility(File $phpcsFile, int $stackPtr, string $methodName): ?int
+    private function findMethodVisibility(File $phpcsFile, int $stackPtr, string $methodName): int|string|null
     {
         $tokens = $phpcsFile->getTokens();
 
         $classPtr = $phpcsFile->getCondition($stackPtr, T_CLASS);
         if ($classPtr === false) {
+            return null;
+        }
+
+        if (
+            array_key_exists('scope_opener', $tokens[$classPtr]) === false
+            || array_key_exists('scope_closer', $tokens[$classPtr]) === false
+        ) {
             return null;
         }
 
@@ -135,13 +142,19 @@ class DisallowSelfSniff implements Sniff
         return null;
     }
 
-    /** @return int|null Token code (T_PUBLIC, T_PROTECTED, T_PRIVATE) or null if not found. */
-    private function findConstantVisibility(File $phpcsFile, int $stackPtr, string $constantName): ?int
+    private function findConstantVisibility(File $phpcsFile, int $stackPtr, string $constantName): int|string|null
     {
         $tokens = $phpcsFile->getTokens();
 
         $classPtr = $phpcsFile->getCondition($stackPtr, T_CLASS);
         if ($classPtr === false) {
+            return null;
+        }
+
+        if (
+            array_key_exists('scope_opener', $tokens[$classPtr]) === false
+            || array_key_exists('scope_closer', $tokens[$classPtr]) === false
+        ) {
             return null;
         }
 
@@ -184,7 +197,7 @@ class DisallowSelfSniff implements Sniff
         return null;
     }
 
-    private function findVisibilityBefore(File $phpcsFile, int $ptr, int $classOpen): int
+    private function findVisibilityBefore(File $phpcsFile, int $ptr, int $classOpen): int|string
     {
         $tokens = $phpcsFile->getTokens();
 

@@ -21,7 +21,7 @@ class DisallowMultipleEmptyLinesSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
         if (
-            isset($tokens[$stackPtr + 1], $tokens[$stackPtr + 2])
+            array_key_exists($stackPtr + 1, $tokens) && array_key_exists($stackPtr + 2, $tokens)
             && $tokens[$stackPtr]['content'] === "\n"
             && $tokens[$stackPtr + 1]['code'] === T_WHITESPACE
             && $tokens[$stackPtr + 1]['content'] === "\n"

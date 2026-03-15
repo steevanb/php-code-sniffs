@@ -183,7 +183,7 @@ class GroupUsesSniff implements Sniff
             // Open brace must be followed by a newline.
             $afterOpen = $groupOpen + 1;
             if (
-                isset($tokens[$afterOpen])
+                array_key_exists($afterOpen, $tokens)
                 && (
                     $tokens[$afterOpen]['code'] !== T_WHITESPACE
                     || str_contains($tokens[$afterOpen]['content'], "\n") === false
@@ -199,7 +199,7 @@ class GroupUsesSniff implements Sniff
             // Close brace must be on its own line.
             $beforeClose = $groupClose - 1;
             if (
-                isset($tokens[$beforeClose])
+                array_key_exists($beforeClose, $tokens)
                 && ($tokens[$beforeClose]['code'] !== T_WHITESPACE || $tokens[$beforeClose]['content'] !== "\n")
             ) {
                 $phpcsFile->addError(
@@ -214,7 +214,7 @@ class GroupUsesSniff implements Sniff
             while ($commaPtr !== false) {
                 $afterComma = $commaPtr + 1;
                 if (
-                    isset($tokens[$afterComma])
+                    array_key_exists($afterComma, $tokens)
                     && $tokens[$afterComma]['code'] === T_WHITESPACE
                     && str_contains($tokens[$afterComma]['content'], "\n") === false
                 ) {
