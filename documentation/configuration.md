@@ -2,7 +2,7 @@
 
 Some sniffs can be configured in xml.
 
-The report `steevanb\PhpCodeSniffs\Reports\Steevanb` can be configured with a bootstrap file.
+The report `Steevanb\PhpCodeSniffs\Reports\Steevanb` can be configured with a bootstrap file.
 
 # Configuration with xml
 
@@ -49,6 +49,18 @@ Allow some variable names to not follow the camelCase convention:
 ```
 
 ### NestingLevelSniff
+
+Configure nesting level thresholds:
+```xml
+<rule ref="Steevanb.Metrics.NestingLevel">
+    <properties>
+        <!-- Nesting level that triggers a warning (default: 5) -->
+        <property name="nestingLevel" value="5"/>
+        <!-- Nesting level that triggers an error (default: 10) -->
+        <property name="absoluteNestingLevel" value="10"/>
+    </properties>
+</rule>
+```
 
 Allow some methods to exceed the nesting level limit:
 ```xml
@@ -105,7 +117,7 @@ You can add a bootstrap file to phpcs to configure sniffs:
 // If you use the Docker image,
 // file path must not be the same between Docker and your local file system.
 // You can change a part of the path to files who have errors, to make file:// works in bash.
-steevanb\PhpCodeSniffs\Reports\Steevanb::addReplaceInPath('/app', __DIR__);
+Steevanb\PhpCodeSniffs\Reports\Steevanb::addReplaceInPath('/app', __DIR__);
 
 ```
 

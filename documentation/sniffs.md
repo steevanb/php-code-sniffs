@@ -8,22 +8,28 @@ Here is the list of enabled sniffs.
 |-------|
 | [Generic.Arrays.ArrayIndent](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/Arrays/ArrayIndentSniff.php) |
 | [Generic.Arrays.DisallowLongArraySyntax](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/Arrays/DisallowLongArraySyntaxSniff.php) |
+| [Generic.CodeAnalysis.AssignmentInCondition](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/CodeAnalysis/AssignmentInConditionSniff.php) |
+| [Generic.CodeAnalysis.UnnecessaryFinalModifier](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/CodeAnalysis/UnnecessaryFinalModifierSniff.php) |
 | [Generic.ControlStructures.DisallowYodaConditions](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/ControlStructures/DisallowYodaConditionsSniff.php) |
 | [Generic.ControlStructures.InlineControlStructure](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/ControlStructures/InlineControlStructureSniff.php) |
 | [Generic.Debug.ClosureLinter](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/Debug/ClosureLinterSniff.php) |
 | [Generic.Files.ByteOrderMark](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/Files/ByteOrderMarkSniff.php) |
 | [Generic.Files.LineEndings](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/Files/LineEndingsSniff.php) |
 | [Generic.Files.LineLength](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/Files/LineLengthSniff.php) |
-| [Generic.Formatting.DisallowMultipleStatements](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/Formatting/DisallowMultipleStatementsSniff.php) |
+| [Generic.Files.OneObjectStructurePerFile](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/Files/OneObjectStructurePerFileSniff.php) |
 | [Generic.Formatting.SpaceAfterCast](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/Formatting/SpaceAfterCastSniff.php) |
 | [Generic.Functions.FunctionCallArgumentSpacing](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/Functions/FunctionCallArgumentSpacingSniff.php) |
+| [Generic.NamingConventions.AbstractClassNamePrefix](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/NamingConventions/AbstractClassNamePrefixSniff.php) |
 | [Generic.NamingConventions.ConstructorName](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/NamingConventions/ConstructorNameSniff.php) |
+| [Generic.NamingConventions.InterfaceNameSuffix](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/NamingConventions/InterfaceNameSuffixSniff.php) |
+| [Generic.NamingConventions.TraitNameSuffix](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/NamingConventions/TraitNameSuffixSniff.php) |
 | [Generic.NamingConventions.UpperCaseConstantName](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/NamingConventions/UpperCaseConstantNameSniff.php) |
 | [Generic.PHP.DisallowAlternativePHPTags](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/Php/DisallowAlternativePHPTagsSniff.php) |
 | [Generic.PHP.DisallowShortOpenTag](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/Php/DisallowShortOpenTagSniff.php) |
 | [Generic.PHP.ForbiddenFunctions](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/Php/ForbiddenFunctionsSniff.php) |
 | [Generic.PHP.LowerCaseConstant](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/Php/LowerCaseConstantSniff.php) |
 | [Generic.PHP.LowerCaseKeyword](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/Php/LowerCaseKeywordSniff.php) |
+| [Generic.PHP.NoSilencedErrors](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/Php/NoSilencedErrorsSniff.php) |
 | [Generic.WhiteSpace.DisallowTabIndent](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/WhiteSpace/DisallowTabIndentSniff.php) |
 | [Generic.WhiteSpace.IncrementDecrementSpacing](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/WhiteSpace/IncrementDecrementSpacingSniff.php) |
 | [Generic.WhiteSpace.ScopeIndent](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Generic/Sniffs/WhiteSpace/ScopeIndentSniff.php) |
@@ -34,6 +40,7 @@ Here is the list of enabled sniffs.
 | [PEAR.Formatting.MultiLineAssignment](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/PEAR/Sniffs/Formatting/MultiLineAssignmentSniff.php) |
 | [PEAR.Functions.FunctionCallSignature](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/PEAR/Sniffs/Functions/FunctionCallSignatureSniff.php) |
 | [PEAR.Functions.ValidDefaultValue](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/PEAR/Sniffs/Functions/ValidDefaultValueSniff.php) |
+| [PEAR.WhiteSpace.ObjectOperatorIndent](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/PEAR/Sniffs/WhiteSpace/ObjectOperatorIndentSniff.php) |
 
 | Sniff |
 |-------|
@@ -49,6 +56,7 @@ Here is the list of enabled sniffs.
 | [PSR12.Files.DeclareStatement](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/PSR12/Sniffs/Files/DeclareStatementSniff.php) |
 | [PSR12.Files.ImportStatement](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/PSR12/Sniffs/Files/ImportStatementSniff.php) |
 | [PSR12.Files.OpenTag](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/PSR12/Sniffs/Files/OpenTagSniff.php) |
+| [PSR12.Functions.NullableTypeDeclaration](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/PSR12/Sniffs/Functions/NullableTypeDeclarationSniff.php) |
 | [PSR12.Functions.ReturnTypeDeclaration](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/PSR12/Sniffs/Functions/ReturnTypeDeclarationSniff.php) |
 | [PSR12.Traits.UseDeclaration](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/PSR12/Sniffs/Traits/UseDeclarationSniff.php) |
 
@@ -97,7 +105,6 @@ Here is the list of enabled sniffs.
 | [Squiz.Classes.ValidClassName](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Squiz/Sniffs/Classes/ValidClassNameSniff.php) |
 | [Squiz.Commenting.ClassComment](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Squiz/Sniffs/Commenting/ClassCommentSniff.php) |
 | [Squiz.Commenting.EmptyCatchComment](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Squiz/Sniffs/Commenting/EmptyCatchCommentSniff.php) |
-| [Squiz.Commenting.FunctionCommentThrowTag](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Squiz/Sniffs/Commenting/FunctionCommentThrowTagSniff.php) |
 | [Squiz.Commenting.PostStatementComment](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Squiz/Sniffs/Commenting/PostStatementCommentSniff.php) |
 | [Squiz.ControlStructures.ControlSignature](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Squiz/Sniffs/ControlStructures/ControlSignatureSniff.php) |
 | [Squiz.ControlStructures.ForEachLoopDeclaration](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Squiz/Sniffs/ControlStructures/ForEachLoopDeclarationSniff.php) |
@@ -155,26 +162,34 @@ Here is the list of enabled sniffs.
 |-------|
 | [Zend.Debug.CodeAnalyzer](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Zend/Sniffs/Debug/CodeAnalyzerSniff.php) |
 | [Zend.Files.ClosingTag](https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.0.1/src/Standards/Zend/Sniffs/Files/ClosingTagSniff.php) |
-  
+
 ## steevanb/php-code-sniffer
 
 | Sniff |
 |-------|
-| [Steevanb.Arrays.DisallowShortArraySyntaxSpaces](https://github.com/steevanb/php-code-sniffs/blob/5.0.0/Steevanb/Sniffs/Arrays/DisallowShortArraySyntaxSpacesSniff.php) |
-| [Steevanb.CodeAnalysis.EmptyStatement](https://github.com/steevanb/php-code-sniffs/blob/5.0.0/Steevanb/Sniffs/CodeAnalysis/EmptyStatementSniff.php) |
-| [Steevanb.CodeAnalysis.StrictTypes](https://github.com/steevanb/php-code-sniffs/blob/5.0.0/Steevanb/Sniffs/CodeAnalysis/StrictTypesSniff.php) |
-| [Steevanb.Comparators.DisallowExclamationPoint](https://github.com/steevanb/php-code-sniffs/blob/5.0.0/Steevanb/Sniffs/Comparators/DisallowExclamationPointSniff.php) |
-| [Steevanb.ControlStructures.ElseIfDeclaration](https://github.com/steevanb/php-code-sniffs/blob/5.0.0/Steevanb/Sniffs/ControlStructures/ElseIfDeclarationSniff.php) |
-| [Steevanb.Metrics.NestingLevel](https://github.com/steevanb/php-code-sniffs/blob/5.0.0/Steevanb/Sniffs/Metrics/NestingLevelSniff.php) |
-| [Steevanb.Namespaces.UseDeclaration](https://github.com/steevanb/php-code-sniffs/blob/5.0.0/Steevanb/Sniffs/Namespaces/UseDeclarationSniff.php) |
-| [Steevanb.NamingConventions.CamelCapsFunctionName](https://github.com/steevanb/php-code-sniffs/blob/5.0.0/Steevanb/Sniffs/NamingConventions/CamelCapsFunctionNameSniff.php) |
-| [Steevanb.NamingConventions.ValidVariableName](https://github.com/steevanb/php-code-sniffs/blob/5.0.0/Steevanb/Sniffs/NamingConventions/ValidVariableNameSniff.php) |
-| [Steevanb.Php.DeprecatedFunctions](https://github.com/steevanb/php-code-sniffs/blob/5.0.0/Steevanb/Sniffs/Php/DeprecatedFunctionsSniff.php) |
-| [Steevanb.Php.DisallowMultipleEmptyLines](https://github.com/steevanb/php-code-sniffs/blob/5.0.0/Steevanb/Sniffs/Php/DisallowMultipleEmptyLinesSniff.php) |
-| [Steevanb.Php.DisallowSelf](https://github.com/steevanb/php-code-sniffs/blob/5.0.0/Steevanb/Sniffs/Php/DisallowSelfSniff.php) |
-| [Steevanb.PhpDoc.NumberOfRowsRelativeToContent](https://github.com/steevanb/php-code-sniffs/blob/5.0.0/Steevanb/Sniffs/PhpDoc/NumberOfRowsRelativeToContentSniff.php) |
-| [Steevanb.Properties.ConstantVisibility](https://github.com/steevanb/php-code-sniffs/blob/5.0.0/Steevanb/Sniffs/Properties/ConstantVisibilitySniff.php) |
-| [Steevanb.ReturnType.StaticInsteadOfSelf](https://github.com/steevanb/php-code-sniffs/blob/5.0.0/Steevanb/Sniffs/ReturnType/StaticInsteadOfSelfSniff.php) |
-| [Steevanb.Syntax.BlankLineBeforeReturnSniff](https://github.com/steevanb/php-code-sniffs/blob/5.0.0/Steevanb/Sniffs/Syntax/BlankLineBeforeReturnSniff.php) |
-| [Steevanb.Syntax.Concatenation](https://github.com/steevanb/php-code-sniffs/blob/5.0.0/Steevanb/Sniffs/Syntax/ConcatenationSniff.php) |
-| [Steevanb.Uses.GroupUses](https://github.com/steevanb/php-code-sniffs/blob/5.0.0/Steevanb/Sniffs/Uses/GroupUsesSniff.php) |
+| [Steevanb.Arrays.DisallowShortArraySyntaxSpaces](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Arrays/DisallowShortArraySyntaxSpacesSniff.php) |
+| [Steevanb.Classes.ClassMemberOrder](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Classes/ClassMemberOrderSniff.php) |
+| [Steevanb.Classes.TraitUseAlphabeticalOrder](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Classes/TraitUseAlphabeticalOrderSniff.php) |
+| [Steevanb.CodeAnalysis.EmptyStatement](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/CodeAnalysis/EmptyStatementSniff.php) |
+| [Steevanb.CodeAnalysis.StrictTypes](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/CodeAnalysis/StrictTypesSniff.php) |
+| [Steevanb.Comparators.DisallowExclamationPoint](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Comparators/DisallowExclamationPointSniff.php) |
+| [Steevanb.ControlStructures.ElseIfDeclaration](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/ControlStructures/ElseIfDeclarationSniff.php) |
+| [Steevanb.Formatting.ChainedCallsOnNewLine](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Formatting/ChainedCallsOnNewLineSniff.php) |
+| [Steevanb.Formatting.DisallowMultipleStatements](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Formatting/DisallowMultipleStatementsSniff.php) |
+| [Steevanb.Functions.StaticClosure](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Functions/StaticClosureSniff.php) |
+| [Steevanb.Metrics.NestingLevel](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Metrics/NestingLevelSniff.php) |
+| [Steevanb.Namespaces.UseDeclaration](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Namespaces/UseDeclarationSniff.php) |
+| [Steevanb.NamingConventions.CamelCapsFunctionName](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/NamingConventions/CamelCapsFunctionNameSniff.php) |
+| [Steevanb.NamingConventions.ValidVariableName](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/NamingConventions/ValidVariableNameSniff.php) |
+| [Steevanb.Php.DeprecatedFunctions](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Php/DeprecatedFunctionsSniff.php) |
+| [Steevanb.Php.DisallowMultipleEmptyLines](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Php/DisallowMultipleEmptyLinesSniff.php) |
+| [Steevanb.Php.DisallowSelf](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Php/DisallowSelfSniff.php) |
+| [Steevanb.PhpDoc.NumberOfRowsRelativeToContent](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/PhpDoc/NumberOfRowsRelativeToContentSniff.php) |
+| [Steevanb.Properties.ConstantVisibility](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Properties/ConstantVisibilitySniff.php) |
+| [Steevanb.Properties.EmptyPropertyHookOnSameLine](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Properties/EmptyPropertyHookOnSameLineSniff.php) |
+| [Steevanb.ReturnType.StaticInsteadOfSelf](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/ReturnType/StaticInsteadOfSelfSniff.php) |
+| [Steevanb.Syntax.BlankLineBeforeReturn](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Syntax/BlankLineBeforeReturnSniff.php) |
+| [Steevanb.Syntax.Concatenation](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Syntax/ConcatenationSniff.php) |
+| [Steevanb.Syntax.NewWithoutParentheses](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Syntax/NewWithoutParenthesesSniff.php) |
+| [Steevanb.Uses.GroupUses](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Uses/GroupUsesSniff.php) |
+| [Steevanb.Uses.UseAlphabeticalOrder](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Uses/UseAlphabeticalOrderSniff.php) |

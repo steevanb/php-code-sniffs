@@ -17,7 +17,7 @@ Example of `phpcs.xml`:
     <arg name="warning-severity" value="0"/>
     <exclude-pattern>/var</exclude-pattern>
     <exclude-pattern>/vendor</exclude-pattern>
-    <arg name="report" value="steevanb\PhpCodeSniffs\Reports\Steevanb"/>
+    <arg name="report" value="Steevanb\PhpCodeSniffs\Reports\Steevanb"/>
     <arg name="cache" value="var/ci/phpcs/cache"/>
     <file>.</file>
     <rule ref="Steevanb.Uses.GroupUses">
@@ -37,7 +37,7 @@ Paths in this file are relatives to this file.
 ```bash
 vendor/bin/phpcs \
     --standard=vendor/steevanb/php-code-sniffs/src/Steevanb/ruleset.xml \
-    --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb \
+    --report=Steevanb\\PhpCodeSniffs\\Reports\\Steevanb \
     src/
 ```
 
@@ -53,7 +53,7 @@ Some phpcs parameters:
 ### Scan files need to be commited
 
 ```bash
-git status --porcelain | grep -E '^[^D\?]{2} .*\.php$' | awk '{print $2}' | xargs -n1 vendor/bin/phpcs --standard=vendor/steevanb/php-code-sniffs/ruleset.xml --report=steevanb\\PhpCodeSniffs\\Reports\\Steevanb
+git status --porcelain | grep -E '^[^D\?]{2} .*\.php$' | awk '{print $2}' | xargs -n1 vendor/bin/phpcs --standard=vendor/steevanb/php-code-sniffs/ruleset.xml --report=Steevanb\\PhpCodeSniffs\\Reports\\Steevanb
 ```
 
 ### Include this ruleset in your ruleset.xml

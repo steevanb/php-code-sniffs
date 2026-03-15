@@ -1,3 +1,41 @@
+### master
+
+- [BC Break] Require `php ^8.4` (was `^7.1||^8.0`).
+- [BC Break] Require `squizlabs/php_codesniffer 4.0.*` (was `3.9.*`).
+- [BC Break] Require `ext-tokenizer`.
+- [BC Break] Rename namespace `steevanb\PhpCodeSniffs` to `Steevanb\PhpCodeSniffs`.
+- [BC Break] Rename `Php81StaticInsteadOfSelfSniff` to `StaticInsteadOfSelfSniff`.
+- [BC Break] Rename directory `Sniffs/PHP` to `Sniffs/Php`.
+- [BC Break] Remove `PhpVersionId` class.
+- [BC Break] Remove root `ruleset.xml` wrapper, use `src/Steevanb/ruleset.xml` directly.
+- Add sniff `Steevanb.Classes.ClassMemberOrder`.
+- Add sniff `Steevanb.Classes.TraitUseAlphabeticalOrder`.
+- Add sniff `Steevanb.Formatting.ChainedCallsOnNewLine`.
+- Add sniff `Steevanb.Formatting.DisallowMultipleStatements` (replaces `Generic.Formatting.DisallowMultipleStatements`).
+- Add sniff `Steevanb.Functions.StaticClosure`.
+- Add sniff `Steevanb.Properties.EmptyPropertyHookOnSameLine`.
+- Add sniff `Steevanb.Syntax.NewWithoutParentheses`.
+- Add sniff `Steevanb.Uses.UseAlphabeticalOrder`.
+- Add ruleset `Generic.CodeAnalysis.AssignmentInCondition`.
+- Add ruleset `Generic.CodeAnalysis.UnnecessaryFinalModifier`.
+- Add ruleset `Generic.Files.OneObjectStructurePerFile`.
+- Add ruleset `Generic.NamingConventions.AbstractClassNamePrefix`.
+- Add ruleset `Generic.NamingConventions.InterfaceNameSuffix`.
+- Add ruleset `Generic.NamingConventions.TraitNameSuffix`.
+- Add ruleset `Generic.PHP.NoSilencedErrors`.
+- Add ruleset `PEAR.WhiteSpace.ObjectOperatorIndent`.
+- Add ruleset `PSR12.Functions.NullableTypeDeclaration`.
+- Remove ruleset `Generic.Formatting.DisallowMultipleStatements` (replaced by custom sniff).
+- Remove ruleset `Squiz.Commenting.FunctionCommentThrowTag`.
+- Rework `DisallowSelfSniff`.
+- Rework `NumberOfRowsRelativeToContentSniff`.
+- Rework `GroupUsesSniff`.
+- Rework `BlankLineBeforeReturnSniff`.
+- Rework `ConcatenationSniff`.
+- Add ruleset presets `rulesets/symfony.xml` and `rulesets/doctrine.xml`.
+- Add unit tests.
+- Rework devops: Docker images (CI + Release), bin scripts, phpstan, shellcheck, composer-require-checker, unused-scanner.
+
 ### [5.0.0](../../../compare/4.5.0...5.0.0) - 2024-08-27
 
 - [BC Break] Remove `GroupUsesSniffs::addFirstLevelPrefix()`, `addThirdLevelPrefix()`, `addFourthLevelPrefix()` and `addSymfonyPrefixes()`. Use xml instead.
