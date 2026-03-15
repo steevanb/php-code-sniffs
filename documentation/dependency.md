@@ -1,7 +1,7 @@
 ## Installation as dependency
 
 ```bash
-composer require --dev steevanb/php-code-sniffs ^5.0
+composer require --dev steevanb/php-code-sniffs ^6.0
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ Example of `phpcs.xml`:
     <file>.</file>
     <rule ref="Steevanb.Uses.GroupUses">
         <properties>
-            <property name="firstLevelPrefixes" type="array">
+            <property name="groupPrefixes" type="array">
                 <element value="App"/>
             </property>
         </properties>
@@ -53,7 +53,7 @@ Some phpcs parameters:
 ### Scan files need to be commited
 
 ```bash
-git status --porcelain | grep -E '^[^D\?]{2} .*\.php$' | awk '{print $2}' | xargs -n1 vendor/bin/phpcs --standard=vendor/steevanb/php-code-sniffs/ruleset.xml --report=Steevanb\\PhpCodeSniffs\\Reports\\Steevanb
+git status --porcelain | grep -E '^[^D\?]{2} .*\.php$' | awk '{print $2}' | xargs -n1 vendor/bin/phpcs --standard=vendor/steevanb/php-code-sniffs/src/Steevanb/ruleset.xml --report=Steevanb\\PhpCodeSniffs\\Reports\\Steevanb
 ```
 
 ### Include this ruleset in your ruleset.xml

@@ -1,4 +1,4 @@
-### master
+### [6.0.0](../../../compare/5.0.0...6.0.0) - 2026-03-15
 
 - [BC Break] Require `php ^8.4` (was `^7.1||^8.0`).
 - [BC Break] Require `squizlabs/php_codesniffer 4.0.*` (was `3.9.*`).
