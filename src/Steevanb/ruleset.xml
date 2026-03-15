@@ -117,6 +117,15 @@
             <property name="ignoreNewlines" value="true" />
         </properties>
     </rule>
+    <rule ref="Generic.CodeAnalysis.AssignmentInCondition"/>
+    <rule ref="Generic.CodeAnalysis.UnnecessaryFinalModifier"/>
+    <rule ref="Generic.Files.OneObjectStructurePerFile"/>
+    <rule ref="Generic.NamingConventions.AbstractClassNamePrefix"/>
+    <rule ref="Generic.NamingConventions.InterfaceNameSuffix"/>
+    <rule ref="Generic.NamingConventions.TraitNameSuffix"/>
+    <rule ref="Generic.PHP.NoSilencedErrors"/>
+    <rule ref="PEAR.WhiteSpace.ObjectOperatorIndent"/>
+    <rule ref="PSR12.Functions.NullableTypeDeclaration"/>
     <rule ref="Generic.PHP.ForbiddenFunctions">
         <properties>
             <property name="forbiddenFunctions" type="array">

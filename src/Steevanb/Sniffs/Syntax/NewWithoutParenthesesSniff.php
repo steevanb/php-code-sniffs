@@ -32,6 +32,19 @@ class NewWithoutParenthesesSniff implements Sniff
 
         $openParen = $prevPtr;
 
+        // If the open parenthesis belongs to a function/method call, it's not a wrapping parenthesis.
+        $beforeParen = $phpcsFile->findPrevious(T_WHITESPACE, $openParen - 1, null, true);
+        if (
+            $beforeParen !== false
+            && in_array(
+                $tokens[$beforeParen]['code'],
+                [T_STRING, T_VARIABLE, T_CLOSE_PARENTHESIS, T_CLOSE_SQUARE_BRACKET],
+                true
+            ) === true
+        ) {
+            return;
+        }
+
         // Find the matching close parenthesis.
         if (array_key_exists('parenthesis_closer', $tokens[$openParen]) === false) {
             return;

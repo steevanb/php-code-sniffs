@@ -90,6 +90,21 @@ class ChainedCallsOnNewLineSniffTest extends AbstractSniffTestCase
         static::assertFixerResult('FirstPropertyOnSameLine.php', 'FirstPropertyOnSameLineFixed.php');
     }
 
+    public function testFirstPropertyOnSameLineIndentedIsDisallowed(): void
+    {
+        static::assertError(
+            'FirstPropertyOnSameLineIndented.php',
+            9,
+            'First chained call must be on a new line when chain spans multiple lines',
+            self::ERROR_SOURCE
+        );
+    }
+
+    public function testFixerFirstPropertyOnSameLineIndented(): void
+    {
+        static::assertFixerResult('FirstPropertyOnSameLineIndented.php', 'FirstPropertyOnSameLineIndentedFixed.php');
+    }
+
     public function testFixerNullsafeFirstCallOnSameLine(): void
     {
         static::assertFixerResult('NullsafeFirstCallOnSameLine.php', 'NullsafeFirstCallOnSameLineFixed.php');

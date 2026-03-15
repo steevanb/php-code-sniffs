@@ -42,6 +42,11 @@ class NewWithoutParenthesesSniffTest extends AbstractSniffTestCase
         static::assertNoErrors('NewWithoutChaining.php');
     }
 
+    public function testWithoutParenthesesMultilineChainingIsAllowed(): void
+    {
+        static::assertNoErrors('WithoutParenthesesMultilineChaining.php');
+    }
+
     public function testFixerWithParentheses(): void
     {
         static::assertFixerResult('WithParentheses.php', 'WithParenthesesFixed.php');
