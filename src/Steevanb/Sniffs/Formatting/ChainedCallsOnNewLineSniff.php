@@ -87,6 +87,12 @@ class ChainedCallsOnNewLineSniff implements Sniff
                     if ($lastNewline !== false) {
                         return substr($content, $lastNewline + 1);
                     }
+
+                    // PHPCS may split whitespace into separate tokens (newline and indentation).
+                    // If the token has no newline but is on the same line as the operator, it is the indentation.
+                    if ($tokens[$prevToken]['line'] === $tokens[$next]['line']) {
+                        return $content;
+                    }
                 }
 
                 break;
