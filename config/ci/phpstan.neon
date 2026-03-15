@@ -1,0 +1,17 @@
+includes:
+    - /composer/vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - /composer/vendor/phpstan/phpstan-phpunit/extension.neon
+    - /composer/vendor/phpstan/phpstan-strict-rules/rules.neon
+
+parameters:
+    level: max
+    tmpDir: /app/var/ci/phpstan
+    paths:
+        - /app/src
+        - /app/tests
+    excludePaths:
+        - /app/tests/*/Fixtures/*
+    scanDirectories:
+        - /app/vendor/squizlabs/php_codesniffer/src
+    stubFiles:
+        - /app/config/ci/phpstan.stubs.php

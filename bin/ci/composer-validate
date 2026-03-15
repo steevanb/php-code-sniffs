@@ -6,4 +6,4 @@ readonly ROOT_PATH="$(realpath "$(dirname "$(realpath "$0")")/../..")"
 source "${ROOT_PATH}"/bin/common.inc.sh
 source "${ROOT_PATH}"/bin/dockerise.inc.bash
 
-vendor/bin/phpcbf --standard=config/ci/phpcs.xml "${@}"
+composer validate --ansi --strict

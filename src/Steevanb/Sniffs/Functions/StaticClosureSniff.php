@@ -56,7 +56,10 @@ class StaticClosureSniff implements Sniff
             return $this->usesThisInArrowFunction($phpcsFile, $stackPtr);
         }
 
-        if (isset($tokens[$stackPtr]['scope_opener'], $tokens[$stackPtr]['scope_closer']) === false) {
+        if (
+            array_key_exists('scope_opener', $tokens[$stackPtr]) === false
+            || array_key_exists('scope_closer', $tokens[$stackPtr]) === false
+        ) {
             return false;
         }
 
@@ -69,7 +72,7 @@ class StaticClosureSniff implements Sniff
             }
 
             if ($tokens[$i]['code'] === T_CLOSURE || $tokens[$i]['code'] === T_FN) {
-                if ($tokens[$i]['code'] === T_CLOSURE && isset($tokens[$i]['scope_closer'])) {
+                if ($tokens[$i]['code'] === T_CLOSURE && array_key_exists('scope_closer', $tokens[$i])) {
                     $i = $tokens[$i]['scope_closer'];
                 } elseif ($tokens[$i]['code'] === T_FN) {
                     $i = $this->findArrowFunctionEnd($phpcsFile, $i);
@@ -96,7 +99,7 @@ class StaticClosureSniff implements Sniff
             }
 
             if ($tokens[$i]['code'] === T_CLOSURE || $tokens[$i]['code'] === T_FN) {
-                if ($tokens[$i]['code'] === T_CLOSURE && isset($tokens[$i]['scope_closer'])) {
+                if ($tokens[$i]['code'] === T_CLOSURE && array_key_exists('scope_closer', $tokens[$i])) {
                     $i = $tokens[$i]['scope_closer'];
                 } elseif ($tokens[$i]['code'] === T_FN) {
                     $i = $this->findArrowFunctionEnd($phpcsFile, $i);
@@ -111,7 +114,7 @@ class StaticClosureSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        if (isset($tokens[$stackPtr]['scope_closer'])) {
+        if (array_key_exists('scope_closer', $tokens[$stackPtr])) {
             return $tokens[$stackPtr]['scope_closer'];
         }
 

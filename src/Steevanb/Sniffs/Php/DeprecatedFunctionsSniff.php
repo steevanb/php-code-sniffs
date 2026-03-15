@@ -22,7 +22,7 @@ class DeprecatedFunctionsSniff extends PhpCodeSnifferDeprecatedFunctionsSniff
     {
         $allowed = false;
         foreach (array_keys($this->forbiddenFunctions) as $functionName) {
-            if (in_array($functionName, $this->allowedDeprecatedFunctions)) {
+            if (in_array($functionName, $this->allowedDeprecatedFunctions, true)) {
                 $allowed = true;
                 break;
             }

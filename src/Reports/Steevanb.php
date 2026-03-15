@@ -12,6 +12,9 @@ use PHP_CodeSniffer\{
 
 class Steevanb implements Report
 {
+    /** @var string[] */
+    protected static $replacesInPath = [];
+
     public static function addReplaceInPath(string $search, string $replace): void
     {
         static::$replacesInPath[$search] = $replace;
@@ -27,9 +30,6 @@ class Steevanb implements Report
         return $return;
     }
 
-    /** @var string[] */
-    protected static $replacesInPath = [];
-
     /**
      * Generate a partial report for a single processed file.
      *
@@ -37,10 +37,23 @@ class Steevanb implements Report
      * and FALSE if it ignored the file. Returning TRUE indicates that the file and
      * its data should be counted in the grand totals.
      *
-     * @param array $report Prepared report data.
+     * @param array<string, mixed> $report Prepared report data.
+     * @phpstan-param array{
+     *     filename: string,
+     *     errors: int,
+     *     warnings: int,
+     *     fixable: int,
+     *     messages: array<int, array<int, list<array{
+     *         message: string,
+     *         source: string,
+     *         type: string,
+     *         fixable: bool,
+     *     }>>>,
+     * } $report
      * @param boolean $showSources Show sources?
      * @param int $width Maximum allowed line width.
      */
+    // @phpstan-ignore method.childParameterType
     public function generateFileReport($report, File $phpcsFile, $showSources = false, $width = 80): bool
     {
         if ($report['errors'] === 0 && $report['warnings'] === 0) {
@@ -55,7 +68,10 @@ class Steevanb implements Report
         }
 
         // Work out the max line number length for formatting.
-        $maxLineNumLength = max(array_map('strlen', array_keys($report['messages'])));
+        $keys = array_keys($report['messages']);
+        $maxLineNumLength = $keys !== []
+            ? max(array_map(static fn(int $key): int => strlen((string) $key), $keys))
+            : 0;
 
         // The padding that all lines will require that are
         // printing an error message overflow.
@@ -224,7 +240,7 @@ class Steevanb implements Report
             $mins = floor($time / 60000);
             $secs = round((($time % 60000) / 1000), 2);
             $return = $mins . ' mins';
-            if ($secs !== 0) {
+            if ($secs !== 0.0) {
                 $return .= ', ' . $secs . ' secs';
             }
         } elseif ($time > 1000) {
@@ -241,6 +257,7 @@ class Steevanb implements Report
         // thanks to not add getter ...
         $reflection = new \ReflectionProperty(Timing::class, 'startTime');
         $reflection->setAccessible(true);
+        /** @var float $return */
         $return = $reflection->getValue();
         $reflection->setAccessible(false);
 

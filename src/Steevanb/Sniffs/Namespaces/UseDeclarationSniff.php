@@ -60,7 +60,14 @@ class UseDeclarationSniff implements Sniff
 
         if ($nextUse === false) {
             $end = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+            if ($end === false) {
+                return;
+            }
+
             $next = $phpcsFile->findNext(T_WHITESPACE, ($end + 1), null, true);
+            if ($next === false) {
+                return;
+            }
 
             if ($tokens[$next]['code'] !== T_CLOSE_TAG) {
                 $this->processBlankLineAfterUse($phpcsFile, $tokens, $next, $end, $stackPtr);
@@ -68,6 +75,7 @@ class UseDeclarationSniff implements Sniff
         }
     }
 
+    /** @param array<int, array{code: int|string, content: string, line: int, column: int, level: int}> $tokens */
     private function processBlankLineAfterUse(File $phpcsFile, array $tokens, int $next, int $end, int $stackPtr): self
     {
         $diff = ($tokens[$next]['line'] - $tokens[$end]['line'] - 1);

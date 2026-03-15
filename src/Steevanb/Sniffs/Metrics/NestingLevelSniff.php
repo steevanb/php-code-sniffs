@@ -16,10 +16,10 @@ use PHP_CodeSniffer\{
 class NestingLevelSniff implements Sniff
 {
     /** A nesting level higher than this value will throw a warning */
-    public $nestingLevel = 5;
+    public int $nestingLevel = 5;
 
     /** A nesting level higher than this value will throw an error */
-    public $absoluteNestingLevel = 10;
+    public int $absoluteNestingLevel = 10;
 
     /** @var string[] */
     public $allowedNestingLevelMethods = [];
@@ -34,13 +34,16 @@ class NestingLevelSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         // Ignore abstract methods.
-        if (isset($tokens[$stackPtr]['scope_opener']) === false) {
+        if (array_key_exists('scope_opener', $tokens[$stackPtr]) === false) {
             return;
         }
 
         // Detect start and end of this function definition.
         $start = $tokens[$stackPtr]['scope_opener'];
-        $end   = $tokens[$stackPtr]['scope_closer'];
+        $end   = $tokens[$stackPtr]['scope_closer'] ?? null;
+        if ($end === null) {
+            return;
+        }
 
         $nestingLevel = 0;
 
@@ -68,7 +71,8 @@ class NestingLevelSniff implements Sniff
                     basename($phpcsFile->getFilename())
                         . '::'
                         . $tokens[$phpcsFile->findNext(T_STRING, $stackPtr)]['content'],
-                    $this->allowedNestingLevelMethods
+                    $this->allowedNestingLevelMethods,
+                    true
                 ) === false
             ) {
                 $warning = 'Function\'s nesting level (%s) exceeds %s; consider refactoring the function';

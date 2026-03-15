@@ -22,11 +22,11 @@ class NumberOfRowsRelativeToContentSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
         $openTag = $tokens[$stackPtr];
 
-        $closeTagPtr = $openTag['comment_closer'] ?? null;
-        if (is_int($closeTagPtr) === false) {
+        if (array_key_exists('comment_closer', $openTag) === false) {
             return;
         }
 
+        $closeTagPtr = $openTag['comment_closer'];
         $closeTag = $tokens[$closeTagPtr];
 
         if (

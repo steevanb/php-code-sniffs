@@ -1,0 +1,26 @@
+{
+    "symbol-whitelist": [
+        "null", "true", "false",
+        "static", "self", "parent",
+        "array", "string", "int", "float", "bool", "iterable", "callable", "void", "object",
+        "PHP_CodeSniffer\\Files\\File",
+        "PHP_CodeSniffer\\Reports\\Report",
+        "PHP_CodeSniffer\\Sniffs\\AbstractScopeSniff",
+        "PHP_CodeSniffer\\Sniffs\\AbstractVariableSniff",
+        "PHP_CodeSniffer\\Sniffs\\Sniff",
+        "PHP_CodeSniffer\\Standards\\Generic\\Sniffs\\CodeAnalysis\\EmptyStatementSniff",
+        "PHP_CodeSniffer\\Standards\\Generic\\Sniffs\\PHP\\DeprecatedFunctionsSniff",
+        "PHP_CodeSniffer\\Util\\Common",
+        "PHP_CodeSniffer\\Util\\Timing",
+        "PHP_CodeSniffer\\Util\\Tokens",
+        "T_ANON_CLASS", "T_BOOLEAN_NOT",
+        "T_CLOSE_CURLY_BRACKET", "T_CLOSE_PARENTHESIS", "T_CLOSE_SHORT_ARRAY",
+        "T_CLOSE_SQUARE_BRACKET", "T_CLOSE_USE_GROUP", "T_CLOSURE", "T_COMMA",
+        "T_DOC_COMMENT_CLOSE_TAG", "T_DOC_COMMENT_OPEN_TAG", "T_DOC_COMMENT_STAR",
+        "T_EQUAL", "T_FN_ARROW", "T_NULL", "T_NULLABLE",
+        "T_OPEN_CURLY_BRACKET", "T_OPEN_PARENTHESIS", "T_OPEN_SHORT_ARRAY",
+        "T_OPEN_SQUARE_BRACKET", "T_OPEN_USE_GROUP",
+        "T_PARENT", "T_PHPCS_IGNORE", "T_SELF", "T_SEMICOLON",
+        "T_STRING_CONCAT", "T_TYPE_INTERSECTION", "T_TYPE_UNION"
+    ]
+}

@@ -126,7 +126,10 @@ class ChainedCallsOnNewLineSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         while (true) {
-            if ($tokens[$ptr]['code'] === T_CLOSE_PARENTHESIS && isset($tokens[$ptr]['parenthesis_opener'])) {
+            if (
+                $tokens[$ptr]['code'] === T_CLOSE_PARENTHESIS
+                && array_key_exists('parenthesis_opener', $tokens[$ptr])
+            ) {
                 $ptr = $phpcsFile->findPrevious(
                     T_WHITESPACE,
                     $tokens[$ptr]['parenthesis_opener'] - 1,
@@ -140,7 +143,10 @@ class ChainedCallsOnNewLineSniff implements Sniff
                 continue;
             }
 
-            if ($tokens[$ptr]['code'] === T_CLOSE_SQUARE_BRACKET && isset($tokens[$ptr]['bracket_opener'])) {
+            if (
+                $tokens[$ptr]['code'] === T_CLOSE_SQUARE_BRACKET
+                && array_key_exists('bracket_opener', $tokens[$ptr])
+            ) {
                 $ptr = $phpcsFile->findPrevious(
                     T_WHITESPACE,
                     $tokens[$ptr]['bracket_opener'] - 1,
@@ -190,17 +196,17 @@ class ChainedCallsOnNewLineSniff implements Sniff
                 return $i;
             }
 
-            if ($code === T_OPEN_PARENTHESIS && isset($tokens[$i]['parenthesis_closer'])) {
+            if ($code === T_OPEN_PARENTHESIS && array_key_exists('parenthesis_closer', $tokens[$i])) {
                 $i = $tokens[$i]['parenthesis_closer'] + 1;
                 continue;
             }
 
-            if ($code === T_OPEN_SQUARE_BRACKET && isset($tokens[$i]['bracket_closer'])) {
+            if ($code === T_OPEN_SQUARE_BRACKET && array_key_exists('bracket_closer', $tokens[$i])) {
                 $i = $tokens[$i]['bracket_closer'] + 1;
                 continue;
             }
 
-            if ($code === T_OPEN_CURLY_BRACKET && isset($tokens[$i]['bracket_closer'])) {
+            if ($code === T_OPEN_CURLY_BRACKET && array_key_exists('bracket_closer', $tokens[$i])) {
                 $i = $tokens[$i]['bracket_closer'] + 1;
                 continue;
             }

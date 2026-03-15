@@ -53,9 +53,9 @@ class DisallowMultipleStatementsSniff implements Sniff
 
         // Ignore multiple statements in a FOR condition.
         foreach ([$stackPtr, $prev] as $checkToken) {
-            if (isset($tokens[$checkToken]['nested_parenthesis']) === true) {
+            if (array_key_exists('nested_parenthesis', $tokens[$checkToken]) === true) {
                 foreach ($tokens[$checkToken]['nested_parenthesis'] as $bracket) {
-                    if (isset($tokens[$bracket]['parenthesis_owner']) === false) {
+                    if (array_key_exists('parenthesis_owner', $tokens[$bracket]) === false) {
                         continue;
                     }
 
@@ -118,7 +118,7 @@ class DisallowMultipleStatementsSniff implements Sniff
             }
         }
 
-        if ($openBrace === null || isset($tokens[$openBrace]['bracket_closer']) === false) {
+        if ($openBrace === null || array_key_exists('bracket_closer', $tokens[$openBrace]) === false) {
             return false;
         }
 

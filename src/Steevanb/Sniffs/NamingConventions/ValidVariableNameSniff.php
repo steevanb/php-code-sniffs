@@ -40,19 +40,27 @@ class ValidVariableNameSniff extends AbstractVariableSniff
         ];
 
         // If it's a php reserved var, then it's ok.
-        if (in_array($varName, $phpReservedVars) === true) {
+        if (in_array($varName, $phpReservedVars, true) === true) {
             return;
         }
 
         $objOperator = $phpcsFile->findNext([T_WHITESPACE], ($stackPtr + 1), null, true);
+        if ($objOperator === false) {
+            return;
+        }
+
         if ($tokens[$objOperator]['code'] === T_OBJECT_OPERATOR) {
             // Check to see if we are using a variable from an object.
             $var = $phpcsFile->findNext([T_WHITESPACE], ($objOperator + 1), null, true);
+            if ($var === false) {
+                return;
+            }
+
             if ($tokens[$var]['code'] === T_STRING) {
                 // Either a var name or a function call, so check for bracket.
                 $bracket = $phpcsFile->findNext([T_WHITESPACE], ($var + 1), null, true);
 
-                if ($tokens[$bracket]['code'] !== T_OPEN_PARENTHESIS) {
+                if ($bracket !== false && $tokens[$bracket]['code'] !== T_OPEN_PARENTHESIS) {
                     $objVarName = $tokens[$var]['content'];
 
                     // There is no way for us to know if the var is public or private,
@@ -93,7 +101,7 @@ class ValidVariableNameSniff extends AbstractVariableSniff
 
         if (
             Common::isCamelCaps($varName, false, true, false) === false
-            && in_array($varName, $this->allowedVariableNames) === false
+            && in_array($varName, $this->allowedVariableNames, true) === false
         ) {
             $error = 'Variable "%s" is not in valid camel caps format';
             $data = [$originalVarName];
@@ -154,7 +162,7 @@ class ValidVariableNameSniff extends AbstractVariableSniff
         ) {
             foreach ($matches[1] as $varName) {
                 // If it's a php reserved var, then its ok.
-                if (in_array($varName, $phpReservedVars) === true) {
+                if (in_array($varName, $phpReservedVars, true) === true) {
                     continue;
                 }
 

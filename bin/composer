@@ -1,17 +1,9 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 set -eu
 
-readonly PROJECT_DIRECTORY="$(realpath "$(dirname "$(realpath "$0")")/..")"
+readonly ROOT_PATH="$(realpath "$(dirname "$(realpath "$0")")/..")"
+source "${ROOT_PATH}"/bin/common.inc.sh
+BIN_DIR=bin source "${ROOT_PATH}"/bin/dockerise.inc.bash
 
-. "${PROJECT_DIRECTORY}"/bin/docker-run-parameter-interactive.inc.sh
-
-docker \
-    run \
-        --rm \
-        ${DOCKER_RUN_PARAMETER_INTERACTIVE} \
-        --tty \
-        --volume "${PROJECT_DIRECTORY}":/app \
-        --user "$(id -u)":"$(id -g)" \
-        composer:2.2.4 \
-            "${@}"
+php /usr/local/bin/composer "${@}"
