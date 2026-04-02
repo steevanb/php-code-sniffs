@@ -1,3 +1,7 @@
+### [6.1.1](../../../compare/6.1.0...6.1.1)
+
+- Fix `Steevanb.CodeAnalysis.ForbidRedundantArgument`: catch `\Error` during Reflection to prevent fatal error when a class is declared by multiple autoloaders.
+
 ### [6.1.0](../../../compare/6.0.0...6.1.0)
 
 - Add sniff `Steevanb.CodeAnalysis.ForbidRedundantArgument` with fixer: detects function, method, constructor and PHP 8 attribute arguments that match the parameter default value. Uses Reflection to resolve defaults from autoloaded classes and built-in PHP functions, with in-file fallback. Supports positional and named arguments.
