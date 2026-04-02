@@ -482,7 +482,7 @@ class ForbidRedundantArgumentSniff implements Sniff
                     $reflector = new \ReflectionFunction(substr($shortName, 1));
                 }
             }
-        } catch (\ReflectionException) {
+        } catch (\ReflectionException | \Error) {
             $this->reflectionCache[$cacheKey] = false;
 
             return null;
