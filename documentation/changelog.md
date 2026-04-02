@@ -1,3 +1,7 @@
+### [6.1.0](../../../compare/6.0.0...6.1.0)
+
+- Add sniff `Steevanb.CodeAnalysis.ForbidRedundantArgument` with fixer: detects function, method, constructor and PHP 8 attribute arguments that match the parameter default value. Uses Reflection to resolve defaults from autoloaded classes and built-in PHP functions, with in-file fallback. Supports positional and named arguments.
+
 ### [6.0.0](../../../compare/5.0.0...6.0.0) - 2026-03-15
 
 - [BC Break] Require `php ^8.4` (was `^7.1||^8.0`).
