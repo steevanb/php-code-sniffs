@@ -8,7 +8,7 @@ WORKDIR /var/php-code-sniffs
 
 RUN \
     # zip is for Composer, git to clone repository
-    apk add --no-cache zip git \
+    apk add --no-cache zip git bash \
     && git clone --single-branch --branch=${VERSION} https://github.com/steevanb/php-code-sniffs.git . \
     && composer install --no-cache --classmap-authoritative
 

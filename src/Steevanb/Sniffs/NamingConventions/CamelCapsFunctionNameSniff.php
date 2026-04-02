@@ -114,7 +114,7 @@ class CamelCapsFunctionNameSniff extends AbstractScopeSniff
         $methodName = ltrim($methodName, '_');
 
         $methodProps = $phpcsFile->getMethodProperties($stackPtr);
-        if (Common::isCamelCaps($methodName, false, true, true) === false) {
+        if (Common::isCamelCaps($methodName) === false) {
             if ($methodProps['scope_specified'] === true) {
                 if (in_array($methodName, $this->allowedNotCamelCase, true) === false) {
                     $error = '%s method name "%s" is not in camel caps format';
@@ -166,7 +166,7 @@ class CamelCapsFunctionNameSniff extends AbstractScopeSniff
         // Ignore first underscore in functions prefixed with "_".
         $functionName = ltrim($functionName, '_');
 
-        if (Common::isCamelCaps($functionName, false, true, true) === false) {
+        if (Common::isCamelCaps($functionName) === false) {
             $error = 'Function name "%s" is not in camel caps format';
             $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $errorData);
             $phpcsFile->recordMetric($stackPtr, 'CamelCase function name', 'no');

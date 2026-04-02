@@ -1,3 +1,9 @@
+### master
+
+### [6.1.2](../../../compare/6.1.1...6.1.2)
+
+- Fix `Steevanb.CodeAnalysis.ForbidRedundantArgument`
+
 ### [6.1.1](../../../compare/6.1.0...6.1.1)
 
 - Fix `Steevanb.CodeAnalysis.ForbidRedundantArgument`: catch `\Error` during Reflection to prevent fatal error when a class is declared by multiple autoloaders.
