@@ -221,7 +221,7 @@ class ForbidRedundantArgumentSniff implements Sniff
             }
 
             if ($code === T_OPEN_USE_GROUP) {
-                $prefix = implode('', $parts);
+                $prefix = rtrim(implode('', $parts), '\\');
                 $parts = [];
                 $inGroup = true;
 
@@ -482,7 +482,7 @@ class ForbidRedundantArgumentSniff implements Sniff
                     $reflector = new \ReflectionFunction(substr($shortName, 1));
                 }
             }
-        } catch (\ReflectionException | \Error) {
+        } catch (\ReflectionException) {
             $this->reflectionCache[$cacheKey] = false;
 
             return null;

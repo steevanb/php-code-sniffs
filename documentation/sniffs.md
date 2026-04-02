@@ -171,6 +171,7 @@ Here is the list of enabled sniffs.
 | [Steevanb.Classes.ClassMemberOrder](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Classes/ClassMemberOrderSniff.php) |
 | [Steevanb.Classes.TraitUseAlphabeticalOrder](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Classes/TraitUseAlphabeticalOrderSniff.php) |
 | [Steevanb.CodeAnalysis.EmptyStatement](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/CodeAnalysis/EmptyStatementSniff.php) |
+| [Steevanb.CodeAnalysis.ForbidRedundantArgument](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/CodeAnalysis/ForbidRedundantArgumentSniff.php) |
 | [Steevanb.CodeAnalysis.StrictTypes](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/CodeAnalysis/StrictTypesSniff.php) |
 | [Steevanb.Comparators.DisallowExclamationPoint](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/Comparators/DisallowExclamationPointSniff.php) |
 | [Steevanb.ControlStructures.ElseIfDeclaration](https://github.com/steevanb/php-code-sniffs/blob/master/src/Steevanb/Sniffs/ControlStructures/ElseIfDeclarationSniff.php) |
