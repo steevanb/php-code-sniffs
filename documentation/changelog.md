@@ -1,5 +1,9 @@
 ### master
 
+### [6.1.3](../../../compare/6.1.2...6.1.3)
+
+- Remove sniff `Steevanb.CodeAnalysis.ForbidRedundantArgument`.
+
 ### [6.1.2](../../../compare/6.1.1...6.1.2)
 
 - Fix `Steevanb.CodeAnalysis.ForbidRedundantArgument`

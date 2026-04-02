@@ -7,7 +7,7 @@ version: '2.1'
 jobs:
     phpcs:
         docker:
-            - image: steevanb/php-code-sniffs:6.1.2
+            - image: steevanb/php-code-sniffs:6.1.3
         working_directory: /app
         steps:
             - checkout
@@ -33,7 +33,7 @@ version: '2.1'
 jobs:
     phpcs:
         docker:
-            - image: steevanb/php-code-sniffs:6.1.2
+            - image: steevanb/php-code-sniffs:6.1.3
         working_directory: /app
         steps:
             - checkout
