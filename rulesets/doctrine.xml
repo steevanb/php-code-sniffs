@@ -4,7 +4,7 @@
 
     <rule ref="Steevanb.Uses.GroupUses">
         <properties>
-            <property name="groupPrefixes" type="array">
+            <property name="groupPrefixes" type="array" extend="true">
                 <element value="Doctrine\Bundle\DoctrineBundle"/>
                 <element value="Doctrine\Bundle\FixturesBundle"/>
                 <element value="Doctrine\Bundle\MigrationsBundle"/>

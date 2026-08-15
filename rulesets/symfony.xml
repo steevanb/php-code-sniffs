@@ -4,7 +4,7 @@
 
     <rule ref="Steevanb.Uses.GroupUses">
         <properties>
-            <property name="groupPrefixes" type="array">
+            <property name="groupPrefixes" type="array" extend="true">
                 <!-- Bridge -->
                 <element value="Symfony\Bridge\Doctrine"/>
                 <element value="Symfony\Bridge\Monolog"/>

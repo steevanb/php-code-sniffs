@@ -1,5 +1,7 @@
 ### master
 
+- Add `extend="true"` to `groupPrefixes` in `rulesets/symfony.xml` and `rulesets/doctrine.xml`: prefixes are now merged instead of overwritten when multiple rulesets are included.
+
 ### [6.1.3](../../../compare/6.1.2...6.1.3)
 
 - Remove sniff `Steevanb.CodeAnalysis.ForbidRedundantArgument`.
