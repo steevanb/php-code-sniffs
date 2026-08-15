@@ -1,6 +1,6 @@
-[![version](https://img.shields.io/badge/version-6.1.3-green.svg)](https://github.com/steevanb/php-code-sniffs/tree/6.1.3)
+[![version](https://img.shields.io/badge/version-6.1.4-green.svg)](https://github.com/steevanb/php-code-sniffs/tree/6.1.4)
 [![php](https://img.shields.io/badge/php-^8.4-blue.svg)](https://php.net)
-![Lines](https://img.shields.io/badge/code%20lines-13,401-green.svg)
+![Lines](https://img.shields.io/badge/code%20lines-13,457-green.svg)
 ![Total Downloads](https://poser.pugx.org/steevanb/php-code-sniffs/downloads)
 
 # php-code-sniffs
