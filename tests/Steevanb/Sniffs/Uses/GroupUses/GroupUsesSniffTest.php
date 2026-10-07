@@ -14,6 +14,10 @@ class GroupUsesSniffTest extends AbstractSniffTestCase
 
     private const string ERROR_SOURCE_CLOSE_BRACE = 'Steevanb.Uses.GroupUses.CloseBraceOwnLine';
 
+    private const string ERROR_SOURCE_WRONG_GROUP_PREFIX = 'Steevanb.Uses.GroupUses.WrongGroupPrefix';
+
+    private const string ERROR_SOURCE_DUPLICATE_GROUP = 'Steevanb.Uses.GroupUses.DuplicateGroup';
+
     protected static function getSniffName(): string
     {
         return 'Steevanb.Uses.GroupUses';
@@ -82,6 +86,51 @@ class GroupUsesSniffTest extends AbstractSniffTestCase
             7,
             'Use group close brace must be on its own line',
             self::ERROR_SOURCE_CLOSE_BRACE
+        );
+    }
+
+    public function testValidGroupedUseWithSubNamespaceIsAllowed(): void
+    {
+        static::assertNoErrors('ValidGroupedUseWithSubNamespace.php');
+    }
+
+    public function testGroupedUnderWrongPrefixIsDisallowed(): void
+    {
+        static::assertError(
+            'GroupedUnderWrongPrefix.php',
+            5,
+            'Use group "App\Foo\Bar" must be grouped under "App\Foo" (App\Foo\Bar\Baz, App\Foo\Bar\Qux)',
+            self::ERROR_SOURCE_WRONG_GROUP_PREFIX
+        );
+    }
+
+    public function testGroupedUnderNonConfiguredPrefixIsDisallowed(): void
+    {
+        static::assertError(
+            'GroupedUnderNonConfiguredPrefix.php',
+            5,
+            'Use group "App\Other" must be grouped under "App" (App\Other\Bar, App\Other\Baz)',
+            self::ERROR_SOURCE_WRONG_GROUP_PREFIX
+        );
+    }
+
+    public function testGroupedAndUngroupedSamePrefixIsDisallowed(): void
+    {
+        static::assertError(
+            'GroupedAndUngroupedSamePrefix.php',
+            8,
+            'Use "App\Foo\Baz" must be grouped under "App\Foo"',
+            self::ERROR_SOURCE_MUST_GROUP
+        );
+    }
+
+    public function testDuplicateGroupIsDisallowed(): void
+    {
+        static::assertError(
+            'DuplicateGroup.php',
+            8,
+            'Use group "App\Foo" must be merged with the previous one',
+            self::ERROR_SOURCE_DUPLICATE_GROUP
         );
     }
 }

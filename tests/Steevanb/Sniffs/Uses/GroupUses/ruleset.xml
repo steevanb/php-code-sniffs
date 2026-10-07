@@ -4,6 +4,7 @@
     <rule ref="Steevanb.Uses.GroupUses">
         <properties>
             <property name="groupPrefixes" type="array">
+                <element value="App"/>
                 <element value="App\Foo"/>
                 <element value="Symfony\Component\HttpFoundation"/>
             </property>
