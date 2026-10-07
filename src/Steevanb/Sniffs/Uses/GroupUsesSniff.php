@@ -31,6 +31,10 @@ use PHP_CodeSniffer\{
  *         Bar,
  *         Baz
  *     };
+ *
+ * An existing group must use the most specific configured prefix matching its uses:
+ * with groupPrefixes = ["App"], "use App\Foo\{Bar, Baz};" must be written "use App\{Foo\Bar, Foo\Baz};".
+ * Only one group per configured prefix is allowed.
  */
 class GroupUsesSniff implements Sniff
 {
@@ -47,7 +51,7 @@ class GroupUsesSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
         $uses = $this->collectUseStatements($phpcsFile);
 
-        $this->validateUngroupedUses($phpcsFile, $uses);
+        $this->validateUses($phpcsFile, $uses);
         $this->validateGroupedUseFormat($phpcsFile, $uses);
 
         // Only process once per file.
@@ -125,39 +129,78 @@ class GroupUsesSniff implements Sniff
     }
 
     /** @param list<array{ptr: int, name: string, isGrouped: bool, groupPrefix: string|null, groupMembers: list<string>}> $uses */
-    private function validateUngroupedUses(File $phpcsFile, array $uses): void
+    private function validateUses(File $phpcsFile, array $uses): void
     {
-        $ungrouped = [];
-        foreach ($uses as $use) {
-            if ($use['isGrouped'] === false) {
-                $ungrouped[] = $use;
-            }
-        }
+        // For each configured prefix, list the uses targeting it: [prefix => [useIndex => list<fullName>]].
+        $usesByPrefix = [];
+        foreach ($uses as $useIndex => $use) {
+            $names = $use['isGrouped']
+                ? array_map(
+                    static fn (string $member): string => $use['groupPrefix'] . '\\' . $member,
+                    $use['groupMembers']
+                )
+                : [$use['name']];
 
-        if (count($ungrouped) < 2) {
-            return;
-        }
-
-        foreach ($this->groupPrefixes as $prefix) {
-            $prefixWithSeparator = rtrim($prefix, '\\') . '\\';
-            $matching = [];
-            foreach ($ungrouped as $use) {
-                if (str_starts_with($use['name'], $prefixWithSeparator)) {
-                    $matching[] = $use;
+            foreach ($names as $name) {
+                $prefix = $this->findGroupPrefix($name);
+                if (is_string($prefix)) {
+                    $usesByPrefix[$prefix][$useIndex][] = $name;
                 }
             }
+        }
 
-            if (count($matching) >= 2) {
-                foreach ($matching as $use) {
+        foreach ($usesByPrefix as $prefix => $usesForPrefix) {
+            $namesCount = array_sum(array_map('count', $usesForPrefix));
+            $isPrefixGroupFound = false;
+
+            foreach ($usesForPrefix as $useIndex => $names) {
+                $use = $uses[$useIndex];
+
+                if ($use['isGrouped'] === false) {
+                    if ($namesCount >= 2) {
+                        $phpcsFile->addError(
+                            'Use "%s" must be grouped under "%s"',
+                            $use['ptr'],
+                            'MustGroup',
+                            [$use['name'], $prefix]
+                        );
+                    }
+                } elseif ($use['groupPrefix'] !== $prefix) {
                     $phpcsFile->addError(
-                        'Use "%s" must be grouped under "%s"',
+                        'Use group "%s" must be grouped under "%s" (%s)',
                         $use['ptr'],
-                        'MustGroup',
-                        [$use['name'], $prefix]
+                        'WrongGroupPrefix',
+                        [$use['groupPrefix'], $prefix, implode(', ', $names)]
                     );
+                } elseif ($isPrefixGroupFound) {
+                    $phpcsFile->addError(
+                        'Use group "%s" must be merged with the previous one',
+                        $use['ptr'],
+                        'DuplicateGroup',
+                        [$prefix]
+                    );
+                } else {
+                    $isPrefixGroupFound = true;
                 }
             }
         }
+    }
+
+    /** Return the most specific configured prefix matching $name, or null. */
+    private function findGroupPrefix(string $name): ?string
+    {
+        $return = null;
+        foreach ($this->groupPrefixes as $prefix) {
+            $prefix = rtrim($prefix, '\\');
+            if (
+                str_starts_with($name, $prefix . '\\')
+                && (is_string($return) === false || strlen($prefix) > strlen($return))
+            ) {
+                $return = $prefix;
+            }
+        }
+
+        return $return;
     }
 
     /** @param list<array{ptr: int, name: string, isGrouped: bool, groupPrefix: string|null, groupMembers: list<string>}> $uses */
